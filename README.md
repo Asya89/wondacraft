@@ -1,4 +1,4 @@
-# Wondacraft — Handmade E-commerce
+# WondaCraft — Handmade E-commerce
 
 Production-ready e-commerce website for handmade products (toys, decor). Built with Next.js, PostgreSQL, and Prisma.
 
@@ -297,4 +297,4 @@ npm run db:generate
 
 ## License
 
-Private — Wondacraft
+Private — WondaCraft

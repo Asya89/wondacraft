@@ -58,14 +58,14 @@ async function generateProductImages(dir: string, slug: string, name: string, in
 async function generateHeroImage() {
   const dir = path.join(process.cwd(), 'public', 'images', 'hero');
   await mkdir(dir, { recursive: true });
-  await generatePlaceholder(dir, 'hero.webp', 1920, 1080, 'Wondacraft', 0);
+  await generatePlaceholder(dir, 'hero.webp', 1920, 1080, 'WondaCraft', 0);
   return '/images/hero/hero.webp';
 }
 
 async function generateAboutImage() {
   const dir = path.join(process.cwd(), 'public', 'images', 'about');
   await mkdir(dir, { recursive: true });
-  await generatePlaceholder(dir, 'about.webp', 800, 600, 'Wondacraft', 2);
+  await generatePlaceholder(dir, 'about.webp', 800, 600, 'WondaCraft', 2);
   return '/images/about/about.webp';
 }
 

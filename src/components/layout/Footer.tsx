@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { t } from '@/lib/i18n';
+import { Logo } from '@/components/layout/Logo';
 
 export function Footer() {
   const translations = t();
@@ -9,9 +10,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <Link href="/" className="font-serif text-xl font-medium text-warm-brown">
-              Wondacraft
-            </Link>
+            <Logo height={44} />
             <p className="mt-3 text-sm text-muted">{translations.home.aboutText.substring(0, 100)}...</p>
           </div>
 
@@ -52,7 +51,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 border-t border-border pt-6 text-center text-xs text-muted">
-          © {new Date().getFullYear()} Wondacraft. {translations.footer.rights}
+          © {new Date().getFullYear()} WondaCraft. {translations.footer.rights}
         </div>
       </div>
     </footer>

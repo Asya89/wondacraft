@@ -20,7 +20,8 @@
     "postinstall": "prisma generate",
     "test": "vitest run",
     "test:watch": "vitest",
-    "generate:images": "tsx scripts/generate-placeholders.ts"
+    "generate:images": "tsx scripts/generate-placeholders.ts",
+    "sync:assets": "tsx scripts/sync-assets.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

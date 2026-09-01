@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { t } from '@/lib/i18n';
+import { Logo } from '@/components/layout/Logo';
 
 const navLinks = [
   { href: '/products', label: t().nav.products },
@@ -18,9 +19,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Link href="/" className="font-serif text-2xl font-medium tracking-wide text-warm-brown">
-          Wondacraft
-        </Link>
+        <Logo height={52} priority />
 
         <nav className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (

@@ -13,7 +13,7 @@ export default function AboutPage() {
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-sm">
         <Image
-          src="/images/about/about.webp"
+          src="/images/about.webp"
           alt={translations.about.title}
           fill
           className="object-cover"
@@ -24,12 +24,12 @@ export default function AboutPage() {
       <div className="mt-6 space-y-4 leading-relaxed text-muted">
         <p>{translations.home.aboutText}</p>
         <p>
-          Wondacraft-ում մենք հ верим, որ յուրաքանչյուր ձեռagort արտadranq ունի իր պատմությունը։
-          Մեր արտadranqner@ պատրastvum en bnavakan nyuteric՝ bambak, felt, ktori ev ayln։
+          WondaCraft-ում մենք հավատում ենք, որ յուրաքանչյուր ձեռagort արտadranq ունի իր պատmuթyunը։
+          Մեր արտadranqner@ պատrastvum են բnakan nyuteric՝ plush yarn, bnakan payt և այլն։
         </p>
         <p>
-          Մենք ստeghծում ենք ոչ միայն khaghalikner, ayl nayev tan dekorativ artadranq,
-          voronq kardagrum en tepl ev yurahatuk mshakuyt shenq masin։
+          Մենք ստeghծum ենք amigurumi ayiukner, zajikner և patayi jamatsuytsner՝ յուրahatuk
+          մթnokaidi համar։
         </p>
       </div>
     </div>

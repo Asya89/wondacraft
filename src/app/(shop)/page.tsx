@@ -21,8 +21,8 @@ export default async function HomePage() {
       <section className="relative flex min-h-[70vh] items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/hero/hero.webp"
-            alt="Wondacraft"
+            src="/images/hero.webp"
+            alt="WondaCraft"
             fill
             priority
             className="object-cover"
@@ -98,7 +98,7 @@ export default async function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
             <Image
-              src="/images/about/about.webp"
+              src="/images/about.webp"
               alt={translations.home.aboutTitle}
               fill
               className="object-cover"

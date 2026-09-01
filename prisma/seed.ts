@@ -1,12 +1,33 @@
 import { PrismaClient, UserRole } from '@prisma/client';
 import bcrypt from 'bcryptjs';
-import { generateAllPlaceholders } from '../scripts/generate-placeholders';
+import { syncAssets } from '../scripts/sync-assets';
 
 const prisma = new PrismaClient();
 
+const img = (path: string) => `/images/${path}`;
+
+async function setProductImages(
+  productId: string,
+  images: Array<{ url: string; alt: string; isMain?: boolean }>,
+) {
+  await prisma.productImage.deleteMany({ where: { productId } });
+
+  for (let i = 0; i < images.length; i++) {
+    await prisma.productImage.create({
+      data: {
+        productId,
+        imageUrl: images[i].url,
+        alt: images[i].alt,
+        sortOrder: i,
+        isMain: images[i].isMain ?? i === 0,
+      },
+    });
+  }
+}
+
 async function main() {
-  console.log('Generating placeholder images...');
-  const { generateCategoryImage, generateProductImages } = await generateAllPlaceholders();
+  console.log('Syncing assets from _assets/ ...');
+  await syncAssets();
 
   console.log('Seeding database...');
 
@@ -27,286 +48,182 @@ async function main() {
 
   const categoriesData = [
     {
-      name: 'Ձեռագործ արջուկներ',
-      slug: 'dzergagort-archukner',
-      description: 'Ձեռագործ արջուկներ բնական նյութերից',
+      name: 'Ամիգուրումի արջուկներ',
+      slug: 'amigurumi-ayiukner',
+      description: 'Ձեռագործ ամիգուրումի արջուկներ՝ 30 սմ, անվտանգ նյութերից',
+      image: img('categories/dzergagort-ayiukner.webp'),
       sortOrder: 1,
     },
     {
-      name: 'Կտորից խաղալիքներ',
-      slug: 'ktoric-khaghaliqner',
-      description: 'Կտորից և felt-ից պատրաստված խաղալիքներ',
+      name: 'Ձեռագործ zajikner',
+      slug: 'crochet-zajikner',
+      description: 'Ձեռagort crochet zajikner՝ soft plush yarn-ից',
+      image: img('categories/ktoric-zajikner.webp'),
       sortOrder: 2,
     },
     {
-      name: 'Տան դեկոր',
-      slug: 'tan-dekor',
-      description: 'Ձեռագործ տան դեկորատիվ արտադրանք',
+      name: 'Պատayin jamatsuytsner',
+      slug: 'patayi-chasy',
+      description: 'Ձեռagort patayin jamatsuytsner bnakan paytic',
+      image: img('categories/patayi-chasy.webp'),
       sortOrder: 3,
-      children: [
-        {
-          name: 'Մոմեր',
-          slug: 'momer',
-          description: 'Ձեռագործ մոմեր',
-          sortOrder: 1,
-        },
-        {
-          name: 'Ծաղկամաններ',
-          slug: 'tsaghkanmanner',
-          description: 'Ձեռագործ ծաղկամաններ',
-          sortOrder: 2,
-        },
-        {
-          name: 'Պատային դեկոր',
-          slug: 'patayin-dekor',
-          description: 'Պատի ձեռագործ դեկոր',
-          sortOrder: 3,
-        },
-      ],
     },
   ];
 
   const categoryMap = new Map<string, string>();
 
-  for (let i = 0; i < categoriesData.length; i++) {
-    const cat = categoriesData[i];
-    const image = await generateCategoryImage(
-      `${process.cwd()}/public/images/categories`,
-      cat.name.substring(0, 12),
-      i,
-    );
-
+  for (const cat of categoriesData) {
     const created = await prisma.category.upsert({
       where: { slug: cat.slug },
-      update: {},
+      update: {
+        name: cat.name,
+        description: cat.description,
+        image: cat.image,
+        sortOrder: cat.sortOrder,
+        isActive: true,
+      },
       create: {
         name: cat.name,
         slug: cat.slug,
         description: cat.description,
-        image,
+        image: cat.image,
         sortOrder: cat.sortOrder,
         isActive: true,
       },
     });
     categoryMap.set(cat.slug, created.id);
-
-    if (cat.children) {
-      for (let j = 0; j < cat.children.length; j++) {
-        const child = cat.children[j];
-        const childImage = await generateCategoryImage(
-          `${process.cwd()}/public/images/categories`,
-          child.name.substring(0, 12),
-          i + j + 10,
-        );
-        const childCreated = await prisma.category.upsert({
-          where: { slug: child.slug },
-          update: {},
-          create: {
-            name: child.name,
-            slug: child.slug,
-            description: child.description,
-            image: childImage,
-            parentId: created.id,
-            sortOrder: child.sortOrder,
-            isActive: true,
-          },
-        });
-        categoryMap.set(child.slug, childCreated.id);
-      }
-    }
   }
 
   const productsData = [
     {
-      name: 'Ձեռագործ արջուկ «Միքի»',
-      slug: 'dzergagort-archuk-miki',
-      categorySlug: 'dzergagort-archukner',
-      shortDescription: 'Բամբակի արջուկ 35 սմ',
+      name: 'Լavanda amigurumi archuk «Milo»',
+      slug: 'lavanda-amigurumi-ayi-milo',
+      categorySlug: 'amigurumi-ayiukner',
+      shortDescription: '30 սմ amigurumi archuk, lavanda guyn',
       description:
-        'Ձեռագործ բամբակի արջուկ «Միքի»՝ պատրաստված բնական կտորից և hypoallergenic լցofill-ից։ Յուրաքանչյուր արջուկ ունի իր յուրահատuk character:',
-      price: 15000,
-      oldPrice: 18000,
-      sku: 'WC-BEAR-001',
-      stock: 5,
-      material: 'Բամբակ, felt',
-      size: '35 սմ',
-      isFeatured: true,
-      isNew: true,
-    },
-    {
-      name: 'Ձեռագործ արջուկ «Լուսի»',
-      slug: 'dzergagort-archuk-lusi',
-      categorySlug: 'dzergagort-archukner',
-      shortDescription: 'Կրեմ գույնի արջուկ 40 սմ',
-      description: 'Մեծ չափի ձեռագործ արջուկ կրեմ գույնի բնական կտորից։',
+        'Ձեռagort amigurumi archuk lavanda guyni plush yarn-ից։ Naxaravorman e cream kochoyn u bow-ov։ Anvtanq nytqer, ideal nver mankakan hamar։',
       price: 18000,
-      sku: 'WC-BEAR-002',
-      stock: 3,
-      material: 'Բամբակ, լանyarn',
-      size: '40 սմ',
-      isFeatured: true,
-      isNew: false,
-    },
-    {
-      name: 'Ձեռագործ արջուկ «Նորի»',
-      slug: 'dzergagort-archuk-nori',
-      categorySlug: 'dzergagort-archukner',
-      shortDescription: 'Փոքր արջուկ 25 սմ',
-      description: 'Փոքր չափի ձեռագործ արջուկ՝ իդéal նվեր մանկան համար։',
-      price: 10000,
-      sku: 'WC-BEAR-003',
-      stock: 8,
-      material: 'Բամբակ',
-      size: '25 սմ',
-      isFeatured: false,
-      isNew: true,
-    },
-    {
-      name: 'Felt կատու «Սօֆի»',
-      slug: 'felt-katu-sofi',
-      categorySlug: 'ktoric-khaghaliqner',
-      shortDescription: 'Felt կatու խաղalիք',
-      description: 'Ձեռagort felt կatու՝ պատրastված բnakan felt-ից։',
-      price: 8000,
-      sku: 'WC-CAT-001',
-      stock: 6,
-      material: 'Felt',
-      size: '20 սմ',
-      isFeatured: true,
-      isNew: true,
-    },
-    {
-      name: 'Felt նապաստak «Լeo»',
-      slug: 'felt-napastak-leo',
-      categorySlug: 'ktoric-khaghaliqner',
-      shortDescription: 'Felt նapastak խaghalik',
-      description: 'Ձեռagort felt napastak bnavakan nyuteric.',
-      price: 12000,
-      sku: 'WC-FOX-001',
+      oldPrice: 22000,
+      sku: 'WC-BEAR-001',
       stock: 4,
-      material: 'Felt, կտor',
-      size: '22 սմ',
-      isFeatured: false,
+      material: 'Plush yarn, hypoallergenic stuffing',
+      size: '30 սմ',
+      isFeatured: true,
       isNew: true,
+      images: [
+        { url: img('products/lavanda-ayi-01.webp'), alt: 'Lavanda amigurumi archuk' },
+        { url: img('products/lavanda-ayi-02.webp'), alt: 'Lavanda archuk naxaravorman' },
+        { url: img('products/lavanda-ayi-03.webp'), alt: 'Lavanda archuk nkaragir' },
+        { url: img('products/lavanda-ayi-04.webp'), alt: 'Amigurumi steghtman proces' },
+      ],
     },
     {
-      name: 'Կտorից zajik «Մaral»',
-      slug: 'ktoric-zajik-maral',
-      categorySlug: 'ktoric-khaghaliqner',
-      shortDescription: 'Ktoric zajik khaghalik',
-      description: 'Yurahatuk ktoric zajik snvats bnavakan nyuteric.',
-      price: 9500,
+      name: 'Rozayin crochet zajik «Sofi»',
+      slug: 'rozayin-crochet-zajik-sofi',
+      categorySlug: 'crochet-zajikner',
+      shortDescription: 'Crochet zajik rozayin ev cream guynov',
+      description:
+        'Yurahatuk crochet zajik chunky yarn-ից։ Naxaravorman e hstak koch quti u shredded filler-ov՝ ideal nveri hamar։',
+      price: 16000,
       sku: 'WC-BUNNY-001',
-      stock: 7,
-      material: 'Բambak, ktori',
+      stock: 5,
+      material: 'Chenille yarn, cotton stuffing',
       size: '28 սմ',
       isFeatured: true,
-      isNew: false,
-    },
-    {
-      name: 'Ձեռagort mom lavanda',
-      slug: 'dzergagort-mom-lavanda',
-      categorySlug: 'momer',
-      shortDescription: 'Lavanda hatkov mom',
-      description: '100% soy mom lavanda hatkov, 200g.',
-      price: 4500,
-      sku: 'WC-CANDLE-001',
-      stock: 15,
-      material: 'Soy mom, esential oil',
-      size: '200 գ',
-      isFeatured: true,
-      isNew: false,
-    },
-    {
-      name: 'Ձեռagort mom vanil',
-      slug: 'dzergagort-mom-vanil',
-      categorySlug: 'momer',
-      shortDescription: 'Vanil hatkov mom',
-      description: '100% soy mom vanil hatkov, 200g.',
-      price: 4500,
-      sku: 'WC-CANDLE-002',
-      stock: 12,
-      material: 'Soy mom',
-      size: '200 գ',
-      isFeatured: false,
       isNew: true,
+      images: [
+        { url: img('products/rozayin-zajik-01.webp'), alt: 'Rozayin crochet zajik' },
+        { url: img('products/rozayin-zajik-02.webp'), alt: 'Zajik naxaravorman' },
+      ],
     },
     {
-      name: 'Ceramic tsaghkanman',
-      slug: 'ceramic-tsaghkanman',
-      categorySlug: 'tsaghkanmanner',
-      shortDescription: 'Dzeragort ceramic tsaghkanman',
-      description: 'Yurahatuk ceramic tsaghkanman dzeragort steghtsvats.',
-      price: 12000,
-      sku: 'WC-VASE-001',
-      stock: 4,
-      material: 'Ceramic',
-      size: '25 սմ',
-      isFeatured: true,
-      isNew: false,
-    },
-    {
-      name: 'Ceramic tsaghkanman klor',
-      slug: 'ceramic-tsaghkanman-klor',
-      categorySlug: 'tsaghkanmanner',
-      shortDescription: 'Klor ceramic tsaghkanman',
-      description: 'Minimalist klor ceramic tsaghkanman.',
-      price: 10000,
-      sku: 'WC-VASE-002',
-      stock: 5,
-      material: 'Ceramic',
-      size: '20 սմ',
-      isFeatured: false,
-      isNew: true,
-    },
-    {
-      name: 'Patayi dekor panel',
-      slug: 'patayi-dekor-panel',
-      categorySlug: 'patayin-dekor',
-      shortDescription: 'Macramé patayi dekor',
-      description: 'Dzeragort macramé patayi dekor panel.',
-      price: 15000,
-      sku: 'WC-WALL-001',
+      name: 'Patayi jamatsuyts bnakan paytic 35 սմ',
+      slug: 'patayi-chasy-35-sm',
+      categorySlug: 'patayi-chasy',
+      shortDescription: '35 սմ patayi jamatsuyts, bnakan payt',
+      description:
+        'Ձեռagort patayi jamatsuyts bnakan paytic։ Romakan tverakner, tepl ev yurahatuk mshakuyt interyeri hamar։',
+      price: 25000,
+      oldPrice: 29000,
+      sku: 'WC-CLOCK-001',
       stock: 3,
-      material: 'Bambak shnor, ktori',
-      size: '40 × 60 սմ',
+      material: 'Bnakan payt, metal tverakner',
+      size: '35 սմ',
       isFeatured: true,
       isNew: false,
+      images: [
+        { url: img('products/patayi-chasy-35-01.webp'), alt: 'Patayi jamatsuyts 35 sm' },
+        { url: img('products/patayi-chasy-35-02.webp'), alt: 'Patayi jamatsuyts dzeragort' },
+      ],
     },
     {
-      name: 'Patayi dekor goyner',
-      slug: 'patayi-dekor-goyner',
-      categorySlug: 'patayin-dekor',
-      shortDescription: 'Tepi goyner patayi dekor',
-      description: 'Dzeragort patayi dekor tepi goynerov.',
-      price: 8000,
-      sku: 'WC-WALL-002',
-      stock: 6,
-      material: 'Ktori, bambak',
-      size: '30 × 40 սմ',
+      name: 'Patayi jamatsuyts bnakan paytic 40 սմ',
+      slug: 'patayi-chasy-40-sm',
+      categorySlug: 'patayi-chasy',
+      shortDescription: '40 սմ patayi jamatsuyts, bnakan payt',
+      description:
+        'Mec chapy patayi jamatsuyts bnakan paytic։ Yurahatuk grain, romakan tverakner։',
+      price: 32000,
+      sku: 'WC-CLOCK-002',
+      stock: 2,
+      material: 'Bnakan payt, metal tverakner',
+      size: '40 սմ',
+      isFeatured: true,
+      isNew: true,
+      images: [
+        { url: img('products/patayi-chasy-40-01.webp'), alt: 'Patayi jamatsuyts 40 sm' },
+        { url: img('products/patayi-chasy-40-02.webp'), alt: 'Bnakan payti texture' },
+      ],
+    },
+    {
+      name: 'Patayi jamatsuyts «Interyer»',
+      slug: 'patayi-chasy-interyer',
+      categorySlug: 'patayi-chasy',
+      shortDescription: 'Patayi jamatsuyts modern interyeri hamar',
+      description:
+        'Elegan patayi jamatsuyts bnakan paytic։ Ideal e minimal ev tepl interyerneri hamar։',
+      price: 28000,
+      sku: 'WC-CLOCK-003',
+      stock: 3,
+      material: 'Bnakan payt',
+      size: '35 սմ',
       isFeatured: false,
       isNew: true,
+      images: [{ url: img('products/patayi-chasy-interyer-01.webp'), alt: 'Patayi jamatsuyts interyerum' }],
     },
   ];
 
-  for (let i = 0; i < productsData.length; i++) {
-    const p = productsData[i];
-    const categoryId = categoryMap.get(p.categorySlug);
-    if (!categoryId) {
-      console.warn(`Category not found: ${p.categorySlug}`);
-      continue;
-    }
+  await prisma.product.updateMany({
+    where: { slug: { notIn: productsData.map((p) => p.slug) } },
+    data: { isActive: false, sku: null },
+  });
 
-    const images = await generateProductImages(
-      `${process.cwd()}/public/images/products`,
-      p.slug,
-      p.name.substring(0, 15),
-      i,
-    );
+  await prisma.category.updateMany({
+    where: { slug: { notIn: categoriesData.map((c) => c.slug) } },
+    data: { isActive: false },
+  });
+
+  for (const p of productsData) {
+    const categoryId = categoryMap.get(p.categorySlug);
+    if (!categoryId) continue;
 
     const product = await prisma.product.upsert({
       where: { slug: p.slug },
-      update: {},
+      update: {
+        name: p.name,
+        categoryId,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        price: p.price,
+        oldPrice: p.oldPrice ?? null,
+        sku: p.sku,
+        stock: p.stock,
+        material: p.material,
+        size: p.size,
+        isFeatured: p.isFeatured,
+        isNew: p.isNew,
+        isActive: true,
+      },
       create: {
         name: p.name,
         slug: p.slug,
@@ -325,20 +242,7 @@ async function main() {
       },
     });
 
-    const existingImages = await prisma.productImage.count({ where: { productId: product.id } });
-    if (existingImages === 0) {
-      for (let j = 0; j < images.length; j++) {
-        await prisma.productImage.create({
-          data: {
-            productId: product.id,
-            imageUrl: images[j],
-            alt: p.name,
-            sortOrder: j,
-            isMain: j === 0,
-          },
-        });
-      }
-    }
+    await setProductImages(product.id, p.images);
   }
 
   console.log('Seed completed successfully!');

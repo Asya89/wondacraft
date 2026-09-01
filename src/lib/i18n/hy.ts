@@ -1,6 +1,6 @@
 export const hy = {
   common: {
-    siteName: 'Wondacraft',
+    siteName: 'WondaCraft',
     currency: '֏',
     loading: 'Բեռնվում է...',
     error: 'Սխալ է տեղի ունեցել',
@@ -37,8 +37,8 @@ export const hy = {
     newTitle: 'Նոր ապրանքներ',
     aboutTitle: 'Մեր պատմությունը',
     aboutText:
-      'Wondacraft-ը ձեռագործ խաղալիքների ատelier է, որտեղ յուրաքանչյուր արտադրանք ստեղծվում է սիրով և մեծ ուշադրությամբ մանրամասների նկատմամբ։',
-    whyTitle: 'Ինչու Wondacraft',
+      'WondaCraft-ը ձեռագործ խաղալիքների ատelier է, որտեղ յուրաքանչյուր արտադրանք ստեղծվում է սիրով և մեծ ուշադրությամբ մանրամասների նկատմամբ։',
+    whyTitle: 'Ինչու WondaCraft',
     whyItems: ['Ձեռագործ', 'Յուրահատուկ', 'Բարձր որակ', 'Պատրաստված սիրով'],
     ctaTitle: 'Գտեք ձեր յուրահատուկ ձեռագործ իրը',
     ctaButton: 'Դիտել ապրանքները',
@@ -88,7 +88,7 @@ export const hy = {
   },
   about: {
     title: 'Մեր մասին',
-    description: 'Wondacraft — ձեռագործ խաղալիքների ատelier',
+    description: 'WondaCraft — ձեռագործ խաղալիքների ատelier',
   },
   contact: {
     title: 'Կապ',

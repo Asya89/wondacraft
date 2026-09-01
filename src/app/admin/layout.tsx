@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { logoutAction } from '@/app/actions/auth';
 import { getSession } from '@/lib/auth/session';
 import { AdminNav } from '@/components/admin/AdminNav';
+import { Logo } from '@/components/layout/Logo';
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();
@@ -11,9 +11,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {session && (
         <header className="border-b bg-white">
           <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-            <Link href="/admin/dashboard" className="font-serif text-lg font-medium text-warm-brown">
-              Wondacraft Admin
-            </Link>
+            <div className="flex items-center gap-2">
+              <Logo href="/admin/dashboard" height={40} />
+              <span className="text-sm text-gray-400">Admin</span>
+            </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-gray-500">{session.email}</span>
               <form action={logoutAction}>

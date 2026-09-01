@@ -18,15 +18,19 @@ const notoSerif = Noto_Serif_Armenian({
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
   title: {
-    default: 'Wondacraft — Ձեռագործ խաղալիքներ',
-    template: '%s | Wondacraft',
+    default: 'WondaCraft — Ձեռagort khaghalikner',
+    template: '%s | WondaCraft',
   },
   description:
-    'Ձեռագործ խաղալիքներ և դեկորativ արտadranq սիրով պատրastված։ Wondacraft — յուրahatuk dzeragort artadranq։',
+    'Ձեռagort khaghalikner, amigurumi ayiukner, zajikner ev patayi jamatsuytsner. WondaCraft — yurahatuk dzergagort artadranq.',
   openGraph: {
     type: 'website',
     locale: 'hy_AM',
-    siteName: 'Wondacraft',
+    siteName: 'WondaCraft',
+  },
+  icons: {
+    icon: '/images/logo.jpg',
+    apple: '/images/logo.jpg',
   },
 };
 
