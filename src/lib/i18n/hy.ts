@@ -1,0 +1,137 @@
+export const hy = {
+  common: {
+    siteName: 'Wondacraft',
+    currency: '֏',
+    loading: 'Բեռնվում է...',
+    error: 'Սխալ է տեղի ունեցել',
+    tryAgain: 'Կրկին փորձել',
+    back: 'Հետ',
+    save: 'Պահպանել',
+    cancel: 'Չեղարկել',
+    delete: 'Ջնջել',
+    edit: 'Խմբագրել',
+    create: 'Ստեղծել',
+    search: 'Որոնել',
+    noResults: 'Արդյունքներ չեն գտնվել',
+    viewAll: 'Տեսնել բոլորը',
+    loadMore: 'Բեռնել ավելին',
+    inStock: 'Առկա է',
+    outOfStock: 'Առկա չէ',
+    featured: 'Ընտրյալ',
+    new: 'Նոր',
+  },
+  nav: {
+    products: 'Ապրանքներ',
+    categories: 'Կատեգորիաներ',
+    about: 'Մեր մասին',
+    contact: 'Կապ',
+    admin: 'Admin',
+  },
+  home: {
+    heroTitle: 'Ձեռագործ խաղալիքներ սիրով պատրաստված',
+    heroDescription:
+      'Յուրահատուկ ձեռագործ արտադրանք, որը ստեղծված է բնական նյութերից՝ յուրաքանչյուր մարդու համար։',
+    heroCta: 'Դիտել ապրանքները',
+    categoriesTitle: 'Կատեգորիաներ',
+    featuredTitle: 'Ընտրյալ ապրանքներ',
+    newTitle: 'Նոր ապրանքներ',
+    aboutTitle: 'Մեր պատմությունը',
+    aboutText:
+      'Wondacraft-ը ձեռագործ խաղալիքների ատelier է, որտեղ յուրաքանչյուր արտադրանք ստեղծվում է սիրով և մեծ ուշադրությամբ մանրամասների նկատմամբ։',
+    whyTitle: 'Ինչու Wondacraft',
+    whyItems: ['Ձեռագործ', 'Յուրահատուկ', 'Բարձր որակ', 'Պատրաստված սիրով'],
+    ctaTitle: 'Գտեք ձեր յուրահատուկ ձեռագործ իրը',
+    ctaButton: 'Դիտել ապրանքները',
+  },
+  products: {
+    title: 'Ապրանքներ',
+    description: 'Դիտեք մեր ձեռագործ հավաքածուն',
+    filterByCategory: 'Կատեգորիա',
+    allCategories: 'Բոլոր կատեգորիաները',
+    sortBy: 'Դասավորել',
+    sortNewest: 'Նորագույն',
+    sortPriceAsc: 'Գին՝ աճող',
+    sortPriceDesc: 'Գին՝ նվազող',
+    sortName: 'Անուն',
+    empty: 'Ապրանքներ դեռ չկան',
+    searchPlaceholder: 'Որոնել ապրանք...',
+  },
+  product: {
+    material: 'Նյութ',
+    size: 'Չапан',
+    sku: 'SKU',
+    order: 'Պատվիրել',
+    description: 'Նկարագրություն',
+    relatedProducts: 'Նման ապրանքներ',
+    notFound: 'Ապրանքը չի գտնվել',
+  },
+  category: {
+    notFound: 'Կատեգորիան չի գտնվել',
+    empty: 'Այս կategորiայում ապրանքներ չկան',
+  },
+  order: {
+    title: 'Պատվիրել',
+    name: 'Անուն',
+    phone: 'Հեռախոս',
+    quantity: 'Քանակ',
+    address: 'Հասցե (ըստ ցանկության)',
+    comment: 'Մեկնabank (ըստ ցանկության)',
+    submit: 'Հաստատել պատվերը',
+    successTitle: 'Շնորհակալություն պատվերի համար',
+    successMessage: 'Մենք շուտով կկապվենք ձեր հետ։',
+    orderNumber: 'Պատվերի համար',
+    nameRequired: 'Անունը պարտադիր է',
+    phoneRequired: 'Հեռախոսահամարը պարտադիր է',
+    phoneInvalid: 'Մուտքագրեք վավեր հեռախոսահամար',
+    quantityInvalid: 'Քանակը պետք է լինի 1-10',
+    error: 'Պատվերը չհաջողվեց ստեղծել',
+  },
+  about: {
+    title: 'Մեր մասին',
+    description: 'Wondacraft — ձեռագործ խաղալիքների ատelier',
+  },
+  contact: {
+    title: 'Կապ',
+    description: 'Կապվեք մեզ հետ',
+    phone: 'Հեռախոս',
+    email: 'Էլ. փոստ',
+    instagram: 'Instagram',
+  },
+  footer: {
+    rights: 'Բոլոր իրavunqnery patrastvac en',
+    followUs: 'Հետևեք մեզ',
+  },
+  admin: {
+    login: 'Մուտք',
+    logout: 'Ելք',
+    dashboard: 'Dashboard',
+    products: 'Ապրանքներ',
+    categories: 'Կategoriաներ',
+    orders: 'Patverner',
+    email: 'Email',
+    password: 'Gaxtnabar',
+    invalidCredentials: 'Sxl email kam gaxtnabar',
+  },
+  errors: {
+    notFound: 'Ej@ chi gtnvel',
+    serverError: 'Server error',
+    unauthorized: 'Unauthorized',
+  },
+} as const;
+
+export type TranslationKey = typeof hy;
+export type Locale = 'hy' | 'en' | 'ru';
+
+const translations: Record<Locale, TranslationKey> = {
+  hy,
+  en: hy,
+  ru: hy,
+};
+
+export function getTranslations(locale: Locale = 'hy'): TranslationKey {
+  return translations[locale] ?? hy;
+}
+
+export function t(locale: Locale = 'hy'): TranslationKey {
+  return getTranslations(locale);
+}
