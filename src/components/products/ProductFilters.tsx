@@ -2,7 +2,8 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback } from 'react';
-import { t } from '@/lib/i18n';
+import { useLocale, useTranslations } from '@/contexts/LocaleContext';
+import { localizedPath } from '@/lib/i18n/path';
 
 interface ProductFiltersProps {
   categories: Array<{
@@ -16,7 +17,8 @@ interface ProductFiltersProps {
 export function ProductFilters({ categories }: ProductFiltersProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const translations = t();
+  const locale = useLocale();
+  const translations = useTranslations();
 
   const updateParams = useCallback(
     (key: string, value: string) => {
@@ -27,9 +29,9 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
         params.delete(key);
       }
       params.delete('page');
-      router.push(`/products?${params.toString()}`);
+      router.push(`${localizedPath('/products', locale)}?${params.toString()}`);
     },
-    [router, searchParams],
+    [router, searchParams, locale],
   );
 
   return (

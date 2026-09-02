@@ -1,5 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { prisma } from '@/lib/prisma';
+import { locales } from '@/lib/i18n/config';
+import { localizedPath } from '@/lib/i18n/path';
 import { getSiteUrl } from '@/lib/utils';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -16,26 +18,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]);
 
-  const staticPages: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${baseUrl}/products`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.9 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
-  ];
+  const staticPaths = ['/', '/products', '/about', '/contact'] as const;
 
-  const productPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${baseUrl}/products/${p.slug}`,
-    lastModified: p.updatedAt,
-    changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
+  const staticPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    staticPaths.map((path) => ({
+      url: `${baseUrl}${localizedPath(path, locale)}`,
+      lastModified: new Date(),
+      changeFrequency: path === '/' ? 'weekly' : path === '/products' ? 'daily' : 'monthly',
+      priority: path === '/' ? 1 : path === '/products' ? 0.9 : 0.5,
+    })),
+  );
 
-  const categoryPages: MetadataRoute.Sitemap = categories.map((c) => ({
-    url: `${baseUrl}/categories/${c.slug}`,
-    lastModified: c.updatedAt,
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }));
+  const productPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    products.map((p) => ({
+      url: `${baseUrl}${localizedPath(`/products/${p.slug}`, locale)}`,
+      lastModified: p.updatedAt,
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    })),
+  );
+
+  const categoryPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    categories.map((c) => ({
+      url: `${baseUrl}${localizedPath(`/categories/${c.slug}`, locale)}`,
+      lastModified: c.updatedAt,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    })),
+  );
 
   return [...staticPages, ...productPages, ...categoryPages];
 }

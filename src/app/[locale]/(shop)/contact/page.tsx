@@ -1,12 +1,22 @@
 import type { Metadata } from 'next';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { isLocale } from '@/lib/i18n/config';
 
-export const metadata: Metadata = {
-  title: 'Կապ',
-};
+interface ContactPageProps {
+  params: Promise<{ locale: string }>;
+}
 
-export default function ContactPage() {
-  const translations = t();
+export async function generateMetadata({ params }: ContactPageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const translations = getTranslations(locale);
+  return { title: translations.contact.title };
+}
+
+export default async function ContactPage({ params }: ContactPageProps) {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const translations = getTranslations(locale);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">

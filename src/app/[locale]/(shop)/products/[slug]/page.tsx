@@ -5,16 +5,19 @@ import { ProductCard } from '@/components/products/ProductCard';
 import { ProductGallery } from '@/components/products/ProductGallery';
 import { OrderForm } from '@/components/orders/OrderForm';
 import { formatPrice, getSiteUrl } from '@/lib/utils';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
+import { isLocale } from '@/lib/i18n/config';
 
 interface ProductPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const product = await getProductBySlug(slug);
-  if (!product) return { title: 'Not found' };
+  if (!product) return { title: getTranslations(locale).product.notFound };
 
   return {
     title: product.name,
@@ -23,18 +26,19 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
       title: product.name,
       description: product.shortDescription ?? undefined,
       images: product.images.filter((i) => i.isMain).map((i) => i.imageUrl),
-      url: `${getSiteUrl()}/products/${product.slug}`,
+      url: `${getSiteUrl()}${localizedPath(`/products/${product.slug}`, locale)}`,
     },
   };
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { slug } = await params;
+  const { slug, locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const product = await getProductBySlug(slug);
   if (!product) notFound();
 
   const relatedProducts = await getRelatedProducts(product.categoryId, product.id);
-  const translations = t();
+  const translations = getTranslations(locale);
   const inStock = product.stock > 0;
 
   const jsonLd = {
@@ -95,9 +99,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </p>
               )}
               <p>
-                <span
-                  className={inStock ? 'text-green-700' : 'text-red-600'}
-                >
+                <span className={inStock ? 'text-green-700' : 'text-red-600'}>
                   {inStock ? translations.common.inStock : translations.common.outOfStock}
                 </span>
                 {inStock && <span className="ml-1 text-muted">({product.stock})</span>}
@@ -134,7 +136,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
               {relatedProducts.map((p) => (
-                <ProductCard key={p.id} product={p} />
+                <ProductCard key={p.id} product={p} locale={locale} />
               ))}
             </div>
           </section>

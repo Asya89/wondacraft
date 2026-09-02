@@ -1,15 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { formatMessage, getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
 import type { CategoryWithRelations } from '@/server/services/category.service';
 
 interface CategoryCardProps {
   category: CategoryWithRelations;
+  locale: Locale;
 }
 
-export function CategoryCard({ category }: CategoryCardProps) {
+export function CategoryCard({ category, locale }: CategoryCardProps) {
+  const translations = getTranslations(locale);
+
   return (
     <Link
-      href={`/categories/${category.slug}`}
+      href={localizedPath(`/categories/${category.slug}`, locale)}
       className="group block overflow-hidden rounded-sm bg-card shadow-sm transition-shadow hover:shadow-md"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-cream">
@@ -22,15 +27,15 @@ export function CategoryCard({ category }: CategoryCardProps) {
             className="object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
-          <div className="flex h-full items-center justify-center bg-beige text-muted">
-            {category.name}
-          </div>
+          <div className="flex h-full items-center justify-center bg-beige text-muted">{category.name}</div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
         <div className="absolute bottom-0 left-0 p-4">
           <h3 className="font-serif text-lg text-white">{category.name}</h3>
           {category._count.products > 0 && (
-            <p className="text-xs text-white/80">{category._count.products} ապրանք</p>
+            <p className="text-xs text-white/80">
+              {formatMessage(translations.common.productCount, { count: category._count.products })}
+            </p>
           )}
         </div>
       </div>

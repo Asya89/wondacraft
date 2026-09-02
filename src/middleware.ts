@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
+import { defaultLocale, isLocale, locales } from '@/lib/i18n/config';
 
 const SESSION_COOKIE = 'wondacraft_session';
 
@@ -21,28 +22,57 @@ async function isAuthenticated(request: NextRequest): Promise<boolean> {
   }
 }
 
+function pathnameHasLocale(pathname: string): boolean {
+  return locales.some((locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`));
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith('/admin') && pathname !== '/admin/login') {
-    const authenticated = await isAuthenticated(request);
-    if (!authenticated) {
-      const loginUrl = new URL('/admin/login', request.url);
-      loginUrl.searchParams.set('redirect', pathname);
-      return NextResponse.redirect(loginUrl);
+  if (pathname.startsWith('/admin')) {
+    if (pathname !== '/admin/login') {
+      const authenticated = await isAuthenticated(request);
+      if (!authenticated) {
+        const loginUrl = new URL('/admin/login', request.url);
+        loginUrl.searchParams.set('redirect', pathname);
+        return NextResponse.redirect(loginUrl);
+      }
+    } else {
+      const authenticated = await isAuthenticated(request);
+      if (authenticated) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
     }
+    return NextResponse.next();
   }
 
-  if (pathname === '/admin/login') {
-    const authenticated = await isAuthenticated(request);
-    if (authenticated) {
-      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
-    }
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.startsWith('/images') ||
+    pathname.startsWith('/uploads') ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml' ||
+    pathname.includes('.')
+  ) {
+    return NextResponse.next();
+  }
+
+  if (!pathnameHasLocale(pathname)) {
+    const url = request.nextUrl.clone();
+    url.pathname =
+      pathname === '/' ? `/${defaultLocale}` : `/${defaultLocale}${pathname}`;
+    return NextResponse.redirect(url);
+  }
+
+  const firstSegment = pathname.split('/').filter(Boolean)[0];
+  if (firstSegment && !isLocale(firstSegment)) {
+    return NextResponse.next();
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };

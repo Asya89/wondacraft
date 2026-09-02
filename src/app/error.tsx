@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { Button } from '@/components/ui/Button';
-import { t } from '@/lib/i18n';
+import { defaultLocale, getTranslations } from '@/lib/i18n';
 
 export default function Error({
   error,
@@ -15,7 +15,7 @@ export default function Error({
     console.error(error);
   }, [error]);
 
-  const translations = t();
+  const translations = getTranslations(defaultLocale);
 
   return (
     <div className="mx-auto max-w-lg px-4 py-24 text-center">

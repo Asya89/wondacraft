@@ -3,18 +3,21 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { getCategoryProducts } from '@/server/services/category.service';
 import { ProductCard } from '@/components/products/ProductCard';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
+import { isLocale } from '@/lib/i18n/config';
 import type { ProductSortOption } from '@/server/services/product.service';
 
 interface CategoryPageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ locale: string; slug: string }>;
   searchParams: Promise<{ sort?: string; page?: string }>;
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const result = await getCategoryProducts(slug, { limit: 1 });
-  if (!result) return { title: 'Not found' };
+  if (!result) return { title: getTranslations(locale).category.notFound };
   return {
     title: result.category.name,
     description: result.category.description ?? undefined,
@@ -22,7 +25,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
-  const { slug } = await params;
+  const { slug, locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const sp = await searchParams;
   const page = parseInt(sp.page ?? '1', 10);
   const sort = (sp.sort as ProductSortOption) ?? 'newest';
@@ -31,7 +35,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   if (!result) notFound();
 
   const { category, products, totalPages } = result;
-  const translations = t();
+  const translations = getTranslations(locale);
+  const categoryBase = localizedPath(`/categories/${slug}`, locale);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -64,7 +69,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         {(['newest', 'price_asc', 'price_desc', 'name'] as const).map((s) => (
           <a
             key={s}
-            href={`/categories/${slug}?sort=${s}`}
+            href={`${categoryBase}?sort=${s}`}
             className={`text-sm ${sort === s ? 'text-warm-brown font-medium' : 'text-muted hover:text-foreground'}`}
           >
             {s === 'newest' && translations.products.sortNewest}
@@ -81,7 +86,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <>
           <div className="grid gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} locale={locale} />
             ))}
           </div>
 
@@ -90,7 +95,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                 <a
                   key={p}
-                  href={`/categories/${slug}?page=${p}&sort=${sort}`}
+                  href={`${categoryBase}?page=${p}&sort=${sort}`}
                   className={`rounded-sm px-3 py-1 text-sm ${p === page ? 'bg-warm-brown text-white' : 'bg-cream text-muted'}`}
                 >
                   {p}

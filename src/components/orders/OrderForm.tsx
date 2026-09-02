@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Textarea } from '@/components/ui/Textarea';
 import { formatPrice } from '@/lib/utils';
-import { t } from '@/lib/i18n';
+import { useLocale, useTranslations } from '@/contexts/LocaleContext';
 
 interface OrderFormProps {
   productId: string;
@@ -15,7 +15,8 @@ interface OrderFormProps {
 }
 
 export function OrderForm({ productId, productName, price }: OrderFormProps) {
-  const translations = t();
+  const translations = useTranslations();
+  const locale = useLocale();
   const [open, setOpen] = useState(false);
   const [state, formAction, pending] = useActionState(submitOrderAction, null);
 
@@ -36,6 +37,7 @@ export function OrderForm({ productId, productName, price }: OrderFormProps) {
 
       <form action={formAction} className="space-y-4">
         <input type="hidden" name="productId" value={productId} />
+        <input type="hidden" name="locale" value={locale} />
 
         <Input
           name="customerName"

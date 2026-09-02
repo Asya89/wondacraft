@@ -5,10 +5,19 @@ import { getFeaturedProducts, getNewProducts } from '@/server/services/product.s
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/categories/CategoryCard';
 import { Button } from '@/components/ui/Button';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
+import { isLocale } from '@/lib/i18n/config';
 
-export default async function HomePage() {
-  const translations = t();
+interface HomePageProps {
+  params: Promise<{ locale: string }>;
+}
+
+export default async function HomePage({ params }: HomePageProps) {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const translations = getTranslations(locale);
+
   const [categories, featuredProducts, newProducts] = await Promise.all([
     getCategories(),
     getFeaturedProducts(4),
@@ -17,7 +26,6 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero */}
       <section className="relative flex min-h-[70vh] items-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
@@ -36,7 +44,7 @@ export default async function HomePage() {
               {translations.home.heroTitle}
             </h1>
             <p className="mt-4 text-lg text-white/90">{translations.home.heroDescription}</p>
-            <Link href="/products" className="mt-8 inline-block">
+            <Link href={localizedPath('/products', locale)} className="mt-8 inline-block">
               <Button size="lg" variant="secondary">
                 {translations.home.heroCta}
               </Button>
@@ -45,57 +53,59 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Categories */}
       <section id="categories" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <h2 className="mb-8 text-center font-serif text-3xl text-warm-brown">
           {translations.home.categoriesTitle}
         </h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
-            <CategoryCard key={category.id} category={category} />
+            <CategoryCard key={category.id} category={category} locale={locale} />
           ))}
         </div>
       </section>
 
-      {/* Featured */}
       {featuredProducts.length > 0 && (
         <section className="bg-cream py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-8 flex items-center justify-between">
               <h2 className="font-serif text-3xl text-warm-brown">{translations.home.featuredTitle}</h2>
-              <Link href="/products?featured=true" className="text-sm text-muted hover:text-warm-brown">
+              <Link
+                href={`${localizedPath('/products', locale)}?featured=true`}
+                className="text-sm text-muted hover:text-warm-brown"
+              >
                 {translations.common.viewAll} →
               </Link>
             </div>
             <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
               {featuredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+                <ProductCard key={product.id} product={product} locale={locale} />
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* New products */}
       {newProducts.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="font-serif text-3xl text-warm-brown">{translations.home.newTitle}</h2>
-            <Link href="/products?new=true" className="text-sm text-muted hover:text-warm-brown">
+            <Link
+              href={`${localizedPath('/products', locale)}?new=true`}
+              className="text-sm text-muted hover:text-warm-brown"
+            >
               {translations.common.viewAll} →
             </Link>
           </div>
           <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
             {newProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} locale={locale} />
             ))}
           </div>
         </section>
       )}
 
-      {/* About */}
       <section className="bg-beige/50 py-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+        <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
             <Image
               src="/images/about.webp"
@@ -108,14 +118,16 @@ export default async function HomePage() {
           <div>
             <h2 className="font-serif text-3xl text-warm-brown">{translations.home.aboutTitle}</h2>
             <p className="mt-4 leading-relaxed text-muted">{translations.home.aboutText}</p>
-            <Link href="/about" className="mt-6 inline-block text-sm text-warm-brown hover:underline">
+            <Link
+              href={localizedPath('/about', locale)}
+              className="mt-6 inline-block text-sm text-warm-brown hover:underline"
+            >
               {translations.nav.about} →
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Why choose us */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <h2 className="mb-10 text-center font-serif text-3xl text-warm-brown">
           {translations.home.whyTitle}
@@ -132,11 +144,10 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="bg-warm-brown py-16 text-center text-white">
         <div className="mx-auto max-w-2xl px-4">
           <h2 className="font-serif text-3xl">{translations.home.ctaTitle}</h2>
-          <Link href="/products" className="mt-6 inline-block">
+          <Link href={localizedPath('/products', locale)} className="mt-6 inline-block">
             <Button size="lg" variant="secondary">
               {translations.home.ctaButton}
             </Button>

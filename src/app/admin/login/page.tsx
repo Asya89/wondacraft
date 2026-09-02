@@ -12,7 +12,7 @@ export default async function AdminLoginPage({ searchParams }: AdminLoginPagePro
     <div className="flex min-h-[60vh] items-center justify-center">
       <div className="w-full max-w-md rounded-sm border bg-white p-8 shadow-sm">
         <div className="mb-6 flex justify-center">
-          <Logo height={56} href="/" />
+          <Logo height={56} href="/hy" />
         </div>
         <h1 className="mb-6 text-center font-serif text-xl text-warm-brown">Admin Մուտք</h1>
         <LoginForm redirectTo={redirectTo} />

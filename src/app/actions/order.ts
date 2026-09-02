@@ -5,6 +5,8 @@ import { headers } from 'next/headers';
 import { createOrder } from '@/server/services/order.service';
 import { singleProductOrderSchema } from '@/lib/validations';
 import { checkRateLimit, getClientIp } from '@/lib/rate-limit';
+import { defaultLocale, isLocale } from '@/lib/i18n/config';
+import { localizedPath } from '@/lib/i18n/path';
 
 export async function submitOrderAction(
   _prevState: { error?: string } | null,
@@ -42,7 +44,10 @@ export async function submitOrderAction(
       items: [{ productId: parsed.data.productId, quantity: parsed.data.quantity }],
     });
 
-    redirect(`/order/success?order=${order.orderNumber}`);
+    const localeRaw = formData.get('locale');
+    const locale = typeof localeRaw === 'string' && isLocale(localeRaw) ? localeRaw : defaultLocale;
+
+    redirect(`${localizedPath('/order/success', locale)}?order=${order.orderNumber}`);
   } catch (error) {
     if (error instanceof Error) {
       if (error.message.startsWith('INSUFFICIENT_STOCK')) {

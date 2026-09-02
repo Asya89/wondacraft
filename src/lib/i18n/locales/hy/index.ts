@@ -19,6 +19,7 @@ export const hy = {
     outOfStock: 'Առկա չէ',
     featured: 'Ընտրյալ',
     new: 'Նոր',
+    productCount: '{count} ապրանք',
   },
   nav: {
     products: 'Ապրանքներ',
@@ -26,6 +27,12 @@ export const hy = {
     about: 'Մեր մասին',
     contact: 'Կապ',
     admin: 'Admin',
+  },
+  language: {
+    label: 'Լեզու',
+    hy: 'Հայերեն',
+    en: 'English',
+    ru: 'Русский',
   },
   home: {
     heroTitle: 'Ձեռագործ խաղալիքներ սիրով պատրաստված',
@@ -79,6 +86,7 @@ export const hy = {
     submit: 'Հաստատել պատվերը',
     successTitle: 'Շնորհակալություն պատվերի համար',
     successMessage: 'Մենք շուտով կկապվենք ձեր հետ։',
+    total: 'Ընդամենը',
     orderNumber: 'Պատվերի համար',
     nameRequired: 'Անունը պարտադիր է',
     phoneRequired: 'Հեռախոսահամարը պարտադիր է',
@@ -118,20 +126,3 @@ export const hy = {
     unauthorized: 'Unauthorized',
   },
 } as const;
-
-export type TranslationKey = typeof hy;
-export type Locale = 'hy' | 'en' | 'ru';
-
-const translations: Record<Locale, TranslationKey> = {
-  hy,
-  en: hy,
-  ru: hy,
-};
-
-export function getTranslations(locale: Locale = 'hy'): TranslationKey {
-  return translations[locale] ?? hy;
-}
-
-export function t(locale: Locale = 'hy'): TranslationKey {
-  return getTranslations(locale);
-}

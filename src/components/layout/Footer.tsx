@@ -1,16 +1,17 @@
 import Link from 'next/link';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
 import { Logo } from '@/components/layout/Logo';
 
-export function Footer() {
-  const translations = t();
+export function Footer({ locale }: { locale: Locale }) {
+  const translations = getTranslations(locale);
 
   return (
     <footer className="border-t border-border bg-cream">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <Logo height={44} />
+            <Logo height={44} href={localizedPath('/', locale)} />
             <p className="mt-3 text-sm text-muted">{translations.home.aboutText.substring(0, 100)}...</p>
           </div>
 
@@ -19,13 +20,13 @@ export function Footer() {
               {translations.nav.products}
             </h3>
             <nav className="flex flex-col gap-2">
-              <Link href="/products" className="text-sm text-muted hover:text-foreground">
+              <Link href={localizedPath('/products', locale)} className="text-sm text-muted hover:text-foreground">
                 {translations.nav.products}
               </Link>
-              <Link href="/about" className="text-sm text-muted hover:text-foreground">
+              <Link href={localizedPath('/about', locale)} className="text-sm text-muted hover:text-foreground">
                 {translations.nav.about}
               </Link>
-              <Link href="/contact" className="text-sm text-muted hover:text-foreground">
+              <Link href={localizedPath('/contact', locale)} className="text-sm text-muted hover:text-foreground">
                 {translations.nav.contact}
               </Link>
             </nav>

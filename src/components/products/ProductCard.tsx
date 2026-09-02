@@ -1,22 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
-import { t } from '@/lib/i18n';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
 import type { ProductWithRelations } from '@/server/services/product.service';
 
 interface ProductCardProps {
   product: ProductWithRelations;
+  locale: Locale;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, locale }: ProductCardProps) {
   const mainImage = product.images.find((img) => img.isMain) ?? product.images[0];
-  const translations = t();
+  const translations = getTranslations(locale);
 
   return (
-    <Link
-      href={`/products/${product.slug}`}
-      className="group block animate-fade-in"
-    >
+    <Link href={localizedPath(`/products/${product.slug}`, locale)} className="group block animate-fade-in">
       <article className="overflow-hidden rounded-sm bg-card shadow-sm transition-shadow duration-300 hover:shadow-md">
         <div className="relative aspect-square overflow-hidden bg-cream">
           {mainImage ? (

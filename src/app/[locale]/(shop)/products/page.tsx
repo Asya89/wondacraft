@@ -4,15 +4,13 @@ import { getProducts } from '@/server/services/product.service';
 import { getAllCategoriesFlat } from '@/server/services/category.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { ProductFilters } from '@/components/products/ProductFilters';
-import { t } from '@/lib/i18n';
+import { formatMessage, getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
+import { isLocale } from '@/lib/i18n/config';
 import type { ProductSortOption } from '@/server/services/product.service';
 
-export const metadata: Metadata = {
-  title: 'Ապրանքներ',
-  description: 'Browse our handmade product collection',
-};
-
 interface ProductsPageProps {
+  params: Promise<{ locale: string }>;
   searchParams: Promise<{
     category?: string;
     search?: string;
@@ -23,24 +21,37 @@ interface ProductsPageProps {
   }>;
 }
 
-export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-  const params = await searchParams;
-  const page = parseInt(params.page ?? '1', 10);
-  const sort = (params.sort as ProductSortOption) ?? 'newest';
+export async function generateMetadata({ params }: ProductsPageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const translations = getTranslations(locale);
+  return {
+    title: translations.products.title,
+    description: translations.products.description,
+  };
+}
+
+export default async function ProductsPage({ params, searchParams }: ProductsPageProps) {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const query = await searchParams;
+  const page = parseInt(query.page ?? '1', 10);
+  const sort = (query.sort as ProductSortOption) ?? 'newest';
 
   const [{ products, total, totalPages }, categories] = await Promise.all([
     getProducts({
-      categorySlug: params.category,
-      search: params.search,
-      isFeatured: params.featured === 'true' ? true : undefined,
-      isNew: params.new === 'true' ? true : undefined,
+      categorySlug: query.category,
+      search: query.search,
+      isFeatured: query.featured === 'true' ? true : undefined,
+      isNew: query.new === 'true' ? true : undefined,
       page,
       sort,
     }),
     getAllCategoriesFlat(),
   ]);
 
-  const translations = t();
+  const translations = getTranslations(locale);
+  const productsBase = localizedPath('/products', locale);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
@@ -56,7 +67,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <>
           <div className="mt-8 grid gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product.id} product={product} locale={locale} />
             ))}
           </div>
 
@@ -65,7 +76,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
                 <a
                   key={p}
-                  href={`/products?page=${p}${params.category ? `&category=${params.category}` : ''}${params.sort ? `&sort=${params.sort}` : ''}`}
+                  href={`${productsBase}?page=${p}${query.category ? `&category=${query.category}` : ''}${query.sort ? `&sort=${query.sort}` : ''}`}
                   className={`rounded-sm px-3 py-1 text-sm ${p === page ? 'bg-warm-brown text-white' : 'bg-cream text-muted hover:text-foreground'}`}
                 >
                   {p}
@@ -75,7 +86,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
           )}
 
           <p className="mt-4 text-center text-xs text-muted">
-            {total} ապրանք
+            {formatMessage(translations.common.productCount, { count: total })}
           </p>
         </>
       )}

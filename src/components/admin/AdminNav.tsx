@@ -32,7 +32,7 @@ export function AdminNav() {
           </Link>
         ))}
         <Link
-          href="/"
+          href="/hy"
           className="ml-auto px-4 py-3 text-sm text-gray-500 hover:text-gray-900"
           target="_blank"
         >
