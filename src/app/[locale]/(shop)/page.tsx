@@ -4,6 +4,7 @@ import { getCategories } from '@/server/services/category.service';
 import { getFeaturedProducts, getNewProducts } from '@/server/services/product.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/categories/CategoryCard';
+import { WhyFeatureIcon } from '@/components/home/WhyFeatureIcon';
 import { Button } from '@/components/ui/Button';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
@@ -150,11 +151,11 @@ export default async function HomePage({ params }: HomePageProps) {
         </h2>
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {translations.home.whyItems.map((item) => (
-            <div key={item} className="text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-cream">
-                <span className="text-warm-brown">✦</span>
+            <div key={item.icon} className="text-center">
+              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-cream text-warm-brown">
+                <WhyFeatureIcon type={item.icon} />
               </div>
-              <h3 className="font-serif text-lg">{item}</h3>
+              <h3 className="font-serif text-lg">{item.title}</h3>
             </div>
           ))}
         </div>

@@ -46,7 +46,12 @@ export const en = {
     aboutText:
       'WondaCraft is a handmade toy studio where every piece is created with love and great attention to detail.',
     whyTitle: 'Why WondaCraft',
-    whyItems: ['Handmade', 'Unique', 'High quality', 'Made with love'],
+    whyItems: [
+      { title: 'Handmade', icon: 'handmade' },
+      { title: 'Unique', icon: 'unique' },
+      { title: 'High quality', icon: 'quality' },
+      { title: 'Made with love', icon: 'love' },
+    ],
     ctaTitle: 'Find your unique handmade piece',
     ctaButton: 'Browse products',
   },

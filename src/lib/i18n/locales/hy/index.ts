@@ -46,7 +46,12 @@ export const hy = {
     aboutText:
       'WondaCraft-ը ձեռագործ խաղալիքների ատelier է, որտեղ յուրաքանչյուր արտադրանք ստեղծվում է սիրով և մեծ ուշադրությամբ մանրամասների նկատմամբ։',
     whyTitle: 'Ինչու WondaCraft',
-    whyItems: ['Ձեռագործ', 'Յուրահատուկ', 'Բարձր որակ', 'Պատրաստված սիրով'],
+    whyItems: [
+      { title: 'Ձեռագործ', icon: 'handmade' },
+      { title: 'Յուրահատուկ', icon: 'unique' },
+      { title: 'Բարձր որակ', icon: 'quality' },
+      { title: 'Պատրաստված սիրով', icon: 'love' },
+    ],
     ctaTitle: 'Գտեք ձեր յուրահատուկ ձեռագործ իրը',
     ctaButton: 'Դիտել ապրանքները',
   },
