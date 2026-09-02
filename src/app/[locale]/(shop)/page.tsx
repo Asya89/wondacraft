@@ -41,6 +41,7 @@ export default async function HomePage({ params }: HomePageProps) {
 
         <div className="relative z-10 mx-auto w-full max-w-4xl px-4 py-24 text-center sm:px-6 lg:px-8">
           <div className="hero-content animate-slide-up">
+            <p className="hero-content-eyebrow">{translations.common.siteName}</p>
             <span className="hero-content-badge" aria-hidden>
               ✦
             </span>
@@ -49,7 +50,13 @@ export default async function HomePage({ params }: HomePageProps) {
               {translations.home.heroTitle}
             </h1>
             <p className="hero-content-description mx-auto mt-4 max-w-2xl text-lg text-white/90">
+              <span className="hero-content-quote" aria-hidden>
+                “
+              </span>
               {translations.home.heroDescription}
+              <span className="hero-content-quote" aria-hidden>
+                ”
+              </span>
             </p>
             <Link href={localizedPath('/products', locale)} className="mt-8 inline-block">
               <Button size="lg" variant="secondary">
