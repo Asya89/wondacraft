@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { Logo } from '@/components/layout/Logo';
+import { ContactLinks } from '@/components/layout/ContactLinks';
 
 export function Footer({ locale }: { locale: Locale }) {
   const translations = getTranslations(locale);
@@ -36,18 +37,7 @@ export function Footer({ locale }: { locale: Locale }) {
             <h3 className="mb-3 text-sm font-medium uppercase tracking-wider text-warm-brown">
               {translations.contact.title}
             </h3>
-            <div className="flex flex-col gap-2 text-sm text-muted">
-              <a href="tel:+37499123456">+374 99 123 456</a>
-              <a href="mailto:info@wondacraft.am">info@wondacraft.am</a>
-              <a
-                href="https://instagram.com/wondacraft"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground"
-              >
-                Instagram
-              </a>
-            </div>
+            <ContactLinks locale={locale} />
           </div>
         </div>
 
