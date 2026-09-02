@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     siteName: 'WondaCraft',
   },
   icons: {
-    icon: '/images/logo.jpg',
-    apple: '/images/logo.jpg',
+    icon: '/images/logo.webp',
+    apple: '/images/logo.webp',
   },
 };
 

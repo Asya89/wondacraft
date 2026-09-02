@@ -2,7 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
-const LOGO_SRC = '/images/logo.jpg';
+const LOGO_SRC = '/images/logo.webp';
+const LOGO_WIDTH = 800;
+const LOGO_HEIGHT = 533;
 
 interface LogoProps {
   className?: string;
@@ -16,8 +18,8 @@ export function Logo({ className, height = 48, href = '/', priority = false }: L
     <Image
       src={LOGO_SRC}
       alt="WondaCraft"
-      width={1280}
-      height={853}
+      width={LOGO_WIDTH}
+      height={LOGO_HEIGHT}
       priority={priority}
       className={cn('w-auto object-contain', className)}
       style={{ height }}

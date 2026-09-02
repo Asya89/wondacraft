@@ -12,7 +12,7 @@ type AssetMapping = {
 };
 
 const MAPPINGS: AssetMapping[] = [
-  { match: 'photo_5195446467542323919_y.jpg', dest: 'logo.jpg', maxWidth: 800 },
+  { match: 'photo_5195446467542323919_y.jpg', dest: 'logo.webp', maxWidth: 800 },
   { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'hero.webp', maxWidth: 1920 },
   { match: 'Aug 28, 2026, 12_12_00 PM', dest: 'about.webp', maxWidth: 1200 },
   { match: 'Aug 27, 2026, 01_09_47 PM', dest: 'categories/dzergagort-ayiukner.webp', maxWidth: 900 },
@@ -44,6 +44,31 @@ async function convertAsset(srcPath: string, destPath: string, maxWidth = 1200) 
   }
 }
 
+async function convertOvalLogo(srcPath: string, destPath: string, maxWidth = 800) {
+  await mkdir(path.dirname(destPath), { recursive: true });
+
+  const meta = await sharp(srcPath).metadata();
+  if (!meta.width || !meta.height) throw new Error('Invalid logo dimensions');
+
+  const width = maxWidth;
+  const height = Math.round(maxWidth * (meta.height / meta.width));
+  const rx = width * 0.455;
+  const ry = height * 0.435;
+  const mask = Buffer.from(
+    `<svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="${width / 2}" cy="${height / 2}" rx="${rx}" ry="${ry}" fill="white"/>
+    </svg>`,
+  );
+
+  await sharp(srcPath)
+    .rotate()
+    .resize({ width, height, fit: 'fill' })
+    .ensureAlpha()
+    .composite([{ input: mask, blend: 'dest-in' }])
+    .webp({ quality: 90 })
+    .toFile(destPath);
+}
+
 export async function syncAssets(): Promise<Map<string, string>> {
   const files = await readdir(ASSETS_DIR);
   const urlMap = new Map<string, string>();
@@ -57,7 +82,11 @@ export async function syncAssets(): Promise<Map<string, string>> {
 
     const srcPath = path.join(ASSETS_DIR, source);
     const destPath = path.join(PUBLIC_DIR, mapping.dest);
-    await convertAsset(srcPath, destPath, mapping.maxWidth);
+    if (mapping.dest === 'logo.webp') {
+      await convertOvalLogo(srcPath, destPath, mapping.maxWidth);
+    } else {
+      await convertAsset(srcPath, destPath, mapping.maxWidth);
+    }
 
     const publicUrl = `/images/${mapping.dest.replace(/\\/g, '/')}`;
     urlMap.set(mapping.dest, publicUrl);
