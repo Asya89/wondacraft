@@ -26,24 +26,31 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
-      <section className="relative flex min-h-[70vh] items-center overflow-hidden">
+      <section className="hero-section relative flex min-h-[75vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/hero.webp"
             alt="WondaCraft"
             fill
             priority
-            className="object-cover"
+            className="object-cover object-center"
             sizes="100vw"
           />
-          <div className="absolute inset-0 bg-foreground/30" />
+          <div className="hero-section-overlay absolute inset-0" />
         </div>
-        <div className="relative mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-          <div className="max-w-xl animate-slide-up">
-            <h1 className="font-serif text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
+
+        <div className="relative z-10 mx-auto w-full max-w-4xl px-4 py-24 text-center sm:px-6 lg:px-8">
+          <div className="hero-content animate-slide-up">
+            <span className="hero-content-badge" aria-hidden>
+              ✦
+            </span>
+            <span className="hero-content-divider" aria-hidden />
+            <h1 className="hero-content-title font-serif text-4xl leading-tight text-white sm:text-5xl lg:text-6xl">
               {translations.home.heroTitle}
             </h1>
-            <p className="mt-4 text-lg text-white/90">{translations.home.heroDescription}</p>
+            <p className="hero-content-description mx-auto mt-4 max-w-2xl text-lg text-white/90">
+              {translations.home.heroDescription}
+            </p>
             <Link href={localizedPath('/products', locale)} className="mt-8 inline-block">
               <Button size="lg" variant="secondary">
                 {translations.home.heroCta}
