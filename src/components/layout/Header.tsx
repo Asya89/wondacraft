@@ -18,16 +18,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        <Logo height={52} priority />
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
+        <Logo height={64} priority />
 
-        <nav className="hidden items-center gap-8 md:flex">
+        <nav className="hidden items-center gap-2 md:flex">
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm text-foreground/80 transition-colors hover:text-warm-brown"
-            >
+            <Link key={link.href} href={link.href} className="nav-link">
               {link.label}
             </Link>
           ))}
@@ -64,12 +60,12 @@ export function Header() {
 
       {mobileOpen && (
         <nav className="border-t border-border/60 bg-background px-4 py-4 md:hidden">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm text-foreground/80 transition-colors hover:text-warm-brown"
+                className="nav-link-mobile text-sm"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}

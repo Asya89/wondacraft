@@ -29,7 +29,10 @@ export function Logo({ className, height = 48, href = '/', priority = false }: L
   if (!href) return image;
 
   return (
-    <Link href={href} className="inline-flex shrink-0 items-center">
+    <Link
+      href={href}
+      className="inline-flex shrink-0 items-center transition-transform duration-300 ease-out hover:scale-[1.04] active:scale-[0.98]"
+    >
       {image}
     </Link>
   );
