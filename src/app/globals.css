@@ -78,3 +78,133 @@ h4 {
 .animate-slide-up {
   animation: slide-up 0.6s ease-out forwards;
 }
+
+/* Header nav — plain CSS hover (works reliably in dev + prod) */
+.nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 0.875rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--foreground) 78%, transparent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-item-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--cream), var(--beige));
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--warm-brown) 12%, transparent);
+  opacity: 0;
+  transform: scale(0.88);
+  transition:
+    opacity 0.3s ease,
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.nav-item-label {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.nav-item-underline {
+  position: absolute;
+  bottom: 0.2rem;
+  left: 50%;
+  z-index: 1;
+  width: 0;
+  height: 2.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--warm-brown), var(--accent));
+  transform: translateX(-50%);
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.nav-item:hover,
+.nav-item:focus-visible {
+  color: var(--warm-brown);
+}
+
+.nav-item:hover .nav-item-bg,
+.nav-item:focus-visible .nav-item-bg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-item:hover .nav-item-label,
+.nav-item:focus-visible .nav-item-label {
+  transform: translateY(-1px);
+}
+
+.nav-item:hover .nav-item-underline,
+.nav-item:focus-visible .nav-item-underline {
+  width: 85%;
+}
+
+.nav-item-mobile {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding: 0.625rem 0.75rem 0.625rem 1rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: color-mix(in srgb, var(--foreground) 78%, transparent);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-item-mobile-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--cream);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.nav-item-mobile-accent {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 0;
+  top: 0.5rem;
+  width: 4px;
+  border-radius: 0 4px 4px 0;
+  background: linear-gradient(180deg, var(--warm-brown), var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+.nav-item-mobile-label {
+  position: relative;
+  z-index: 1;
+  padding-left: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.nav-item-mobile:hover,
+.nav-item-mobile:focus-visible {
+  color: var(--warm-brown);
+}
+
+.nav-item-mobile:hover .nav-item-mobile-bg,
+.nav-item-mobile:focus-visible .nav-item-mobile-bg {
+  opacity: 1;
+}
+
+.nav-item-mobile:hover .nav-item-mobile-accent,
+.nav-item-mobile:focus-visible .nav-item-mobile-accent {
+  transform: scaleX(1);
+}
+
+.nav-item-mobile:hover .nav-item-mobile-label,
+.nav-item-mobile:focus-visible .nav-item-mobile-label {
+  transform: translateX(4px);
+}
