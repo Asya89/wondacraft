@@ -15,30 +15,48 @@ export function CategoryCard({ category, locale }: CategoryCardProps) {
   return (
     <Link
       href={localizedPath(`/categories/${category.slug}`, locale)}
-      className="group block overflow-hidden rounded-sm bg-card shadow-sm transition-shadow hover:shadow-md"
+      className="category-card group block"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-cream">
-        {category.image ? (
-          <Image
-            src={category.image}
-            alt={category.name}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center bg-beige text-muted">{category.name}</div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute bottom-0 left-0 p-4">
-          <h3 className="font-serif text-lg text-white">{category.name}</h3>
-          {category._count.products > 0 && (
-            <p className="text-xs text-white/80">
-              {formatMessage(translations.common.productCount, { count: category._count.products })}
-            </p>
+      <article className="category-card-inner">
+        <div className="category-card-media">
+          {category.image ? (
+            <Image
+              src={category.image}
+              alt={category.name}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="category-card-image object-cover"
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center bg-beige px-4 text-center font-serif text-lg text-muted">
+              {category.name}
+            </div>
           )}
+          <span className="category-card-shimmer" aria-hidden />
         </div>
-      </div>
+
+        <div className="category-card-body">
+          <span className="category-card-accent" aria-hidden>
+            ✦
+          </span>
+          <h3 className="category-card-title font-serif text-xl text-warm-brown">{category.name}</h3>
+          {category.description && (
+            <p className="category-card-description">{category.description}</p>
+          )}
+          <div className="category-card-footer">
+            {category._count.products > 0 ? (
+              <p className="category-card-count">
+                {formatMessage(translations.common.productCount, { count: category._count.products })}
+              </p>
+            ) : (
+              <span className="category-card-count">&nbsp;</span>
+            )}
+            <span className="category-card-arrow" aria-hidden>
+              →
+            </span>
+          </div>
+        </div>
+      </article>
     </Link>
   );
 }

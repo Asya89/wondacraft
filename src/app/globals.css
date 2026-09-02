@@ -296,3 +296,270 @@ h4 {
 .nav-item-mobile:focus-visible .nav-item-mobile-label {
   transform: translateX(4px);
 }
+
+/* Boutique cards — categories & products */
+.category-card,
+.product-card {
+  height: 100%;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.category-card:hover,
+.category-card:focus-visible,
+.product-card:hover,
+.product-card:focus-visible {
+  transform: translateY(-4px);
+}
+
+.category-card-inner,
+.product-card-inner {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0.375rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  box-shadow:
+    0 1px 2px rgb(107 79 58 / 0.06),
+    0 8px 24px rgb(107 79 58 / 0.05);
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.35s ease;
+}
+
+.category-card:hover .category-card-inner,
+.category-card:focus-visible .category-card-inner,
+.product-card:hover .product-card-inner,
+.product-card:focus-visible .product-card-inner {
+  border-color: color-mix(in srgb, var(--warm-brown) 35%, var(--border));
+  box-shadow:
+    0 4px 12px rgb(107 79 58 / 0.1),
+    0 16px 40px rgb(107 79 58 / 0.12);
+}
+
+.category-card-media,
+.product-card-media {
+  position: relative;
+  overflow: hidden;
+  margin: 0.75rem 0.75rem 0;
+  border-radius: 0.25rem;
+  background: var(--cream);
+  box-shadow: inset 0 0 0 1px rgb(107 79 58 / 0.08);
+}
+
+.category-card-media {
+  aspect-ratio: 4 / 3;
+}
+
+.product-card-media {
+  aspect-ratio: 1 / 1;
+}
+
+.category-card-image,
+.product-card-image {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.category-card:hover .category-card-image,
+.category-card:focus-visible .category-card-image,
+.product-card:hover .product-card-image,
+.product-card:focus-visible .product-card-image {
+  transform: scale(1.06);
+}
+
+.category-card-shimmer,
+.product-card-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgb(255 255 255 / 0.18) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.category-card:hover .category-card-shimmer,
+.category-card:focus-visible .category-card-shimmer,
+.product-card:hover .product-card-shimmer,
+.product-card:focus-visible .product-card-shimmer {
+  opacity: 1;
+}
+
+.category-card-body,
+.product-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 1.125rem 1.25rem 1.25rem;
+  text-align: center;
+}
+
+.category-card-accent,
+.product-card-accent {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  opacity: 0.85;
+  transition: transform 0.35s ease;
+}
+
+.category-card:hover .category-card-accent,
+.category-card:focus-visible .category-card-accent,
+.product-card:hover .product-card-accent,
+.product-card:focus-visible .product-card-accent {
+  transform: scale(1.15);
+}
+
+.category-card-title,
+.product-card-title {
+  line-height: 1.25;
+  transition: color 0.25s ease;
+}
+
+.category-card:hover .category-card-title,
+.category-card:focus-visible .category-card-title,
+.product-card:hover .product-card-title,
+.product-card:focus-visible .product-card-title {
+  color: color-mix(in srgb, var(--warm-brown) 85%, var(--accent));
+}
+
+.category-card-description,
+.product-card-description {
+  margin-top: 0.5rem;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.category-card-footer,
+.product-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: auto;
+  padding-top: 0.875rem;
+  border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+}
+
+.category-card-count {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.category-card-arrow,
+.product-card-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background: var(--cream);
+  color: var(--warm-brown);
+  font-size: 0.875rem;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.category-card:hover .category-card-arrow,
+.category-card:focus-visible .category-card-arrow,
+.product-card:hover .product-card-arrow,
+.product-card:focus-visible .product-card-arrow {
+  transform: translateX(2px);
+  background: var(--warm-brown);
+  color: white;
+}
+
+.product-card-badges {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+}
+
+.product-card-badge {
+  border-radius: 9999px;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  box-shadow: 0 1px 4px rgb(44 36 32 / 0.15);
+}
+
+.product-card-badge--new {
+  background: color-mix(in srgb, var(--accent) 92%, white);
+  color: white;
+}
+
+.product-card-badge--featured {
+  background: color-mix(in srgb, var(--warm-brown) 92%, white);
+  color: white;
+}
+
+.product-card-price-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.375rem;
+  text-align: left;
+}
+
+.product-card-price {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--warm-brown);
+}
+
+.product-card-old-price {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.section-title-decorated {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.section-title-decorated::after {
+  content: '';
+  display: block;
+  width: 4.5rem;
+  height: 2px;
+  margin: 0.875rem auto 0;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--warm-brown), var(--accent), transparent);
+}
+
+.section-view-all {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  transition: color 0.25s ease;
+}
+
+.section-view-all:hover {
+  color: var(--warm-brown);
+}

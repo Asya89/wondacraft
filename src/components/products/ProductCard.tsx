@@ -15,43 +15,53 @@ export function ProductCard({ product, locale }: ProductCardProps) {
   const translations = getTranslations(locale);
 
   return (
-    <Link href={localizedPath(`/products/${product.slug}`, locale)} className="group block animate-fade-in">
-      <article className="overflow-hidden rounded-sm bg-card shadow-sm transition-shadow duration-300 hover:shadow-md">
-        <div className="relative aspect-square overflow-hidden bg-cream">
+    <Link href={localizedPath(`/products/${product.slug}`, locale)} className="product-card group block">
+      <article className="product-card-inner">
+        <div className="product-card-media">
           {mainImage ? (
             <Image
               src={mainImage.imageUrl}
               alt={mainImage.alt ?? product.name}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="product-card-image object-cover"
             />
           ) : (
-            <div className="flex h-full items-center justify-center text-muted">No image</div>
+            <div className="flex h-full items-center justify-center bg-beige text-muted">No image</div>
           )}
-          <div className="absolute left-3 top-3 flex gap-2">
-            {product.isNew && (
-              <span className="rounded-sm bg-accent/90 px-2 py-0.5 text-xs text-white">
-                {translations.common.new}
-              </span>
-            )}
-            {product.isFeatured && (
-              <span className="rounded-sm bg-warm-brown/90 px-2 py-0.5 text-xs text-white">
-                {translations.common.featured}
-              </span>
-            )}
-          </div>
+          {(product.isNew || product.isFeatured) && (
+            <div className="product-card-badges">
+              {product.isNew && (
+                <span className="product-card-badge product-card-badge--new">{translations.common.new}</span>
+              )}
+              {product.isFeatured && (
+                <span className="product-card-badge product-card-badge--featured">
+                  {translations.common.featured}
+                </span>
+              )}
+            </div>
+          )}
+          <span className="product-card-shimmer" aria-hidden />
         </div>
-        <div className="p-4">
-          <h3 className="font-serif text-base text-foreground group-hover:text-warm-brown">
-            {product.name}
-          </h3>
-          {product.size && <p className="mt-1 text-xs text-muted">{product.size}</p>}
-          <div className="mt-2 flex items-baseline gap-2">
-            <span className="text-sm font-medium text-warm-brown">{formatPrice(product.price)}</span>
-            {product.oldPrice && (
-              <span className="text-xs text-muted line-through">{formatPrice(product.oldPrice)}</span>
-            )}
+
+        <div className="product-card-body">
+          <span className="product-card-accent" aria-hidden>
+            ✦
+          </span>
+          <h3 className="product-card-title font-serif text-lg text-warm-brown">{product.name}</h3>
+          {(product.shortDescription || product.size) && (
+            <p className="product-card-description">{product.shortDescription ?? product.size}</p>
+          )}
+          <div className="product-card-footer">
+            <div className="product-card-price-wrap">
+              <span className="product-card-price">{formatPrice(product.price)}</span>
+              {product.oldPrice && (
+                <span className="product-card-old-price">{formatPrice(product.oldPrice)}</span>
+              )}
+            </div>
+            <span className="product-card-arrow" aria-hidden>
+              →
+            </span>
           </div>
         </div>
       </article>

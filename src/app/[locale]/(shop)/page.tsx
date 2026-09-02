@@ -68,10 +68,10 @@ export default async function HomePage({ params }: HomePageProps) {
       </section>
 
       <section id="categories" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <h2 className="mb-8 text-center font-serif text-3xl text-warm-brown">
+        <h2 className="section-title-decorated mb-10 font-serif text-3xl text-warm-brown">
           {translations.home.categoriesTitle}
         </h2>
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <CategoryCard key={category.id} category={category} locale={locale} />
           ))}
@@ -81,16 +81,18 @@ export default async function HomePage({ params }: HomePageProps) {
       {featuredProducts.length > 0 && (
         <section className="bg-cream py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="mb-8 flex items-center justify-between">
-              <h2 className="font-serif text-3xl text-warm-brown">{translations.home.featuredTitle}</h2>
+            <div className="mb-10 text-center">
+              <h2 className="section-title-decorated font-serif text-3xl text-warm-brown">
+                {translations.home.featuredTitle}
+              </h2>
               <Link
                 href={`${localizedPath('/products', locale)}?featured=true`}
-                className="text-sm text-muted hover:text-warm-brown"
+                className="section-view-all"
               >
                 {translations.common.viewAll} →
               </Link>
             </div>
-            <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-8 grid-cols-2 lg:grid-cols-4">
               {featuredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} locale={locale} />
               ))}
