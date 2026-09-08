@@ -15,10 +15,10 @@ export const createOrderSchema = z.object({
     .transform((val) => val.trim()),
   customerPhone: z
     .string()
-    .min(1, 'Հեռախոսahamysը պարտադիր է')
+    .min(1, 'Հեռախոսահամարը պարտադիր է')
     .transform((val) => val.replace(/[\s\-()]/g, ''))
     .refine((val) => armenianPhoneRegex.test(val) || /^\+?\d{8,15}$/.test(val), {
-      message: 'Մուտքագրեք վավեր հեռախոսahamys',
+      message: 'Մուտքագրեք վավեր հեռախոսահամար',
     }),
   customerAddress: z.string().max(500).optional().nullable(),
   comment: z.string().max(1000).optional().nullable(),
@@ -35,7 +35,7 @@ export const singleProductOrderSchema = z.object({
     .min(1)
     .transform((val) => val.replace(/[\s\-()]/g, ''))
     .refine((val) => armenianPhoneRegex.test(val) || /^\+?\d{8,15}$/.test(val),
-      'Մուտքագրեք վավեր հեռախոսahamys'),
+      'Մուտքագրեք վավեր հեռախոսահամար'),
   quantity: z.coerce.number().int().min(1).max(10),
   customerAddress: z.string().max(500).optional().nullable(),
   comment: z.string().max(1000).optional().nullable(),
@@ -44,8 +44,8 @@ export const singleProductOrderSchema = z.object({
 export type SingleProductOrderInput = z.infer<typeof singleProductOrderSchema>;
 
 export const loginSchema = z.object({
-  email: z.string().email('Սխal email'),
-  password: z.string().min(6, 'Գaxtnabary petq e lini kam 6 nish'),
+  email: z.string().email('Սխալ էլ. փոստ'),
+  password: z.string().min(6, 'Գաղտնաբառը պետք է լինի առնվազն 6 նիշ'),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;

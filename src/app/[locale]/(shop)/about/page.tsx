@@ -18,22 +18,40 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const translations = getTranslations(locale);
+  const about = translations.about;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-sm">
         <Image
-          src="/images/about.webp"
-          alt={translations.about.title}
+          src="/images/about.jpeg"
+          alt={about.title}
           fill
           className="object-cover"
           sizes="(max-width: 896px) 100vw, 896px"
         />
       </div>
-      <h1 className="font-serif text-4xl text-warm-brown">{translations.about.title}</h1>
-      <div className="mt-6 space-y-4 leading-relaxed text-muted">
-        <p>{translations.home.aboutText}</p>
-        <p>{translations.about.description}</p>
+
+      <h1 className="font-serif text-4xl text-warm-brown">{about.title}</h1>
+
+      <div className="mt-8 space-y-5 leading-relaxed text-muted">
+        <p className="font-serif text-2xl leading-snug text-warm-brown">{about.lead}</p>
+        <p>{about.intro}</p>
+        <p>{about.story}</p>
+        <p className="font-medium text-warm-brown">{about.highlight}</p>
+        <p>{about.mission}</p>
+        <ul className="space-y-3 pl-1">
+          {about.goals.map((goal) => (
+            <li key={goal} className="flex gap-3">
+              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-warm-brown/60" aria-hidden />
+              <span>{goal}</span>
+            </li>
+          ))}
+        </ul>
+        <div className="border-t border-border pt-6">
+          <h2 className="font-serif text-xl text-warm-brown">{about.beliefTitle}</h2>
+          <p className="mt-3">{about.beliefText}</p>
+        </div>
       </div>
     </div>
   );

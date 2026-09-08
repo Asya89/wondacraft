@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCategories } from '@/server/services/category.service';
-import { getFeaturedProducts, getNewProducts } from '@/server/services/product.service';
+import { getProducts, getNewProducts } from '@/server/services/product.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/categories/CategoryCard';
 import { WhyFeatureIcon } from '@/components/home/WhyFeatureIcon';
@@ -19,9 +19,9 @@ export default async function HomePage({ params }: HomePageProps) {
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const translations = getTranslations(locale);
 
-  const [categories, featuredProducts, newProducts] = await Promise.all([
+  const [categories, { products: allProductsPreview }, newProducts] = await Promise.all([
     getCategories(),
-    getFeaturedProducts(4),
+    getProducts({ limit: 4, sort: 'newest' }),
     getNewProducts(4),
   ]);
 
@@ -79,22 +79,19 @@ export default async function HomePage({ params }: HomePageProps) {
         </div>
       </section>
 
-      {featuredProducts.length > 0 && (
+      {allProductsPreview.length > 0 && (
         <section className="bg-cream py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mb-10 text-center">
               <h2 className="section-title-decorated font-serif text-3xl text-warm-brown">
-                {translations.home.featuredTitle}
+                {translations.home.allProductsTitle}
               </h2>
-              <Link
-                href={`${localizedPath('/products', locale)}?featured=true`}
-                className="section-view-all"
-              >
+              <Link href={localizedPath('/products', locale)} className="section-view-all">
                 {translations.common.viewAll} →
               </Link>
             </div>
             <div className="grid gap-8 grid-cols-2 lg:grid-cols-4">
-              {featuredProducts.map((product) => (
+              {allProductsPreview.map((product) => (
                 <ProductCard key={product.id} product={product} locale={locale} />
               ))}
             </div>
@@ -125,7 +122,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:px-8 lg:grid-cols-2">
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
             <Image
-              src="/images/about.webp"
+              src="/images/about.jpeg"
               alt={translations.home.aboutTitle}
               fill
               className="object-cover"
@@ -134,7 +131,7 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
           <div>
             <h2 className="font-serif text-3xl text-warm-brown">{translations.home.aboutTitle}</h2>
-            <p className="mt-4 leading-relaxed text-muted">{translations.home.aboutText}</p>
+            <p className="mt-4 leading-relaxed text-muted">{translations.about.lead}</p>
             <Link
               href={localizedPath('/about', locale)}
               className="mt-6 inline-block text-sm text-warm-brown hover:underline"

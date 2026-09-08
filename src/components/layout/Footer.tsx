@@ -13,7 +13,13 @@ export function Footer({ locale }: { locale: Locale }) {
         <div className="grid gap-8 md:grid-cols-3">
           <div>
             <Logo height={44} href={localizedPath('/', locale)} />
-            <p className="mt-3 text-sm text-muted">{translations.home.aboutText.substring(0, 100)}...</p>
+            <p className="mt-3 font-serif text-sm italic leading-relaxed text-muted">
+              {translations.about.footerLead.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </p>
           </div>
 
           <div>

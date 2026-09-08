@@ -15,8 +15,8 @@ export function LoginForm({ redirectTo }: LoginFormProps) {
   return (
     <form action={formAction} className="space-y-4">
       {redirectTo && <input type="hidden" name="redirect" value={redirectTo} />}
-      <Input name="email" label="Email" type="email" required autoComplete="email" />
-      <Input name="password" label="Գaxtnabar" type="password" required autoComplete="current-password" />
+      <Input name="email" label="Էլ. փոստ" type="email" required autoComplete="email" />
+      <Input name="password" label="Գաղտնաբառ" type="password" required autoComplete="current-password" />
       {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
       <Button type="submit" className="w-full" loading={pending}>
         Մուտք

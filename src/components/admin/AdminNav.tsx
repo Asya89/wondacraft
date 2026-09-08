@@ -7,8 +7,8 @@ import { cn } from '@/lib/utils';
 const links = [
   { href: '/admin/dashboard', label: 'Dashboard' },
   { href: '/admin/products', label: 'Ապրանքներ' },
-  { href: '/admin/categories', label: 'Կatегoriанեր' },
-  { href: '/admin/orders', label: 'Patverner' },
+  { href: '/admin/categories', label: 'Կատեգորիաներ' },
+  { href: '/admin/orders', label: 'Պատվերներ' },
 ];
 
 export function AdminNav() {

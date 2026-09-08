@@ -24,7 +24,7 @@ export const en = {
   nav: {
     products: 'Products',
     categories: 'Categories',
-    about: 'About',
+    about: 'About us',
     contact: 'Contact',
     admin: 'Admin',
   },
@@ -35,16 +35,14 @@ export const en = {
     ru: 'Русский',
   },
   home: {
-    heroTitle: 'Handmade toys crafted with love',
+    heroTitle: 'What is made by hand is also made with heart',
     heroDescription:
-      'Unique handmade pieces made from natural materials for someone special.',
-    heroCta: 'Browse products',
+      'Unique handmade pieces made from natural materials — for every person',
+    heroCta: 'View products',
     categoriesTitle: 'Categories',
-    featuredTitle: 'Featured products',
-    newTitle: 'New arrivals',
+    allProductsTitle: 'All products',
+    newTitle: 'New products',
     aboutTitle: 'Our story',
-    aboutText:
-      'WondaCraft is a handmade toy studio where every piece is created with love and great attention to detail.',
     whyTitle: 'Why WondaCraft',
     whyItems: [
       { title: 'Handmade', icon: 'handmade' },
@@ -53,7 +51,7 @@ export const en = {
       { title: 'Made with love', icon: 'love' },
     ],
     ctaTitle: 'Find your unique handmade piece',
-    ctaButton: 'Browse products',
+    ctaButton: 'View products',
   },
   products: {
     title: 'Products',
@@ -61,7 +59,7 @@ export const en = {
     filterByCategory: 'Category',
     allCategories: 'All categories',
     sortBy: 'Sort by',
-    sortNewest: 'Newest',
+    sortNewest: 'Newly added',
     sortPriceAsc: 'Price: low to high',
     sortPriceDesc: 'Price: high to low',
     sortName: 'Name',
@@ -71,10 +69,10 @@ export const en = {
   product: {
     material: 'Material',
     size: 'Size',
-    sku: 'SKU',
+    sku: 'Product code',
     order: 'Order',
     description: 'Description',
-    relatedProducts: 'Related products',
+    relatedProducts: 'Similar products',
     notFound: 'Product not found',
   },
   category: {
@@ -97,11 +95,27 @@ export const en = {
     phoneRequired: 'Phone number is required',
     phoneInvalid: 'Enter a valid phone number',
     quantityInvalid: 'Quantity must be between 1 and 10',
-    error: 'Could not create order',
+    error: 'Could not create the order',
   },
   about: {
     title: 'About us',
-    description: 'WondaCraft — handmade toy studio',
+    lead: 'What is made by hand is also made with heart.',
+    footerLead: ['What is made by hand,', 'is also made with heart.'],
+    intro:
+      'In Armenia there are people who can create extraordinary things from ordinary materials.',
+    story:
+      'One weaves a fairy tale from thread, another tells a story in wood, a third shapes a little world from clay. Each has their own handwriting, their own story, and most importantly — their gift for creating.',
+    highlight: 'WondaCraft is made for exactly these people.',
+    mission:
+      'Our goal is to gather handmade pieces created in Armenia on one platform, discover their makers, and help their work reach more people.',
+    goals: [
+      'So that a piece made in a small workshop does not stay only in its maker’s hands.',
+      'So that good work becomes visible.',
+      'So that handmade skill can become real work.',
+      'So that the maker can not only create, but also sell, grow, and believe in what they do.',
+    ],
+    beliefTitle: 'We believe every handmade piece holds a little story inside.',
+    beliefText: 'And we want those stories to be heard.',
   },
   contact: {
     title: 'Contact',
@@ -123,11 +137,11 @@ export const en = {
     orders: 'Orders',
     email: 'Email',
     password: 'Password',
-    invalidCredentials: 'Invalid email or password',
+    invalidCredentials: 'Incorrect email or password',
   },
   errors: {
-    notFound: 'Page not found',
-    serverError: 'Server error',
-    unauthorized: 'Unauthorized',
+    notFound: 'Product not found',
+    serverError: 'Something went wrong',
+    unauthorized: 'Unauthorized access',
   },
 } as const;

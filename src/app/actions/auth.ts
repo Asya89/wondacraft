@@ -15,12 +15,12 @@ export async function loginAction(
 
   const parsed = loginSchema.safeParse(raw);
   if (!parsed.success) {
-    return { error: 'Սխալ email կամ գաղtնabар' };
+    return { error: 'Սխալ էլ. փոստ կամ գաղտնաբառ' };
   }
 
   const user = await loginAdmin(parsed.data.email, parsed.data.password);
   if (!user) {
-    return { error: 'Սխal email kam gaxtnabar' };
+    return { error: 'Սխալ էլ. փոստ կամ գաղտնաբառ' };
   }
 
   await createSession(user);

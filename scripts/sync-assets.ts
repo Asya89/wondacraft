@@ -14,7 +14,8 @@ type AssetMapping = {
 const MAPPINGS: AssetMapping[] = [
   { match: 'photo_5195446467542323919_y.jpg', dest: 'logo.webp', maxWidth: 800 },
   { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'hero.webp', maxWidth: 1920 },
-  { match: 'Aug 28, 2026, 12_12_00 PM', dest: 'about.webp', maxWidth: 1200 },
+  { match: 'about.jpeg', dest: 'about.jpeg', maxWidth: 1600 },
+  { match: 'about.jpeg', dest: 'about.webp', maxWidth: 1600 },
   { match: 'Aug 27, 2026, 01_09_47 PM', dest: 'categories/dzergagort-ayiukner.webp', maxWidth: 900 },
   { match: 'Aug 26, 2026, 03_23_38 PM', dest: 'categories/ktoric-zajikner.webp', maxWidth: 900 },
   { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'categories/patayi-chasy.webp', maxWidth: 900 },

@@ -35,16 +35,14 @@ export const hy = {
     ru: 'Русский',
   },
   home: {
-    heroTitle: 'Ձեռագործ խաղալիքներ սիրով պատրաստված',
+    heroTitle: 'Այն, ինչ ստեղծվում է ձեռքերով, ստեղծվում է նաև սրտով',
     heroDescription:
-      'Յուրահատուկ ձեռագործ արտադրանք, որը ստեղծված է բնական նյութերից՝ յուրաքանչյուր մարդու համար։',
+      'Յուրահատուկ ձեռագործ արտադրանք, որը ստեղծված է բնական նյութերից՝ յուրաքանչյուր մարդու համար',
     heroCta: 'Դիտել ապրանքները',
     categoriesTitle: 'Կատեգորիաներ',
-    featuredTitle: 'Ընտրյալ ապրանքներ',
+    allProductsTitle: 'Բոլոր ապրանքներ',
     newTitle: 'Նոր ապրանքներ',
     aboutTitle: 'Մեր պատմությունը',
-    aboutText:
-      'WondaCraft-ը ձեռագործ խաղալիքների ատelier է, որտեղ յուրաքանչյուր արտադրանք ստեղծվում է սիրով և մեծ ուշադրությամբ մանրամասների նկատմամբ։',
     whyTitle: 'Ինչու WondaCraft',
     whyItems: [
       { title: 'Ձեռագործ', icon: 'handmade' },
@@ -61,17 +59,17 @@ export const hy = {
     filterByCategory: 'Կատեգորիա',
     allCategories: 'Բոլոր կատեգորիաները',
     sortBy: 'Դասավորել',
-    sortNewest: 'Նորագույն',
-    sortPriceAsc: 'Գին՝ աճող',
-    sortPriceDesc: 'Գին՝ նվազող',
+    sortNewest: 'Նոր ավելացված',
+    sortPriceAsc: 'Գին ըստ աճման',
+    sortPriceDesc: 'Գին ըստ նվազման',
     sortName: 'Անուն',
     empty: 'Ապրանքներ դեռ չկան',
     searchPlaceholder: 'Որոնել ապրանք...',
   },
   product: {
     material: 'Նյութ',
-    size: 'Չапан',
-    sku: 'SKU',
+    size: 'Չափս',
+    sku: 'Ապրանքի համար',
     order: 'Պատվիրել',
     description: 'Նկարագրություն',
     relatedProducts: 'Նման ապրանքներ',
@@ -79,7 +77,7 @@ export const hy = {
   },
   category: {
     notFound: 'Կատեգորիան չի գտնվել',
-    empty: 'Այս կategորiայում ապրանքներ չկան',
+    empty: 'Այս կատեգորիայում ապրանքներ չկան',
   },
   order: {
     title: 'Պատվիրել',
@@ -87,10 +85,10 @@ export const hy = {
     phone: 'Հեռախոս',
     quantity: 'Քանակ',
     address: 'Հասցե (ըստ ցանկության)',
-    comment: 'Մեկնabank (ըստ ցանկության)',
+    comment: 'Մեկնաբանություն (ըստ ցանկության)',
     submit: 'Հաստատել պատվերը',
     successTitle: 'Շնորհակալություն պատվերի համար',
-    successMessage: 'Մենք շուտով կկապվենք ձեր հետ։',
+    successMessage: 'Մենք շուտով կկապվենք ձեզ հետ։',
     total: 'Ընդամենը',
     orderNumber: 'Պատվերի համար',
     nameRequired: 'Անունը պարտադիր է',
@@ -101,7 +99,23 @@ export const hy = {
   },
   about: {
     title: 'Մեր մասին',
-    description: 'WondaCraft — ձեռագործ խաղալիքների ատelier',
+    lead: 'Այն, ինչ ստեղծվում է ձեռքերով, ստեղծվում է նաև սրտով։',
+    footerLead: ['Այն, ինչ ստեղծվում է ձեռքերով,', 'ստեղծվում է նաև սրտով։'],
+    intro:
+      'Հայաստանում կան մարդիկ, ովքեր կարողանում են սովորական նյութերից ստեղծել անսովոր բաներ։',
+    story:
+      'Մեկը թելից հեքիաթ է հյուսում, մյուսը՝ փայտից պատմություն, երրորդը՝ կավից ձևավորում է մի փոքրիկ աշխարհ։ Նրանցից յուրաքանչյուրն ունի իր ձեռագիրը, իր պատմությունը և ամենակարևորը՝ իր ստեղծագործելու շնորհքը։',
+    highlight: 'WondaCraft-ը ստեղծվում է հենց այդ մարդկանց համար։',
+    mission:
+      'Մեր նպատակն է մեկ հարթակում հավաքել Հայաստանում ստեղծվող ձեռագործ իրերը, բացահայտել դրանց հեղինակներին և օգնել, որ նրանց աշխատանքը հասնի ավելի շատ մարդկանց։',
+    goals: [
+      'Որ մի փոքրիկ արհեստանոցում ստեղծված իրը չմնա միայն իր ստեղծողի ձեռքում։',
+      'Որ լավ աշխատանքը տեսանելի դառնա։',
+      'Որ ձեռքի շնորհքը կարողանա դառնալ իրական աշխատանք։',
+      'Որ ստեղծողը կարողանա ոչ միայն ստեղծել, այլև վաճառել, զարգանալ և հավատալ իր գործին։',
+    ],
+    beliefTitle: 'Մենք հավատում ենք, որ յուրաքանչյուր ձեռագործ իր իր մեջ մի փոքր պատմություն ունի։',
+    beliefText: 'Եվ ուզում ենք, որ այդ պատմությունները լսելի լինեն։',
   },
   contact: {
     title: 'Կապ',
@@ -111,7 +125,7 @@ export const hy = {
     instagram: 'Instagram',
   },
   footer: {
-    rights: 'Բոլոր իրavunqnery patrastvac en',
+    rights: 'Բոլոր իրավունքները պաշտպանված են',
     followUs: 'Հետևեք մեզ',
   },
   admin: {
@@ -119,15 +133,15 @@ export const hy = {
     logout: 'Ելք',
     dashboard: 'Dashboard',
     products: 'Ապրանքներ',
-    categories: 'Կategoriաներ',
-    orders: 'Patverner',
-    email: 'Email',
-    password: 'Gaxtnabar',
-    invalidCredentials: 'Sxl email kam gaxtnabar',
+    categories: 'Կատեգորիաներ',
+    orders: 'Պատվերներ',
+    email: 'Էլ. փոստ',
+    password: 'Գաղտնաբառ',
+    invalidCredentials: 'Սխալ էլ. փոստ կամ գաղտնաբառ',
   },
   errors: {
-    notFound: 'Ej@ chi gtnvel',
-    serverError: 'Server error',
-    unauthorized: 'Unauthorized',
+    notFound: 'Ապրանքը չի գտնվել',
+    serverError: 'Սխալ է տեղի ունեցել',
+    unauthorized: 'Չհաստատված մուտք',
   },
 } as const;
