@@ -16,14 +16,30 @@ export function Header() {
   const navLinks = [
     { href: localizedPath('/products', locale), label: translations.nav.products },
     { href: localizedPath('/#categories', locale), label: translations.nav.categories },
+    { href: localizedPath('/makers', locale), label: translations.nav.makers },
     { href: localizedPath('/about', locale), label: translations.nav.about },
     { href: localizedPath('/contact', locale), label: translations.nav.contact },
   ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8">
-        <Logo height={64} href={localizedPath('/', locale)} priority />
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
+          <Logo height={64} href={localizedPath('/', locale)} priority />
+          <span className="hidden h-10 w-px shrink-0 bg-border/80 sm:block" aria-hidden />
+          <p className="brand-tagline max-w-[9rem] font-serif text-[0.6875rem] leading-snug text-warm-brown sm:max-w-[12rem] sm:text-[0.8125rem] lg:max-w-[15rem] lg:text-sm">
+            {translations.common.tagline.map((line, index) => (
+              <span key={line} className="block">
+                {index === 0 && (
+                  <span className="brand-tagline-flag" aria-hidden>
+                    🇦🇲{' '}
+                  </span>
+                )}
+                {line}
+              </span>
+            ))}
+          </p>
+        </div>
 
         <nav className="hidden items-center gap-1 md:flex">
           {navLinks.map((link) => (

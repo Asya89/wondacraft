@@ -20,10 +20,12 @@ export const en = {
     featured: 'Featured',
     new: 'New',
     productCount: '{count} products',
+    tagline: ['Armenian handmade —', 'on one platform'],
   },
   nav: {
     products: 'Products',
     categories: 'Categories',
+    makers: 'Makers',
     about: 'About us',
     contact: 'Contact',
     admin: 'Admin',
@@ -43,6 +45,7 @@ export const en = {
     allProductsTitle: 'All products',
     newTitle: 'New products',
     aboutTitle: 'Our story',
+    makersTitle: 'Makers',
     whyTitle: 'Why WondaCraft',
     whyItems: [
       { title: 'Handmade', icon: 'handmade' },
@@ -104,18 +107,48 @@ export const en = {
     intro:
       'In Armenia there are people who can create extraordinary things from ordinary materials.',
     story:
-      'One weaves a fairy tale from thread, another tells a story in wood, a third shapes a little world from clay. Each has their own handwriting, their own story, and most importantly — their gift for creating.',
-    highlight: 'WondaCraft is made for exactly these people.',
+      'One weaves a fairy tale from thread, another tells a story in wood, a third shapes a little world from clay. Each has their own handwriting, their own story, and most importantly — their unique gift for creating.',
+    problem:
+      'But these people often face an important challenge: they can create, yet finding the right place to present and sell their work is not easy.',
+    problemDetail:
+      'Good work can stay only on its maker’s page, reach a limited number of people, and never find the person who was looking for exactly that piece.',
+    highlight: 'WondaCraft is created to fill that gap.',
     mission:
-      'Our goal is to gather handmade pieces created in Armenia on one platform, discover their makers, and help their work reach more people.',
+      'Our goal is to gather selected handmade works created in Armenia on one platform, discover their makers, and help what they create reach more people.',
+    goalsIntro: 'We want:',
     goals: [
-      'So that a piece made in a small workshop does not stay only in its maker’s hands.',
-      'So that good work becomes visible.',
-      'So that handmade skill can become real work.',
-      'So that the maker can not only create, but also sell, grow, and believe in what they do.',
+      'a unique piece made in a small workshop not to stay only in its maker’s hands,',
+      'good work to become visible,',
+      'a creator’s handmade skill to become real work,',
+      'the maker to not only create, but also sell, grow, and believe in what they do.',
     ],
-    beliefTitle: 'We believe every handmade piece holds a little story inside.',
-    beliefText: 'And we want those stories to be heard.',
+    localBeliefTitle: 'We believe in local creativity.',
+    localSupport:
+      'Through WondaCraft we want to support and encourage Armenian local production, help small businesses and independent makers become more visible, and bring their work to new people.',
+    localGrowth:
+      'We want beautiful, high-quality products made in Armenia to have their place, their audience, and their chance to grow.',
+    localIdentity:
+      'So that every small workshop, family production, or individual maker can present their work to a wider audience — without losing the individuality and story that make them unique.',
+    handmadeBelief: 'We believe handmade is not just a product.',
+    handmadeStory:
+      'Every piece holds a person’s time, idea, skill, patience, and a little story.',
+    notJustShop: 'That is why WondaCraft is not just an online store.',
+    placeVision:
+      'We want to create a place where people can discover Armenian handmade, meet its makers, support local small business, and find pieces made with love and dedication.',
+    curation:
+      'We ourselves discover makers and choose the works we want to present on WondaCraft — while protecting the quality and idea of our platform.',
+    visionTitle: 'Our vision',
+    vision:
+      'To create a platform that helps Armenian handmade and local small production become more visible, accessible, and competitive — in Armenia and, later, around the world.',
+    visionCreator: 'Where makers can focus on what matters most: creating.',
+    visionClose:
+      'And WondaCraft will help that creation become visible, reach people, support local production, and find its place in the world.',
+  },
+  makers: {
+    title: 'Makers',
+    description:
+      'Meet the people who create WondaCraft pieces with their hands and hearts.',
+    empty: 'No makers yet',
   },
   contact: {
     title: 'Contact',

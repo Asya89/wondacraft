@@ -18,7 +18,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]);
 
-  const staticPaths = ['/', '/products', '/about', '/contact'] as const;
+  const staticPaths = ['/', '/products', '/makers', '/about', '/contact'] as const;
 
   const staticPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
     staticPaths.map((path) => ({

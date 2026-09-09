@@ -8,6 +8,7 @@ const links = [
   { href: '/admin/dashboard', label: 'Dashboard' },
   { href: '/admin/products', label: 'Ապրանքներ' },
   { href: '/admin/categories', label: 'Կատեգորիաներ' },
+  { href: '/admin/makers', label: 'Հեղինակներ' },
   { href: '/admin/orders', label: 'Պատվերներ' },
 ];
 

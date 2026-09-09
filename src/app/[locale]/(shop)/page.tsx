@@ -2,8 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getCategories } from '@/server/services/category.service';
 import { getProducts, getNewProducts } from '@/server/services/product.service';
+import { getFeaturedMakers } from '@/server/services/maker.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { CategoryCard } from '@/components/categories/CategoryCard';
+import { MakerCard } from '@/components/makers/MakerCard';
 import { WhyFeatureIcon } from '@/components/home/WhyFeatureIcon';
 import { Button } from '@/components/ui/Button';
 import { getTranslations, type Locale } from '@/lib/i18n';
@@ -19,10 +21,11 @@ export default async function HomePage({ params }: HomePageProps) {
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const translations = getTranslations(locale);
 
-  const [categories, { products: allProductsPreview }, newProducts] = await Promise.all([
+  const [categories, { products: allProductsPreview }, newProducts, makers] = await Promise.all([
     getCategories(),
     getProducts({ limit: 4, sort: 'newest' }),
     getNewProducts(4),
+    getFeaturedMakers(3),
   ]);
 
   return (
@@ -140,6 +143,26 @@ export default async function HomePage({ params }: HomePageProps) {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="mb-10 text-center">
+          <h2 className="section-title-decorated font-serif text-3xl text-warm-brown">
+            {translations.home.makersTitle}
+          </h2>
+          <Link href={localizedPath('/makers', locale)} className="section-view-all">
+            {translations.common.viewAll} →
+          </Link>
+        </div>
+        {makers.length > 0 ? (
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {makers.map((maker) => (
+              <MakerCard key={maker.id} maker={maker} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted">{translations.makers.empty}</p>
+        )}
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

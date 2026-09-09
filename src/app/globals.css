@@ -167,6 +167,18 @@ h4 {
   color: rgb(237 228 211 / 0.75);
 }
 
+.brand-tagline {
+  font-style: italic;
+  font-synthesis: style;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: color-mix(in srgb, var(--warm-brown) 88%, var(--muted));
+}
+
+.brand-tagline-flag {
+  font-style: normal;
+}
+
 /* Header nav — plain CSS hover (works reliably in dev + prod) */
 .nav-item {
   position: relative;

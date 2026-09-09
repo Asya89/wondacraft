@@ -81,6 +81,18 @@ export const categoryFormSchema = z.object({
 
 export type CategoryFormInput = z.infer<typeof categoryFormSchema>;
 
+export const makerFormSchema = z.object({
+  name: z.string().min(2).max(200),
+  slug: z.string().min(2).max(200).optional(),
+  craft: z.string().min(2).max(200),
+  bio: z.string().min(10).max(2000),
+  image: z.string().optional().nullable(),
+  sortOrder: z.coerce.number().int().default(0),
+  isActive: z.boolean().default(true),
+});
+
+export type MakerFormInput = z.infer<typeof makerFormSchema>;
+
 export const orderStatusSchema = z.enum([
   'PENDING',
   'CONFIRMED',

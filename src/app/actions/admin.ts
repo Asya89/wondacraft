@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { requireAdmin } from '@/lib/auth/session';
-import { productFormSchema, categoryFormSchema, updateOrderStatusSchema } from '@/lib/validations';
+import { productFormSchema, categoryFormSchema, makerFormSchema, updateOrderStatusSchema } from '@/lib/validations';
 import { slugifyText } from '@/lib/utils';
 import {
   createProduct,
@@ -18,6 +18,11 @@ import {
   updateCategory,
   deleteCategory,
 } from '@/server/services/category.service';
+import {
+  createMaker,
+  updateMaker,
+  deleteMaker,
+} from '@/server/services/maker.service';
 import { updateOrderStatus } from '@/server/services/order.service';
 import { OrderStatus } from '@prisma/client';
 
@@ -136,6 +141,57 @@ export async function deleteCategoryFormAction(id: string, _formData: FormData) 
   }
   revalidatePath('/admin/categories');
   redirect('/admin/categories');
+}
+
+export async function createMakerAction(formData: FormData) {
+  await ensureAdmin();
+
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = makerFormSchema.safeParse({
+    ...raw,
+    isActive: raw.isActive === 'on' || raw.isActive === 'true' || raw.isActive === undefined,
+  });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? 'Validation error' };
+  }
+
+  const slug = parsed.data.slug || slugifyText(parsed.data.name);
+  await createMaker({ ...parsed.data, slug });
+  revalidatePath('/admin/makers');
+  revalidatePath('/makers');
+  revalidatePath('/');
+  redirect('/admin/makers');
+}
+
+export async function updateMakerAction(id: string, formData: FormData) {
+  await ensureAdmin();
+
+  const raw = Object.fromEntries(formData.entries());
+  const parsed = makerFormSchema.safeParse({
+    ...raw,
+    isActive: raw.isActive === 'on' || raw.isActive === 'true',
+  });
+
+  if (!parsed.success) {
+    return { error: parsed.error.issues[0]?.message ?? 'Validation error' };
+  }
+
+  const slug = parsed.data.slug || slugifyText(parsed.data.name);
+  await updateMaker(id, { ...parsed.data, slug });
+  revalidatePath('/admin/makers');
+  revalidatePath('/makers');
+  revalidatePath('/');
+  return { success: true };
+}
+
+export async function deleteMakerFormAction(id: string, _formData: FormData) {
+  await ensureAdmin();
+  await deleteMaker(id);
+  revalidatePath('/admin/makers');
+  revalidatePath('/makers');
+  revalidatePath('/');
+  redirect('/admin/makers');
 }
 
 export async function deleteProductFormAction(id: string, _formData: FormData) {

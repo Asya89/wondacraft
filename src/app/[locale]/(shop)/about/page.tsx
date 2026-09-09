@@ -21,14 +21,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
   const about = translations.about;
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-sm">
         <Image
           src="/images/about.jpeg"
           alt={about.title}
           fill
           className="object-cover"
-          sizes="(max-width: 896px) 100vw, 896px"
+          sizes="(max-width: 768px) 100vw, 768px"
         />
       </div>
 
@@ -36,10 +36,16 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
       <div className="mt-8 space-y-5 leading-relaxed text-muted">
         <p className="font-serif text-2xl leading-snug text-warm-brown">{about.lead}</p>
+
         <p>{about.intro}</p>
         <p>{about.story}</p>
+        <p>{about.problem}</p>
+        <p>{about.problemDetail}</p>
+
         <p className="font-medium text-warm-brown">{about.highlight}</p>
         <p>{about.mission}</p>
+
+        <p className="font-medium text-warm-brown">{about.goalsIntro}</p>
         <ul className="space-y-3 pl-1">
           {about.goals.map((goal) => (
             <li key={goal} className="flex gap-3">
@@ -48,9 +54,27 @@ export default async function AboutPage({ params }: AboutPageProps) {
             </li>
           ))}
         </ul>
-        <div className="border-t border-border pt-6">
-          <h2 className="font-serif text-xl text-warm-brown">{about.beliefTitle}</h2>
-          <p className="mt-3">{about.beliefText}</p>
+
+        <div className="space-y-5 border-t border-border pt-8">
+          <p className="font-serif text-xl text-warm-brown">{about.localBeliefTitle}</p>
+          <p>{about.localSupport}</p>
+          <p>{about.localGrowth}</p>
+          <p>{about.localIdentity}</p>
+        </div>
+
+        <div className="space-y-5 border-t border-border pt-8">
+          <p className="font-serif text-xl text-warm-brown">{about.handmadeBelief}</p>
+          <p>{about.handmadeStory}</p>
+          <p className="font-medium text-warm-brown">{about.notJustShop}</p>
+          <p>{about.placeVision}</p>
+          <p>{about.curation}</p>
+        </div>
+
+        <div className="space-y-5 border-t border-border pt-8">
+          <h2 className="font-serif text-2xl text-warm-brown">{about.visionTitle}</h2>
+          <p>{about.vision}</p>
+          <p>{about.visionCreator}</p>
+          <p>{about.visionClose}</p>
         </div>
       </div>
     </div>
