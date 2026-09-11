@@ -42,7 +42,7 @@ export const ru = {
       'Откройте уникальные изделия ручной работы, созданные в Армении, узнайте их авторов и поддержите местный малый бизнес',
     heroCta: 'Смотреть товары',
     categoriesTitle: 'Категории',
-    allProductsTitle: 'Все товары',
+    allProductsTitle: 'Подборка WondaCraft',
     newTitle: 'Новые товары',
     aboutTitle: 'Наша история',
     makersTitle: 'Авторы',

@@ -42,7 +42,7 @@ export const en = {
       'Discover unique handmade works created in Armenia, meet their makers, and support local small business',
     heroCta: 'View products',
     categoriesTitle: 'Categories',
-    allProductsTitle: 'All products',
+    allProductsTitle: 'WondaCraft selection',
     newTitle: 'New products',
     aboutTitle: 'Our story',
     makersTitle: 'Makers',
