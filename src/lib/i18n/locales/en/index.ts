@@ -39,7 +39,7 @@ export const en = {
   home: {
     heroTitle: 'What is made by hand is also made with heart',
     heroDescription:
-      'Unique handmade pieces made from natural materials — for every person',
+      'Discover unique handmade works created in Armenia, meet their makers, and support local small business',
     heroCta: 'View products',
     categoriesTitle: 'Categories',
     allProductsTitle: 'All products',

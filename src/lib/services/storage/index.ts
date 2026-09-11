@@ -13,9 +13,10 @@ export function getStorageProvider(): StorageProvider {
       storageInstance = new LocalStorageProvider();
       break;
     case 's3':
-      // Future: implement S3StorageProvider using STORAGE_* env vars
+      // Not used yet — images are kept in git (public/images/).
+      // When volume grows: implement S3/R2 using STORAGE_* env vars.
       throw new Error(
-        'S3 storage is not yet implemented. Set STORAGE_PROVIDER=local for development.',
+        'S3 storage is not yet implemented. Keep images in git (public/images/) or set STORAGE_PROVIDER=local.',
       );
     default:
       storageInstance = new LocalStorageProvider();

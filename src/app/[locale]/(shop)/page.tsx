@@ -75,7 +75,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <h2 className="section-title-decorated mb-10 font-serif text-3xl text-warm-brown">
           {translations.home.categoriesTitle}
         </h2>
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {categories.map((category) => (
             <CategoryCard key={category.id} category={category} locale={locale} />
           ))}

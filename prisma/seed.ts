@@ -48,25 +48,32 @@ async function main() {
 
   const categoriesData = [
     {
-      name: 'Ամիգուրումի արջուկներ',
-      slug: 'amigurumi-ayiukner',
-      description: 'Ձեռագործ ամիգուրումի արջուկներ՝ 30 սմ, անվտանգ նյութերից',
+      name: '🧸 Խաղալիքներ',
+      slug: 'khaghalikner',
+      description: 'Ձեռագործ խաղալիքներ՝ ամիգուրումի, կրոշե և այլ յուրահատուկ աշխատանքներ',
       image: img('categories/dzergagort-ayiukner.webp'),
       sortOrder: 1,
     },
     {
-      name: 'Ձեռագործ zajikner',
-      slug: 'crochet-zajikner',
-      description: 'Ձեռagort crochet zajikner՝ soft plush yarn-ից',
+      name: '👜 Աքսեսուարներ',
+      slug: 'aksessuarner',
+      description: 'Ձեռագործ աքսեսուարներ՝ ամենօրյա և նվերային',
       image: img('categories/ktoric-zajikner.webp'),
       sortOrder: 2,
     },
     {
-      name: 'Պատayin jamatsuytsner',
-      slug: 'patayi-chasy',
-      description: 'Ձեռagort patayin jamatsuytsner bnakan paytic',
+      name: '🪵 Փայտե աշխատանքներ',
+      slug: 'payte-ashkhatankner',
+      description: 'Բնական փայտից ստեղծված ձեռագործ իրեր',
       image: img('categories/patayi-chasy.webp'),
       sortOrder: 3,
+    },
+    {
+      name: 'Պատի նկարներ',
+      slug: 'pati-nkarner',
+      description: 'Յուրահատուկ պատի նկարներ և դեկորատիվ աշխատանքներ',
+      image: img('about.jpeg'),
+      sortOrder: 4,
     },
   ];
 
@@ -98,7 +105,7 @@ async function main() {
     {
       name: 'Լavanda amigurumi archuk «Milo»',
       slug: 'lavanda-amigurumi-ayi-milo',
-      categorySlug: 'amigurumi-ayiukner',
+      categorySlug: 'khaghalikner',
       shortDescription: '30 սմ amigurumi archuk, lavanda guyn',
       description:
         'Ձեռagort amigurumi archuk lavanda guyni plush yarn-ից։ Naxaravorman e cream kochoyn u bow-ov։ Anvtanq nytqer, ideal nver mankakan hamar։',
@@ -120,7 +127,7 @@ async function main() {
     {
       name: 'Rozayin crochet zajik «Sofi»',
       slug: 'rozayin-crochet-zajik-sofi',
-      categorySlug: 'crochet-zajikner',
+      categorySlug: 'khaghalikner',
       shortDescription: 'Crochet zajik rozayin ev cream guynov',
       description:
         'Yurahatuk crochet zajik chunky yarn-ից։ Naxaravorman e hstak koch quti u shredded filler-ov՝ ideal nveri hamar։',
@@ -139,7 +146,7 @@ async function main() {
     {
       name: 'Patayi jamatsuyts bnakan paytic 35 սմ',
       slug: 'patayi-chasy-35-sm',
-      categorySlug: 'patayi-chasy',
+      categorySlug: 'payte-ashkhatankner',
       shortDescription: '35 սմ patayi jamatsuyts, bnakan payt',
       description:
         'Ձեռagort patayi jamatsuyts bnakan paytic։ Romakan tverakner, tepl ev yurahatuk mshakuyt interyeri hamar։',
@@ -159,7 +166,7 @@ async function main() {
     {
       name: 'Patayi jamatsuyts bnakan paytic 40 սմ',
       slug: 'patayi-chasy-40-sm',
-      categorySlug: 'patayi-chasy',
+      categorySlug: 'payte-ashkhatankner',
       shortDescription: '40 սմ patayi jamatsuyts, bnakan payt',
       description:
         'Mec chapy patayi jamatsuyts bnakan paytic։ Yurahatuk grain, romakan tverakner։',
@@ -178,7 +185,7 @@ async function main() {
     {
       name: 'Patayi jamatsuyts «Interyer»',
       slug: 'patayi-chasy-interyer',
-      categorySlug: 'patayi-chasy',
+      categorySlug: 'payte-ashkhatankner',
       shortDescription: 'Patayi jamatsuyts modern interyeri hamar',
       description:
         'Elegan patayi jamatsuyts bnakan paytic։ Ideal e minimal ev tepl interyerneri hamar։',

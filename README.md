@@ -46,14 +46,33 @@ Open [http://localhost:3000](http://localhost:3000)
 
 Default admin: `admin@wondacraft.am` / `admin123456`
 
+## Images (keep in Git)
+
+**Decision:** product, category, maker, and site images live in the repo — not on Vercel’s temporary disk and not on S3 (for now).
+
+| Folder | Role |
+|--------|------|
+| `_assets/` | Source files you drop in (jpeg/png) |
+| `public/images/` | Optimized files the site serves (`/images/...`) |
+
+**Add a new image**
+
+1. Put the file in `_assets/` (or copy into `public/images/...` directly)
+2. Run `npm run sync:assets` if it has a mapping in `scripts/sync-assets.ts`
+3. In admin, set **Image URL** to e.g. `/images/products/my-item-01.webp`
+4. `git add` → `commit` → `push` → deploy
+
+**Why:** free, works from any computer after `git pull`, survives Vercel redeploys.
+
+**Do not rely on** Admin → file upload on production (`public/uploads/`) — those files can disappear after deploy. Use Git images instead until volume grows (then Cloudflare R2).
+
 ## Adding products
 
 1. Log in at `/admin/login` (local or live — same result)
 2. **Products** → **Create Product**
 3. Fill form, save
 4. Product is live instantly on [wondacraft.vercel.app](https://wondacraft.vercel.app)
-
-Upload images on the edit page after creating the product.
+5. For photos: use `/images/...` URLs from git (see **Images** above)
 
 ## Database commands
 
@@ -83,7 +102,7 @@ Set on Vercel (Production). Pull locally with `vercel env pull`.
 | `NEXT_PUBLIC_SITE_URL` | Public URL |
 | `SESSION_SECRET` | Admin session signing (32+ chars) |
 | `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Used by seed |
-| `STORAGE_PROVIDER` | `local` (seed images in git work; new uploads on Vercel are ephemeral until S3) |
+| `STORAGE_PROVIDER` | Keep `local`. Site images are stored in git (`public/images/`). Admin uploads on Vercel are ephemeral — prefer git workflow. |
 
 See `.env.example` for the full list.
 
