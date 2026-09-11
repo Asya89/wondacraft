@@ -30,6 +30,9 @@ const MAPPINGS: AssetMapping[] = [
   { match: 'Aug 24, 2026, 02_14_07 PM', dest: 'products/patayi-chasy-40-01.webp', maxWidth: 1200 },
   { match: 'Aug 24, 2026, 02_13_49 PM', dest: 'products/patayi-chasy-40-02.webp', maxWidth: 1200 },
   { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'products/patayi-chasy-interyer-01.webp', maxWidth: 1200 },
+  { match: '5600378717.webp', dest: 'makers/lilit-hakobyan.webp', maxWidth: 900 },
+  { match: 'Hand-painting.webp', dest: 'makers/ani-martirosyan.webp', maxWidth: 900 },
+  { match: 'istockphoto.jpg', dest: 'makers/vahan-grigoryan.webp', maxWidth: 900 },
 ];
 
 async function convertAsset(srcPath: string, destPath: string, maxWidth = 1200) {

@@ -252,6 +252,61 @@ async function main() {
     await setProductImages(product.id, p.images);
   }
 
+  const makersData = [
+    {
+      name: 'Լիլիթ Հակոբյան',
+      slug: 'lilit-hakobyan',
+      craft: 'Պատի նկարներ',
+      bio: 'Լիլիթը ստեղծում է բարդ ու նուրբ մանդալա նկարներ, որոնք համադրում են երկրաչափությունն ու բուսական մոտիվները։ Նրա աշխատանքներում կարևոր են համբերությունը, մանրամասների ճշգրտությունը և հանգիստ գեղագիտությունը։ Յուրաքանչյուր նկար երկար ժամանակ է պահանջում և կրում է հեղինակի ուշադրության հետքը։ Լիլիթը հավատում է, որ պատի վրայի արվեստը կարող է փոխել տան մթնոլորտը և դառնալ առօրյայի մի փոքր ծիսակարգ։ WondaCraft-ում նա ներկայացնում է այն աշխատանքները, որոնք ստեղծվել են սիրով ու մեծ նվիրումով։',
+      image: img('makers/lilit-hakobyan.webp'),
+      sortOrder: 1,
+    },
+    {
+      name: 'Անի Մարտիրոսյան',
+      slug: 'ani-martirosyan',
+      craft: 'Ձեռքի նկարազարդում',
+      bio: 'Անին աշխատում է նուրբ վրձինով և ստեղծում է մանրանկարչական ձևավորված աշխատանքներ։ Նրա արհեստանոցում ամեն մանրուք կարևոր է՝ գույնի ընտրությունից մինչև վերջնական դետալը։ Նա սիրում է միավորել մաքուր գծերն ու վառ շեշտերը՝ յուրահատուկ ոճ ստեղծելու համար։ Անիի համար ձեռագործը ոչ միայն տեխնիկա է, այլև ուշադրությամբ ու հոգատարությամբ արված աշխատանք։ WondaCraft-ում նա կիսվում է իր ստեղծած իրերով, որոնք նախատեսված են նրանց համար, ովքեր գնահատում են անհատական մոտեցումը։',
+      image: img('makers/ani-martirosyan.webp'),
+      sortOrder: 2,
+    },
+    {
+      name: 'Վահան Գրիգորյան',
+      slug: 'vahan-grigoryan',
+      craft: 'Կավագործություն',
+      bio: 'Վահանը աշխատում է բրուտի անիվի վրա և ստեղծում է կավե անոթներ ու դեկորատիվ ձևեր։ Նրա համար կարևոր է նյութի հետ անմիջական շփումը՝ ձեռքերով զգալ կավի խոնավությունն ու շարժումը։ Յուրաքանչյուր իր անցնում է համբերատար ձևավորման փուլերով և ստանում է յուրահատուկ բնույթ։ Վահանը հավատում է, որ լավ ձեռագործը պետք է լինի և գեղեցիկ, և օգտակար։ WondaCraft-ում նա ներկայացնում է աշխատանքներ, որոնք միավորում են ավանդական տեխնիկան ու ժամանակակից պարզ գեղագիտությունը։',
+      image: img('makers/vahan-grigoryan.webp'),
+      sortOrder: 3,
+    },
+  ];
+
+  for (const maker of makersData) {
+    await prisma.maker.upsert({
+      where: { slug: maker.slug },
+      update: {
+        name: maker.name,
+        craft: maker.craft,
+        bio: maker.bio,
+        image: maker.image,
+        sortOrder: maker.sortOrder,
+        isActive: true,
+      },
+      create: {
+        name: maker.name,
+        slug: maker.slug,
+        craft: maker.craft,
+        bio: maker.bio,
+        image: maker.image,
+        sortOrder: maker.sortOrder,
+        isActive: true,
+      },
+    });
+  }
+
+  await prisma.maker.updateMany({
+    where: { slug: { notIn: makersData.map((m) => m.slug) } },
+    data: { isActive: false },
+  });
+
   console.log('Seed completed successfully!');
   console.log(`Admin login: ${adminEmail} / ${adminPassword}`);
 }
