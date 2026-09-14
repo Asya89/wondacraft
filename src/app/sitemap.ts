@@ -1,8 +1,36 @@
 import type { MetadataRoute } from 'next';
 import { prisma } from '@/lib/prisma';
-import { locales } from '@/lib/i18n/config';
+import { defaultLocale, locales } from '@/lib/i18n/config';
 import { localizedPath } from '@/lib/i18n/path';
 import { getSiteUrl } from '@/lib/utils';
+
+function languageAlternates(baseUrl: string, path: string): Record<string, string> {
+  const languages: Record<string, string> = {};
+  for (const locale of locales) {
+    languages[locale] = `${baseUrl}${localizedPath(path, locale)}`;
+  }
+  languages['x-default'] = `${baseUrl}${localizedPath(path, defaultLocale)}`;
+  return languages;
+}
+
+function localeEntries(
+  baseUrl: string,
+  path: string,
+  options: {
+    lastModified?: Date;
+    changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency'];
+    priority: number;
+  },
+): MetadataRoute.Sitemap {
+  const languages = languageAlternates(baseUrl, path);
+  return locales.map((locale) => ({
+    url: `${baseUrl}${localizedPath(path, locale)}`,
+    lastModified: options.lastModified,
+    changeFrequency: options.changeFrequency,
+    priority: options.priority,
+    alternates: { languages },
+  }));
+}
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl();
@@ -22,42 +50,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]);
 
-  const staticPaths = ['/', '/products', '/makers', '/about', '/contact'] as const;
+  const staticPages = [
+    ...localeEntries(baseUrl, '/', { changeFrequency: 'weekly', priority: 1 }),
+    ...localeEntries(baseUrl, '/products', { changeFrequency: 'daily', priority: 0.9 }),
+    ...localeEntries(baseUrl, '/makers', { changeFrequency: 'weekly', priority: 0.6 }),
+    ...localeEntries(baseUrl, '/about', { changeFrequency: 'monthly', priority: 0.5 }),
+    ...localeEntries(baseUrl, '/contact', { changeFrequency: 'monthly', priority: 0.5 }),
+  ];
 
-  const staticPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
-    staticPaths.map((path) => ({
-      url: `${baseUrl}${localizedPath(path, locale)}`,
-      lastModified: new Date(),
-      changeFrequency: path === '/' ? 'weekly' : path === '/products' ? 'daily' : 'monthly',
-      priority: path === '/' ? 1 : path === '/products' ? 0.9 : 0.5,
-    })),
-  );
-
-  const productPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
-    products.map((p) => ({
-      url: `${baseUrl}${localizedPath(`/products/${p.slug}`, locale)}`,
-      lastModified: p.updatedAt,
-      changeFrequency: 'weekly' as const,
+  const productPages = products.flatMap((product) =>
+    localeEntries(baseUrl, `/products/${product.slug}`, {
+      lastModified: product.updatedAt,
+      changeFrequency: 'weekly',
       priority: 0.8,
-    })),
+    }),
   );
 
-  const categoryPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
-    categories.map((c) => ({
-      url: `${baseUrl}${localizedPath(`/categories/${c.slug}`, locale)}`,
-      lastModified: c.updatedAt,
-      changeFrequency: 'weekly' as const,
+  const categoryPages = categories.flatMap((category) =>
+    localeEntries(baseUrl, `/categories/${category.slug}`, {
+      lastModified: category.updatedAt,
+      changeFrequency: 'weekly',
       priority: 0.7,
-    })),
+    }),
   );
 
-  const makerPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
-    makers.map((m) => ({
-      url: `${baseUrl}${localizedPath(`/makers/${m.slug}`, locale)}`,
-      lastModified: m.updatedAt,
-      changeFrequency: 'weekly' as const,
+  const makerPages = makers.flatMap((maker) =>
+    localeEntries(baseUrl, `/makers/${maker.slug}`, {
+      lastModified: maker.updatedAt,
+      changeFrequency: 'weekly',
       priority: 0.7,
-    })),
+    }),
   );
 
   return [...staticPages, ...productPages, ...categoryPages, ...makerPages];

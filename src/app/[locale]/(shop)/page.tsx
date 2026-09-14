@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getCategories } from '@/server/services/category.service';
@@ -8,12 +9,29 @@ import { CategoryCard } from '@/components/categories/CategoryCard';
 import { MakerCard } from '@/components/makers/MakerCard';
 import { WhyFeatureIcon } from '@/components/home/WhyFeatureIcon';
 import { Button } from '@/components/ui/Button';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { isLocale } from '@/lib/i18n/config';
+import { buildPageMetadata, organizationJsonLd } from '@/lib/seo';
 
 interface HomePageProps {
   params: Promise<{ locale: string }>;
+}
+
+export async function generateMetadata({ params }: HomePageProps): Promise<Metadata> {
+  const { locale: localeParam } = await params;
+  const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
+  const seo = getTranslations(locale).seo;
+
+  return buildPageMetadata({
+    locale,
+    path: '/',
+    title: seo.homeTitle,
+    description: seo.homeDescription,
+    imageAlt: seo.heroImageAlt,
+    absoluteTitle: true,
+  });
 }
 
 export default async function HomePage({ params }: HomePageProps) {
@@ -30,11 +48,12 @@ export default async function HomePage({ params }: HomePageProps) {
 
   return (
     <>
+      <JsonLd data={organizationJsonLd(locale)} />
       <section className="hero-section relative flex min-h-[75vh] items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src="/images/hero.webp"
-            alt="WondaCraft"
+            alt={translations.seo.heroImageAlt}
             fill
             priority
             className="object-cover object-center"
@@ -126,7 +145,7 @@ export default async function HomePage({ params }: HomePageProps) {
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
             <Image
               src="/images/about.jpeg"
-              alt={translations.home.aboutTitle}
+              alt={translations.seo.aboutImageAlt}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { getMakers } from '@/server/services/maker.service';
 import { MakerCard } from '@/components/makers/MakerCard';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { isLocale } from '@/lib/i18n/config';
+import { buildPageMetadata, canonicalFor, collectionPageJsonLd } from '@/lib/seo';
 
 interface MakersPageProps {
   params: Promise<{ locale: string }>;
@@ -11,11 +13,13 @@ interface MakersPageProps {
 export async function generateMetadata({ params }: MakersPageProps): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
-  const translations = getTranslations(locale);
-  return {
-    title: translations.makers.title,
-    description: translations.makers.description,
-  };
+  const seo = getTranslations(locale).seo;
+  return buildPageMetadata({
+    locale,
+    path: '/makers',
+    title: seo.makersTitle,
+    description: seo.makersDescription,
+  });
 }
 
 export default async function MakersPage({ params }: MakersPageProps) {
@@ -26,6 +30,13 @@ export default async function MakersPage({ params }: MakersPageProps) {
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <JsonLd
+        data={collectionPageJsonLd({
+          name: translations.seo.makersTitle,
+          description: translations.seo.makersDescription,
+          url: canonicalFor('/makers', locale),
+        })}
+      />
       <div className="mx-auto max-w-2xl text-center">
         <h1 className="font-serif text-3xl text-warm-brown sm:text-4xl">{translations.makers.title}</h1>
         <p className="mt-4 leading-relaxed text-muted">{translations.makers.description}</p>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
+import { meaningfulImageAlt } from '@/lib/seo';
 
 interface ProductCardProps {
   product: {
@@ -31,7 +32,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
           {mainImage ? (
             <Image
               src={mainImage.imageUrl}
-              alt={mainImage.alt ?? product.name}
+              alt={meaningfulImageAlt(mainImage.alt, product.name)}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               className="product-card-image object-cover"

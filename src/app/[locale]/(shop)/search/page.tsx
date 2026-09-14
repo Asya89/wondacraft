@@ -10,6 +10,7 @@ interface SearchPageProps {
 
 export const metadata: Metadata = {
   title: 'Search',
+  robots: { index: false, follow: false },
 };
 
 export default async function SearchPage({ params, searchParams }: SearchPageProps) {

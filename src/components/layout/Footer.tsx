@@ -30,6 +30,9 @@ export function Footer({ locale }: { locale: Locale }) {
               <Link href={localizedPath('/products', locale)} className="text-sm text-muted hover:text-foreground">
                 {translations.nav.products}
               </Link>
+              <Link href={localizedPath('/#categories', locale)} className="text-sm text-muted hover:text-foreground">
+                {translations.nav.categories}
+              </Link>
               <Link href={localizedPath('/makers', locale)} className="text-sm text-muted hover:text-foreground">
                 {translations.nav.makers}
               </Link>

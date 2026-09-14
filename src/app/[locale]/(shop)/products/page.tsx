@@ -7,6 +7,7 @@ import { ProductFilters } from '@/components/products/ProductFilters';
 import { formatMessage, getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { isLocale } from '@/lib/i18n/config';
+import { buildPageMetadata } from '@/lib/seo';
 import type { ProductSortOption } from '@/server/services/product.service';
 
 interface ProductsPageProps {
@@ -24,11 +25,13 @@ interface ProductsPageProps {
 export async function generateMetadata({ params }: ProductsPageProps): Promise<Metadata> {
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
-  const translations = getTranslations(locale);
-  return {
-    title: translations.products.title,
-    description: translations.products.description,
-  };
+  const seo = getTranslations(locale).seo;
+  return buildPageMetadata({
+    locale,
+    path: '/products',
+    title: seo.productsTitle,
+    description: seo.productsDescription,
+  });
 }
 
 export default async function ProductsPage({ params, searchParams }: ProductsPageProps) {

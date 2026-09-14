@@ -36,5 +36,13 @@ export function sanitizeString(input: string): string {
 }
 
 export function getSiteUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000';
+  const explicit = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, '');
+  if (explicit) return explicit;
+
+  const vercelProduction = process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ?.replace(/^https?:\/\//, '')
+    .replace(/\/$/, '');
+  if (vercelProduction) return `https://${vercelProduction}`;
+
+  return 'https://wondacraft.vercel.app';
 }

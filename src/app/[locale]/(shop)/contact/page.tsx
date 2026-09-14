@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ContactLinks } from '@/components/layout/ContactLinks';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { isLocale } from '@/lib/i18n/config';
+import { buildPageMetadata } from '@/lib/seo';
 
 interface ContactPageProps {
   params: Promise<{ locale: string }>;
@@ -11,7 +12,12 @@ export async function generateMetadata({ params }: ContactPageProps): Promise<Me
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const translations = getTranslations(locale);
-  return { title: translations.contact.title };
+  return buildPageMetadata({
+    locale,
+    path: '/contact',
+    title: translations.seo.contactTitle,
+    description: translations.seo.contactDescription,
+  });
 }
 
 export default async function ContactPage({ params }: ContactPageProps) {

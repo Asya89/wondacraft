@@ -5,9 +5,17 @@ import { notFound } from 'next/navigation';
 import { getMakerBySlug } from '@/server/services/maker.service';
 import { getProducts } from '@/server/services/product.service';
 import { ProductCard } from '@/components/products/ProductCard';
-import { getTranslations, type Locale } from '@/lib/i18n';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { formatMessage, getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { isLocale } from '@/lib/i18n/config';
+import {
+  breadcrumbJsonLd,
+  buildMakerDescription,
+  buildPageMetadata,
+  canonicalFor,
+  personJsonLd,
+} from '@/lib/seo';
 
 interface MakerDetailPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -17,11 +25,23 @@ export async function generateMetadata({ params }: MakerDetailPageProps): Promis
   const { slug, locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const maker = await getMakerBySlug(slug);
-  if (!maker) return { title: getTranslations(locale).makers.notFound };
-  return {
-    title: maker.name,
-    description: maker.bio.slice(0, 160),
-  };
+  if (!maker) return { title: getTranslations(locale).makers.notFound, robots: { index: false } };
+
+  const translations = getTranslations(locale);
+  return buildPageMetadata({
+    locale,
+    path: `/makers/${maker.slug}`,
+    title: formatMessage(translations.seo.makerTitle, { name: maker.name, craft: maker.craft }),
+    description: buildMakerDescription({
+      name: maker.name,
+      craft: maker.craft,
+      bio: maker.bio,
+      locale,
+    }),
+    image: maker.image,
+    imageAlt: `${maker.name} — ${maker.craft}`,
+    type: 'profile',
+  });
 }
 
 export default async function MakerDetailPage({ params }: MakerDetailPageProps) {
@@ -33,9 +53,26 @@ export default async function MakerDetailPage({ params }: MakerDetailPageProps) 
   if (!maker) notFound();
 
   const { products } = await getProducts({ makerId: maker.id, limit: 24 });
+  const makerUrl = canonicalFor(`/makers/${maker.slug}`, locale);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+      <JsonLd
+        data={personJsonLd({
+          name: maker.name,
+          craft: maker.craft,
+          bio: maker.bio,
+          url: makerUrl,
+          image: maker.image,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: translations.seo.breadcrumbHome, url: canonicalFor('/', locale) },
+          { name: translations.makers.title, url: canonicalFor('/makers', locale) },
+          { name: maker.name, url: makerUrl },
+        ])}
+      />
       <Link
         href={localizedPath('/makers', locale)}
         className="text-sm text-muted transition-colors hover:text-warm-brown"
@@ -48,7 +85,7 @@ export default async function MakerDetailPage({ params }: MakerDetailPageProps) 
           {maker.image ? (
             <Image
               src={maker.image}
-              alt={maker.name}
+              alt={`${maker.name} — ${maker.craft}`}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 320px, 280px"

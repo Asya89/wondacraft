@@ -26,6 +26,14 @@ function pathnameHasLocale(pathname: string): boolean {
   return locales.some((locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`));
 }
 
+function nextWithLocale(request: NextRequest, locale: string) {
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-locale', locale);
+  return NextResponse.next({
+    request: { headers: requestHeaders },
+  });
+}
+
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -43,7 +51,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/admin/dashboard', request.url));
       }
     }
-    return NextResponse.next();
+    return nextWithLocale(request, defaultLocale);
   }
 
   if (
@@ -55,7 +63,7 @@ export async function middleware(request: NextRequest) {
     pathname === '/sitemap.xml' ||
     pathname.includes('.')
   ) {
-    return NextResponse.next();
+    return nextWithLocale(request, defaultLocale);
   }
 
   if (!pathnameHasLocale(pathname)) {
@@ -66,11 +74,8 @@ export async function middleware(request: NextRequest) {
   }
 
   const firstSegment = pathname.split('/').filter(Boolean)[0];
-  if (firstSegment && !isLocale(firstSegment)) {
-    return NextResponse.next();
-  }
-
-  return NextResponse.next();
+  const locale = isLocale(firstSegment) ? firstSegment : defaultLocale;
+  return nextWithLocale(request, locale);
 }
 
 export const config = {

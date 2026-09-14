@@ -6,10 +6,19 @@ import { getProductBySlug, getRelatedProducts } from '@/server/services/product.
 import { ProductCard } from '@/components/products/ProductCard';
 import { ProductGallery } from '@/components/products/ProductGallery';
 import { OrderForm } from '@/components/orders/OrderForm';
-import { formatPrice, getSiteUrl } from '@/lib/utils';
+import { JsonLd } from '@/components/seo/JsonLd';
+import { formatPrice } from '@/lib/utils';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { isLocale } from '@/lib/i18n/config';
+import {
+  breadcrumbJsonLd,
+  buildPageMetadata,
+  buildProductDescription,
+  canonicalFor,
+  meaningfulImageAlt,
+  productJsonLd,
+} from '@/lib/seo';
 
 interface ProductPageProps {
   params: Promise<{ locale: string; slug: string }>;
@@ -19,18 +28,26 @@ export async function generateMetadata({ params }: ProductPageProps): Promise<Me
   const { slug, locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const product = await getProductBySlug(slug);
-  if (!product) return { title: getTranslations(locale).product.notFound };
+  if (!product) return { title: getTranslations(locale).product.notFound, robots: { index: false } };
 
-  return {
+  const mainImage = product.images.find((image) => image.isMain) ?? product.images[0];
+  const description = buildProductDescription({
+    name: product.name,
+    shortDescription: product.shortDescription,
+    description: product.description,
+    makerName: product.maker?.name,
+    locale,
+  });
+
+  return buildPageMetadata({
+    locale,
+    path: `/products/${product.slug}`,
     title: product.name,
-    description: product.shortDescription ?? product.description ?? undefined,
-    openGraph: {
-      title: product.name,
-      description: product.shortDescription ?? undefined,
-      images: product.images.filter((i) => i.isMain).map((i) => i.imageUrl),
-      url: `${getSiteUrl()}${localizedPath(`/products/${product.slug}`, locale)}`,
-    },
-  };
+    description,
+    image: mainImage?.imageUrl,
+    images: product.images.map((image) => image.imageUrl),
+    imageAlt: meaningfulImageAlt(mainImage?.alt, product.name),
+  });
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
@@ -42,34 +59,52 @@ export default async function ProductPage({ params }: ProductPageProps) {
   const relatedProducts = await getRelatedProducts(product.categoryId, product.id);
   const translations = getTranslations(locale);
   const inStock = product.stock > 0;
-
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
+  const productUrl = canonicalFor(`/products/${product.slug}`, locale);
+  const schemaDescription = buildProductDescription({
     name: product.name,
-    description: product.shortDescription ?? product.description,
-    sku: product.sku,
-    image: product.images.map((i) => `${getSiteUrl()}${i.imageUrl}`),
-    offers: {
-      '@type': 'Offer',
-      price: product.price,
-      priceCurrency: 'AMD',
-      availability: inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-    },
-  };
+    shortDescription: product.shortDescription,
+    description: product.description,
+    makerName: product.maker?.name,
+    locale,
+  });
+  const makerUrl = product.maker ? canonicalFor(`/makers/${product.maker.slug}`, locale) : null;
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      <JsonLd
+        data={productJsonLd({
+          name: product.name,
+          description: schemaDescription,
+          sku: product.sku,
+          images: product.images.map((image) => image.imageUrl),
+          price: product.price,
+          inStock,
+          url: productUrl,
+          categoryName: product.category.name,
+          makerName: product.maker?.name,
+          makerUrl,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: translations.seo.breadcrumbHome, url: canonicalFor('/', locale) },
+          { name: product.category.name, url: canonicalFor(`/categories/${product.category.slug}`, locale) },
+          { name: product.name, url: productUrl },
+        ])}
       />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-2">
           <ProductGallery images={product.images} productName={product.name} />
 
           <div>
-            <p className="text-sm text-muted">{product.category.name}</p>
+            <p className="text-sm text-muted">
+              <Link
+                href={localizedPath(`/categories/${product.category.slug}`, locale)}
+                className="hover:text-warm-brown"
+              >
+                {product.category.name}
+              </Link>
+            </p>
             <h1 className="mt-1 font-serif text-2xl break-words text-warm-brown sm:text-3xl">{product.name}</h1>
 
             <div className="mt-4 flex items-baseline gap-3">
@@ -138,18 +173,28 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
               {product.maker.image && (
-                <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-sm bg-cream">
+                <Link
+                  href={localizedPath(`/makers/${product.maker.slug}`, locale)}
+                  className="relative h-28 w-28 shrink-0 overflow-hidden rounded-sm bg-cream"
+                >
                   <Image
                     src={product.maker.image}
-                    alt={product.maker.name}
+                    alt={`${product.maker.name} — ${product.maker.craft}`}
                     fill
                     className="object-cover"
                     sizes="112px"
                   />
-                </div>
+                </Link>
               )}
               <div>
-                <p className="font-serif text-xl break-words text-warm-brown">{product.maker.name}</p>
+                <h3 className="font-serif text-xl break-words text-warm-brown">
+                  <Link
+                    href={localizedPath(`/makers/${product.maker.slug}`, locale)}
+                    className="transition-colors hover:text-accent"
+                  >
+                    {product.maker.name}
+                  </Link>
+                </h3>
                 <p className="mt-1 text-sm font-medium tracking-wide text-accent">
                   {product.maker.craft}
                 </p>

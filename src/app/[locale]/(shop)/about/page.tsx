@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { isLocale } from '@/lib/i18n/config';
+import { buildPageMetadata } from '@/lib/seo';
 
 interface AboutPageProps {
   params: Promise<{ locale: string }>;
@@ -11,7 +12,14 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
   const { locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const translations = getTranslations(locale);
-  return { title: translations.about.title };
+  return buildPageMetadata({
+    locale,
+    path: '/about',
+    title: translations.seo.aboutTitle,
+    description: translations.seo.aboutDescription,
+    image: '/images/about.jpeg',
+    imageAlt: translations.seo.aboutImageAlt,
+  });
 }
 
 export default async function AboutPage({ params }: AboutPageProps) {
@@ -25,7 +33,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-sm">
         <Image
           src="/images/about.jpeg"
-          alt={about.title}
+          alt={translations.seo.aboutImageAlt}
           fill
           className="object-cover"
           sizes="(max-width: 768px) 100vw, 768px"
@@ -56,14 +64,14 @@ export default async function AboutPage({ params }: AboutPageProps) {
         </ul>
 
         <div className="space-y-5 border-t border-border pt-8">
-          <p className="font-serif text-xl text-warm-brown">{about.localBeliefTitle}</p>
+          <h2 className="font-serif text-xl text-warm-brown">{about.localBeliefTitle}</h2>
           <p>{about.localSupport}</p>
           <p>{about.localGrowth}</p>
           <p>{about.localIdentity}</p>
         </div>
 
         <div className="space-y-5 border-t border-border pt-8">
-          <p className="font-serif text-xl text-warm-brown">{about.handmadeBelief}</p>
+          <h2 className="font-serif text-xl text-warm-brown">{about.handmadeBelief}</h2>
           <p>{about.handmadeStory}</p>
           <p className="font-medium text-warm-brown">{about.notJustShop}</p>
           <p>{about.placeVision}</p>

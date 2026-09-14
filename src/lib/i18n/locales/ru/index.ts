@@ -189,6 +189,33 @@ export const ru = {
     email: 'Эл. почта',
     instagram: 'Instagram',
   },
+  seo: {
+    homeTitle: 'WondaCraft — Армянские изделия ручной работы',
+    homeDescription:
+      'Откройте на WondaCraft изделия ручной работы, созданные в Армении, узнайте их авторов и найдите уникальные подарки местных мастерских.',
+    productsTitle: 'Изделия ручной работы',
+    productsDescription:
+      'Смотрите коллекцию армянской ручной работы WondaCraft — игрушки, деревянные изделия и другие уникальные работы, созданные в Армении.',
+    makersTitle: 'Авторы',
+    makersDescription:
+      'Познакомьтесь с авторами WondaCraft — армянскими мастерами, которые создают уникальные игрушки, часы и другие работы вручную.',
+    aboutTitle: 'О нас',
+    aboutDescription:
+      'Узнайте о WondaCraft — платформе армянской ручной работы, которая открывает создателей и поддерживает местное малое производство.',
+    contactTitle: 'Контакты',
+    contactDescription:
+      'Свяжитесь с WondaCraft по вопросам заказа, сотрудничества или армянских изделий ручной работы — по телефону, почте или в Instagram.',
+    categoryDescription:
+      'Откройте армянские изделия ручной работы в категории {name} и уникальные работы на WondaCraft.',
+    productFallback: '{name} — изделие ручной работы, созданное в Армении, на WondaCraft.',
+    productMaker: 'Создатель: {maker}.',
+    makerTitle: '{name} — {craft}',
+    makerDescription: '{name} — {craft}. {bio}',
+    defaultImageAlt: 'Армянские изделия ручной работы на WondaCraft',
+    heroImageAlt: 'Армянские изделия ручной работы, созданные в Армении',
+    aboutImageAlt: 'История WondaCraft и армянская ручная работа',
+    breadcrumbHome: 'Главная',
+  },
   footer: {
     rights: 'Все права защищены',
     followUs: 'Следите за нами',

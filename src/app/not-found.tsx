@@ -1,7 +1,13 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { defaultLocale, getTranslations } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { Button } from '@/components/ui/Button';
+
+export const metadata: Metadata = {
+  title: '404',
+  robots: { index: false, follow: false },
+};
 
 export default function NotFound() {
   const translations = getTranslations(defaultLocale);

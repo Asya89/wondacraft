@@ -3,9 +3,17 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { getCategoryProducts } from '@/server/services/category.service';
 import { ProductCard } from '@/components/products/ProductCard';
+import { JsonLd } from '@/components/seo/JsonLd';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
 import { isLocale } from '@/lib/i18n/config';
+import {
+  breadcrumbJsonLd,
+  buildCategoryDescription,
+  buildPageMetadata,
+  canonicalFor,
+  collectionPageJsonLd,
+} from '@/lib/seo';
 import type { ProductSortOption } from '@/server/services/product.service';
 
 interface CategoryPageProps {
@@ -17,11 +25,17 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const { slug, locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   const result = await getCategoryProducts(slug, { limit: 1 });
-  if (!result) return { title: getTranslations(locale).category.notFound };
-  return {
+  if (!result) return { title: getTranslations(locale).category.notFound, robots: { index: false } };
+
+  const description = buildCategoryDescription(result.category.name, result.category.description, locale);
+  return buildPageMetadata({
+    locale,
+    path: `/categories/${result.category.slug}`,
     title: result.category.name,
-    description: result.category.description ?? undefined,
-  };
+    description,
+    image: result.category.image,
+    imageAlt: result.category.name,
+  });
 }
 
 export default async function CategoryPage({ params, searchParams }: CategoryPageProps) {
@@ -37,9 +51,24 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
   const { category, products, totalPages } = result;
   const translations = getTranslations(locale);
   const categoryBase = localizedPath(`/categories/${slug}`, locale);
+  const categoryUrl = canonicalFor(`/categories/${slug}`, locale);
+  const categoryDescription = buildCategoryDescription(category.name, category.description, locale);
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <JsonLd
+        data={collectionPageJsonLd({
+          name: category.name,
+          description: categoryDescription,
+          url: categoryUrl,
+        })}
+      />
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: translations.seo.breadcrumbHome, url: canonicalFor('/', locale) },
+          { name: category.name, url: categoryUrl },
+        ])}
+      />
       {category.image && (
         <div className="relative mb-8 h-48 overflow-hidden rounded-sm sm:h-64">
           <Image

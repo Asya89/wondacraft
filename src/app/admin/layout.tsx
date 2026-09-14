@@ -1,7 +1,24 @@
+import type { Metadata } from 'next';
 import { logoutAction } from '@/app/actions/auth';
 import { getSession } from '@/lib/auth/session';
 import { AdminNav } from '@/components/admin/AdminNav';
 import { Logo } from '@/components/layout/Logo';
+
+export const metadata: Metadata = {
+  title: {
+    absolute: 'Admin | WondaCraft',
+  },
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+      noimageindex: true,
+    },
+  },
+};
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await getSession();

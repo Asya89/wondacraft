@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { meaningfulImageAlt } from '@/lib/seo';
 
 interface ProductGalleryProps {
   images: Array<{ id: string; imageUrl: string; alt: string | null; isMain: boolean }>;
@@ -27,7 +28,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
       <div className="relative aspect-square overflow-hidden rounded-sm bg-cream">
         <Image
           src={active.imageUrl}
-          alt={active.alt ?? productName}
+          alt={meaningfulImageAlt(active.alt, productName)}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
@@ -48,7 +49,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             >
               <Image
                 src={img.imageUrl}
-                alt={img.alt ?? `${productName} ${index + 1}`}
+                alt={meaningfulImageAlt(img.alt, productName)}
                 fill
                 sizes="64px"
                 className="object-cover"

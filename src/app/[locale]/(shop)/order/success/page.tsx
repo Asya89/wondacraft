@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: OrderSuccessPageProps): Promi
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
   return {
     title: getTranslations(locale).order.successTitle,
-    robots: { index: false },
+    robots: { index: false, follow: false, nocache: true },
   };
 }
 

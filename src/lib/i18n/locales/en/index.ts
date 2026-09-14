@@ -189,6 +189,33 @@ export const en = {
     email: 'Email',
     instagram: 'Instagram',
   },
+  seo: {
+    homeTitle: 'WondaCraft — Armenian handmade crafts',
+    homeDescription:
+      'Discover handmade works created in Armenia on WondaCraft. Meet selected makers and find unique toys, wooden pieces, and thoughtful gifts.',
+    productsTitle: 'Handmade products',
+    productsDescription:
+      'Browse WondaCraft’s Armenian handmade collection — toys, wooden pieces, and other distinctive works created in Armenia by selected makers.',
+    makersTitle: 'Makers',
+    makersDescription:
+      'Meet the makers behind WondaCraft — Armenian artisans who create unique handmade toys, clocks, and other distinctive works by hand.',
+    aboutTitle: 'About us',
+    aboutDescription:
+      'Learn about WondaCraft, a platform for Armenian handmade that discovers makers and supports local small production in Armenia.',
+    contactTitle: 'Contact',
+    contactDescription:
+      'Contact WondaCraft about orders, collaborations, or Armenian handmade products by phone, email, or Instagram.',
+    categoryDescription:
+      'Discover Armenian handmade works in the {name} category and find distinctive pieces on WondaCraft.',
+    productFallback: '{name} — handmade in Armenia, available on WondaCraft.',
+    productMaker: 'Maker: {maker}.',
+    makerTitle: '{name} — {craft}',
+    makerDescription: '{name} — {craft}. {bio}',
+    defaultImageAlt: 'Armenian handmade works on WondaCraft',
+    heroImageAlt: 'Armenian handmade works created in Armenia',
+    aboutImageAlt: 'The story of WondaCraft and Armenian handmade',
+    breadcrumbHome: 'Home',
+  },
   footer: {
     rights: 'All rights reserved',
     followUs: 'Follow us',
