@@ -1,6 +1,7 @@
 import { getDashboardStats } from '@/server/services/order.service';
 import { formatPrice, formatDate } from '@/lib/utils';
 import Link from 'next/link';
+import { ORDER_STATUS_LABELS } from '@/lib/admin/order-status';
 
 export default async function AdminDashboardPage() {
   const stats = await getDashboardStats();
@@ -52,7 +53,7 @@ export default async function AdminDashboardPage() {
                   <td className="px-4 py-3">{formatPrice(order.totalAmount)}</td>
                   <td className="px-4 py-3">
                     <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs text-yellow-800">
-                      {order.status}
+                      {ORDER_STATUS_LABELS[order.status]}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-gray-500">{formatDate(order.createdAt)}</td>

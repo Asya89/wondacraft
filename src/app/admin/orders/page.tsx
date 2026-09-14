@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { getAllOrdersAdmin } from '@/server/services/order.service';
 import { formatPrice, formatDate } from '@/lib/utils';
 import { OrderStatus } from '@prisma/client';
+import { ORDER_STATUS_LABELS } from '@/lib/admin/order-status';
 
 interface AdminOrdersPageProps {
   searchParams: Promise<{ status?: string }>;
@@ -32,7 +33,7 @@ export default async function AdminOrdersPage({ searchParams }: AdminOrdersPageP
             href={`/admin/orders?status=${s}`}
             className={`rounded-sm px-3 py-1 text-sm ${status === s ? 'bg-warm-brown text-white' : 'bg-white border'}`}
           >
-            {s}
+            {ORDER_STATUS_LABELS[s]}
           </Link>
         ))}
       </div>
@@ -61,7 +62,9 @@ export default async function AdminOrdersPage({ searchParams }: AdminOrdersPageP
                 <td className="px-4 py-3">{order.customerPhone}</td>
                 <td className="px-4 py-3">{formatPrice(order.totalAmount)}</td>
                 <td className="px-4 py-3">
-                  <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs">{order.status}</span>
+                  <span className="rounded-full bg-yellow-100 px-2 py-0.5 text-xs">
+                    {ORDER_STATUS_LABELS[order.status]}
+                  </span>
                 </td>
                 <td className="px-4 py-3 text-gray-500">{formatDate(order.createdAt)}</td>
               </tr>

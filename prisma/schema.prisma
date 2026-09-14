@@ -113,6 +113,7 @@ model Order {
   orderNumber     String        @unique
   customerName    String
   customerPhone   String
+  customerCity    String?
   customerAddress String?
   comment         String?
   status          OrderStatus   @default(PENDING)

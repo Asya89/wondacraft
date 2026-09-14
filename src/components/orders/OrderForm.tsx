@@ -62,8 +62,19 @@ export function OrderForm({ productId, productName, price }: OrderFormProps) {
           defaultValue={1}
           required
         />
+        <Input name="customerCity" label={translations.order.city} autoComplete="address-level2" />
         <Input name="customerAddress" label={translations.order.address} autoComplete="street-address" />
         <Textarea name="comment" label={translations.order.comment} rows={3} />
+
+        <label className="flex items-start gap-3 text-sm leading-relaxed text-muted">
+          <input
+            type="checkbox"
+            name="consent"
+            required
+            className="mt-1 h-4 w-4 shrink-0 rounded-sm border-border accent-warm-brown"
+          />
+          <span>{translations.order.consent}</span>
+        </label>
 
         {state?.error && (
           <p className="rounded-sm bg-red-50 p-3 text-sm text-red-600">{state.error}</p>

@@ -53,6 +53,7 @@ export async function createOrder(input: CreateOrderInput) {
         orderNumber,
         customerName: validated.customerName,
         customerPhone: validated.customerPhone,
+        customerCity: validated.customerCity ?? null,
         customerAddress: validated.customerAddress ?? null,
         comment: validated.comment ?? null,
         status: OrderStatus.PENDING,

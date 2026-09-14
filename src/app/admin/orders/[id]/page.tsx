@@ -4,9 +4,19 @@ import { formatPrice, formatDate } from '@/lib/utils';
 import { updateOrderStatusFormAction } from '@/app/actions/admin';
 import { Button } from '@/components/ui/Button';
 import { OrderStatus } from '@prisma/client';
+import { ORDER_STATUS_HELP, ORDER_STATUS_LABELS } from '@/lib/admin/order-status';
 
 interface OrderDetailPageProps {
   params: Promise<{ id: string }>;
+}
+
+function Field({ label, value }: { label: string; value: string | null | undefined }) {
+  return (
+    <div>
+      <dt className="text-gray-500">{label}</dt>
+      <dd className="mt-0.5 whitespace-pre-line">{value?.trim() ? value : '—'}</dd>
+    </div>
+  );
 }
 
 export default async function OrderDetailPage({ params }: OrderDetailPageProps) {
@@ -24,33 +34,47 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="rounded-sm border bg-white p-6 shadow-sm">
           <h2 className="mb-4 font-medium">Customer</h2>
-          <dl className="space-y-2 text-sm">
-            <div><dt className="text-gray-500">Name</dt><dd>{order.customerName}</dd></div>
-            <div><dt className="text-gray-500">Phone</dt><dd>{order.customerPhone}</dd></div>
-            {order.customerAddress && (
-              <div><dt className="text-gray-500">Address</dt><dd>{order.customerAddress}</dd></div>
-            )}
-            {order.comment && (
-              <div><dt className="text-gray-500">Comment</dt><dd>{order.comment}</dd></div>
-            )}
+          <dl className="space-y-3 text-sm">
+            <Field label="Name" value={order.customerName} />
+            <Field label="Phone" value={order.customerPhone} />
+            <Field label="City" value={order.customerCity} />
+            <Field label="Address" value={order.customerAddress} />
+            <Field label="Customer comment" value={order.comment} />
           </dl>
         </div>
 
         <div className="rounded-sm border bg-white p-6 shadow-sm">
           <h2 className="mb-4 font-medium">Status</h2>
           <dl className="mb-4 space-y-2 text-sm">
-            <div><dt className="text-gray-500">Order Status</dt><dd>{order.status}</dd></div>
-            <div><dt className="text-gray-500">Payment Status</dt><dd>{order.paymentStatus}</dd></div>
-            <div><dt className="text-gray-500">Payment Method</dt><dd>{order.paymentMethod}</dd></div>
+            <div>
+              <dt className="text-gray-500">Order Status</dt>
+              <dd>{ORDER_STATUS_LABELS[order.status]}</dd>
+              <p className="mt-1 text-xs leading-relaxed text-gray-500">
+                {ORDER_STATUS_HELP[order.status]}
+              </p>
+            </div>
+            <div>
+              <dt className="text-gray-500">Payment Status</dt>
+              <dd>{order.paymentStatus}</dd>
+            </div>
+            <div>
+              <dt className="text-gray-500">Payment Method</dt>
+              <dd>{order.paymentMethod}</dd>
+            </div>
           </dl>
 
-          <form action={boundUpdate} className="flex gap-2">
-            <select name="status" defaultValue={order.status} className="rounded border px-3 py-2 text-sm">
+          <form action={boundUpdate} className="space-y-3">
+            <select name="status" defaultValue={order.status} className="w-full rounded border px-3 py-2 text-sm">
               {Object.values(OrderStatus).map((s) => (
-                <option key={s} value={s}>{s}</option>
+                <option key={s} value={s}>
+                  {ORDER_STATUS_LABELS[s]}
+                </option>
               ))}
             </select>
-            <Button type="submit" size="sm">Update</Button>
+            <p className="text-xs leading-relaxed text-gray-500">{ORDER_STATUS_HELP[order.status]}</p>
+            <Button type="submit" size="sm">
+              Update
+            </Button>
           </form>
         </div>
       </div>
@@ -78,7 +102,9 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan={3} className="pt-4 text-right font-medium">Total</td>
+              <td colSpan={3} className="pt-4 text-right font-medium">
+                Total
+              </td>
               <td className="pt-4 font-medium text-warm-brown">{formatPrice(order.totalAmount)}</td>
             </tr>
           </tfoot>

@@ -20,6 +20,7 @@ export const createOrderSchema = z.object({
     .refine((val) => armenianPhoneRegex.test(val) || /^\+?\d{8,15}$/.test(val), {
       message: 'Մուտքագրեք վավեր հեռախոսահամար',
     }),
+  customerCity: z.string().max(100).optional().nullable(),
   customerAddress: z.string().max(500).optional().nullable(),
   comment: z.string().max(1000).optional().nullable(),
   items: z.array(orderItemSchema).min(1),
@@ -37,8 +38,10 @@ export const singleProductOrderSchema = z.object({
     .refine((val) => armenianPhoneRegex.test(val) || /^\+?\d{8,15}$/.test(val),
       'Մուտքագրեք վավեր հեռախոսահամար'),
   quantity: z.coerce.number().int().min(1).max(10),
+  customerCity: z.string().max(100).optional().nullable(),
   customerAddress: z.string().max(500).optional().nullable(),
   comment: z.string().max(1000).optional().nullable(),
+  consent: z.literal(true, { error: 'Համաձայնությունը պարտադիր է' }),
 });
 
 export type SingleProductOrderInput = z.infer<typeof singleProductOrderSchema>;

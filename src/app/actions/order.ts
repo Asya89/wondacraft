@@ -25,8 +25,10 @@ export async function submitOrderAction(
     customerName: formData.get('customerName') as string,
     customerPhone: formData.get('customerPhone') as string,
     quantity: formData.get('quantity'),
+    customerCity: (formData.get('customerCity') as string) || null,
     customerAddress: (formData.get('customerAddress') as string) || null,
     comment: (formData.get('comment') as string) || null,
+    consent: formData.get('consent') === 'on',
   };
 
   const parsed = singleProductOrderSchema.safeParse(raw);
@@ -35,19 +37,16 @@ export async function submitOrderAction(
     return { error: firstError };
   }
 
+  let order;
   try {
-    const order = await createOrder({
+    order = await createOrder({
       customerName: parsed.data.customerName,
       customerPhone: parsed.data.customerPhone,
+      customerCity: parsed.data.customerCity,
       customerAddress: parsed.data.customerAddress,
       comment: parsed.data.comment,
       items: [{ productId: parsed.data.productId, quantity: parsed.data.quantity }],
     });
-
-    const localeRaw = formData.get('locale');
-    const locale = typeof localeRaw === 'string' && isLocale(localeRaw) ? localeRaw : defaultLocale;
-
-    redirect(`${localizedPath('/order/success', locale)}?order=${order.orderNumber}`);
   } catch (error) {
     if (error instanceof Error) {
       if (error.message.startsWith('INSUFFICIENT_STOCK')) {
@@ -59,4 +58,9 @@ export async function submitOrderAction(
     }
     return { error: 'Պատվերը չհաջողվեց ստեղծել' };
   }
+
+  const localeRaw = formData.get('locale');
+  const locale = typeof localeRaw === 'string' && isLocale(localeRaw) ? localeRaw : defaultLocale;
+
+  redirect(`${localizedPath('/order/success', locale)}?order=${order.orderNumber}`);
 }
