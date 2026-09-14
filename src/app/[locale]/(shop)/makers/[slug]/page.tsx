@@ -62,7 +62,7 @@ export default async function MakerDetailPage({ params }: MakerDetailPageProps) 
         </div>
 
         <div>
-          <h1 className="font-serif text-4xl text-warm-brown">{maker.name}</h1>
+          <h1 className="font-serif text-3xl break-words text-warm-brown sm:text-4xl">{maker.name}</h1>
           <p className="mt-2 text-sm font-medium tracking-wide text-accent">{maker.craft}</p>
           <p className="mt-6 max-w-2xl leading-relaxed text-muted">{maker.bio}</p>
         </div>
@@ -73,7 +73,7 @@ export default async function MakerDetailPage({ params }: MakerDetailPageProps) 
         {products.length === 0 ? (
           <p className="text-muted">{translations.makers.worksEmpty}</p>
         ) : (
-          <div className="grid grid-cols-2 gap-6 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} locale={locale} />
             ))}

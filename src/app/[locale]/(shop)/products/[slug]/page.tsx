@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
           <div>
             <p className="text-sm text-muted">{product.category.name}</p>
-            <h1 className="mt-1 font-serif text-3xl text-warm-brown">{product.name}</h1>
+            <h1 className="mt-1 font-serif text-2xl break-words text-warm-brown sm:text-3xl">{product.name}</h1>
 
             <div className="mt-4 flex items-baseline gap-3">
               <span className="text-2xl font-medium text-warm-brown">
@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               )}
               <div>
-                <p className="font-serif text-xl text-warm-brown">{product.maker.name}</p>
+                <p className="font-serif text-xl break-words text-warm-brown">{product.maker.name}</p>
                 <p className="mt-1 text-sm font-medium tracking-wide text-accent">
                   {product.maker.craft}
                 </p>
@@ -174,7 +174,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             <h2 className="mb-8 font-serif text-2xl text-warm-brown">
               {translations.product.relatedProducts}
             </h2>
-            <div className="grid gap-6 grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
               {relatedProducts.map((p) => (
                 <ProductCard key={p.id} product={p} locale={locale} />
               ))}

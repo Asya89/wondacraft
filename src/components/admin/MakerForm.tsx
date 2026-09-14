@@ -21,7 +21,7 @@ export function MakerForm({ maker, action }: MakerFormProps) {
   );
 
   return (
-    <form action={formAction} className="max-w-lg space-y-4 rounded-sm border bg-white p-6 shadow-sm">
+    <form action={formAction} className="max-w-lg space-y-4 rounded-sm border bg-white p-4 shadow-sm sm:p-6">
       <Input name="name" label="Անուն ազգանուն *" defaultValue={maker?.name} required />
       <Input name="slug" label="Slug" defaultValue={maker?.slug ?? ''} />
       <Input

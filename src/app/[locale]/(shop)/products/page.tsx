@@ -55,7 +55,7 @@ export default async function ProductsPage({ params, searchParams }: ProductsPag
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-      <h1 className="mb-8 font-serif text-3xl text-warm-brown">{translations.products.title}</h1>
+      <h1 className="mb-8 font-serif text-2xl text-warm-brown sm:text-3xl">{translations.products.title}</h1>
 
       <Suspense fallback={null}>
         <ProductFilters categories={categories} />
@@ -65,7 +65,7 @@ export default async function ProductsPage({ params, searchParams }: ProductsPag
         <div className="py-20 text-center text-muted">{translations.products.empty}</div>
       ) : (
         <>
-          <div className="mt-8 grid gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} locale={locale} />
             ))}

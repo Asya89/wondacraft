@@ -14,6 +14,7 @@ interface LogoProps {
 }
 
 export function Logo({ className, height = 48, href = '/', priority = false }: LogoProps) {
+  const hasHeightClass = /(?:^|\s)(?:[\w-]+:)*h-/.test(className ?? '');
   const image = (
     <Image
       src={LOGO_SRC}
@@ -22,7 +23,7 @@ export function Logo({ className, height = 48, href = '/', priority = false }: L
       height={LOGO_HEIGHT}
       priority={priority}
       className={cn('w-auto object-contain', className)}
-      style={{ height }}
+      style={hasHeightClass ? undefined : { height }}
     />
   );
 

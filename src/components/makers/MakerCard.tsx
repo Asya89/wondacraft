@@ -29,10 +29,10 @@ export function MakerCard({ maker, locale }: MakerCardProps) {
           </div>
         )}
       </div>
-      <div className="flex flex-1 flex-col p-5 text-center">
-        <h3 className="font-serif text-xl text-warm-brown">{maker.name}</h3>
+      <div className="flex min-w-0 flex-1 flex-col p-4 text-center sm:p-5">
+        <h3 className="font-serif text-xl break-words text-warm-brown">{maker.name}</h3>
         <p className="mt-1 text-sm font-medium tracking-wide text-accent">{maker.craft}</p>
-        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{maker.bio}</p>
+        <p className="mt-3 flex-1 text-sm leading-relaxed text-muted line-clamp-6 lg:line-clamp-none">{maker.bio}</p>
         <Link
           href={localizedPath(`/makers/${maker.slug}`, locale)}
           className="mt-5 inline-flex items-center justify-center text-sm font-medium text-warm-brown transition-colors hover:text-accent"

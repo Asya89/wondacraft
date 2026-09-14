@@ -33,25 +33,28 @@ export default async function OrderSuccessPage({ params, searchParams }: OrderSu
   const translations = getTranslations(locale);
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-20 text-center sm:px-6">
+    <div className="mx-auto max-w-lg px-4 py-12 text-center sm:px-6 sm:py-20">
       <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-cream">
         <span className="text-2xl text-warm-brown">✓</span>
       </div>
-      <h1 className="font-serif text-3xl text-warm-brown">
+      <h1 className="font-serif text-2xl text-warm-brown sm:text-3xl">
         ✅ {translations.order.successTitle}
       </h1>
       <p className="mt-4 leading-relaxed text-muted">{translations.order.successThanks}</p>
       <p className="mt-3 leading-relaxed text-muted">{translations.order.successMessage}</p>
 
-      <div className="mt-8 rounded-sm border border-border bg-card px-6 py-5">
-        <p className="text-sm text-muted">
-          {translations.order.orderNumber}: {order.orderNumber}
+      <div className="mt-8 rounded-sm border border-border bg-card px-4 py-5 sm:px-6">
+        <p className="text-sm break-words text-muted">
+          {translations.order.orderNumber}:{' '}
+          <span className="font-mono">{order.orderNumber}</span>
         </p>
         <p className="mt-3 text-sm leading-relaxed text-muted">{translations.order.orderNumberHint}</p>
       </div>
 
-      <Link href={localizedPath('/products', locale)} className="mt-8 inline-block">
-        <Button variant="outline">{translations.home.heroCta}</Button>
+      <Link href={localizedPath('/products', locale)} className="mt-8 inline-flex w-full justify-center sm:w-auto">
+        <Button variant="outline" className="w-full whitespace-normal sm:w-auto">
+          {translations.home.heroCta}
+        </Button>
       </Link>
     </div>
   );

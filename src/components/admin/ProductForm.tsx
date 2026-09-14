@@ -34,7 +34,7 @@ export function ProductForm({ categories, makers = [], product, action }: Produc
   }));
 
   return (
-    <form action={formAction} className="space-y-4 rounded-sm border bg-white p-6 shadow-sm">
+    <form action={formAction} className="space-y-4 rounded-sm border bg-white p-4 shadow-sm sm:p-6">
       <Input name="name" label="Name *" defaultValue={product?.name} required />
       <Input name="slug" label="Slug" defaultValue={product?.slug ?? ''} placeholder="Auto-generated if empty" />
       <Select
@@ -52,19 +52,19 @@ export function ProductForm({ categories, makers = [], product, action }: Produc
       />
       <Input name="shortDescription" label="Short Description" defaultValue={product?.shortDescription ?? ''} />
       <Textarea name="description" label="Description" defaultValue={product?.description ?? ''} rows={5} />
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input name="price" label="Price (AMD) *" type="number" defaultValue={product?.price ?? 0} required />
         <Input name="oldPrice" label="Old Price" type="number" defaultValue={product?.oldPrice ?? ''} />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input name="sku" label="SKU" defaultValue={product?.sku ?? ''} />
         <Input name="stock" label="Stock *" type="number" defaultValue={product?.stock ?? 0} required />
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Input name="material" label="Material" defaultValue={product?.material ?? ''} />
         <Input name="size" label="Size" defaultValue={product?.size ?? ''} />
       </div>
-      <div className="flex gap-6">
+      <div className="flex flex-wrap gap-4 sm:gap-6">
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" name="isFeatured" defaultChecked={product?.isFeatured} />
           Featured

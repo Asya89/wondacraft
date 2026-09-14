@@ -10,13 +10,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
     <div className="min-h-screen bg-gray-50">
       {session && (
         <header className="border-b bg-white">
-          <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-            <div className="flex items-center gap-2">
-              <Logo href="/admin/dashboard" height={40} />
+          <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
+            <div className="flex min-w-0 items-center gap-2">
+              <Logo href="/admin/dashboard" className="h-10" />
               <span className="text-sm text-gray-400">Admin</span>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-gray-500">{session.email}</span>
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="hidden truncate text-sm text-gray-500 sm:inline">{session.email}</span>
               <form action={logoutAction}>
                 <button type="submit" className="text-sm text-red-600 hover:underline">
                   Ելք

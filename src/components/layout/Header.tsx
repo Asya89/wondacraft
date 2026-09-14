@@ -23,11 +23,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-          <Logo height={64} href={localizedPath('/', locale)} priority />
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
+          <Logo
+            className="h-10 max-w-[5.5rem] sm:h-12 sm:max-w-none lg:h-16"
+            href={localizedPath('/', locale)}
+            priority
+          />
           <span className="hidden h-10 w-px shrink-0 bg-border/80 sm:block" aria-hidden />
-          <p className="brand-tagline max-w-[9rem] font-serif text-[0.6875rem] leading-snug text-warm-brown sm:max-w-[12rem] sm:text-[0.8125rem] lg:max-w-[15rem] lg:text-sm">
+          <p className="brand-tagline min-w-0 max-w-[7.25rem] font-serif text-[0.625rem] leading-snug text-warm-brown sm:max-w-[12rem] sm:text-[0.8125rem] lg:max-w-[15rem] lg:text-sm">
             {translations.common.tagline.map((line, index) => (
               <span key={line} className="block">
                 {index === 0 && (
@@ -51,13 +55,14 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2">
           <LocaleSwitcher className="hidden sm:flex" />
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-sm md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-sm md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
+            aria-expanded={mobileOpen}
           >
             <span className="relative h-4 w-5">
               <span

@@ -29,8 +29,8 @@ export function OrderForm({ productId, productName, price }: OrderFormProps) {
   }
 
   return (
-    <div className="rounded-sm border border-border bg-card p-6 shadow-sm">
-      <h3 className="mb-4 font-serif text-xl text-warm-brown">
+    <div className="rounded-sm border border-border bg-card p-4 shadow-sm sm:p-6">
+      <h3 className="mb-4 font-serif text-xl break-words text-warm-brown">
         {translations.order.title}: {productName}
       </h3>
       <p className="mb-4 text-sm text-muted">{formatPrice(price)}</p>
@@ -71,20 +71,20 @@ export function OrderForm({ productId, productName, price }: OrderFormProps) {
             type="checkbox"
             name="consent"
             required
-            className="mt-1 h-4 w-4 shrink-0 rounded-sm border-border accent-warm-brown"
+            className="mt-0.5 h-5 w-5 shrink-0 rounded-sm border-border accent-warm-brown"
           />
           <span>{translations.order.consent}</span>
         </label>
 
         {state?.error && (
-          <p className="rounded-sm bg-red-50 p-3 text-sm text-red-600">{state.error}</p>
+          <p className="rounded-sm bg-red-50 p-3 text-sm text-red-600 break-words">{state.error}</p>
         )}
 
-        <div className="flex gap-3">
-          <Button type="submit" loading={pending}>
+        <div className="flex flex-col-reverse gap-3 sm:flex-row">
+          <Button type="submit" loading={pending} className="w-full sm:w-auto">
             {translations.order.submit}
           </Button>
-          <Button type="button" variant="outline" onClick={() => setOpen(false)}>
+          <Button type="button" variant="outline" onClick={() => setOpen(false)} className="w-full sm:w-auto">
             {translations.common.cancel}
           </Button>
         </div>

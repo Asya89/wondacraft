@@ -63,7 +63,7 @@ export function ContactLinks({ locale: _locale, variant = 'footer' }: ContactLin
           <span className={iconWrapClass}>
             <ContactIcon type={item.icon} />
           </span>
-          <span className={`text-muted group-hover:text-foreground ${labelClass}`}>{item.label}</span>
+          <span className={`min-w-0 break-words text-muted group-hover:text-foreground ${labelClass}`}>{item.label}</span>
         </a>
       ))}
     </div>

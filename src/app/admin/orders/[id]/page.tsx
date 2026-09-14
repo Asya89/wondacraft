@@ -14,7 +14,7 @@ function Field({ label, value }: { label: string; value: string | null | undefin
   return (
     <div>
       <dt className="text-gray-500">{label}</dt>
-      <dd className="mt-0.5 whitespace-pre-line">{value?.trim() ? value : '—'}</dd>
+      <dd className="mt-0.5 whitespace-pre-line break-words">{value?.trim() ? value : '—'}</dd>
     </div>
   );
 }
@@ -28,11 +28,11 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
 
   return (
     <div>
-      <h1 className="mb-2 text-2xl font-semibold">Order {order.orderNumber}</h1>
+      <h1 className="mb-2 text-xl font-semibold break-words sm:text-2xl">Order {order.orderNumber}</h1>
       <p className="mb-6 text-sm text-gray-500">{formatDate(order.createdAt)}</p>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-sm border bg-white p-6 shadow-sm">
+        <div className="rounded-sm border bg-white p-4 shadow-sm sm:p-6">
           <h2 className="mb-4 font-medium">Customer</h2>
           <dl className="space-y-3 text-sm">
             <Field label="Name" value={order.customerName} />
@@ -43,7 +43,7 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
           </dl>
         </div>
 
-        <div className="rounded-sm border bg-white p-6 shadow-sm">
+        <div className="rounded-sm border bg-white p-4 shadow-sm sm:p-6">
           <h2 className="mb-4 font-medium">Status</h2>
           <dl className="mb-4 space-y-2 text-sm">
             <div>
@@ -79,9 +79,9 @@ export default async function OrderDetailPage({ params }: OrderDetailPageProps) 
         </div>
       </div>
 
-      <div className="mt-6 rounded-sm border bg-white p-6 shadow-sm">
+      <div className="mt-6 overflow-x-auto rounded-sm border bg-white p-4 shadow-sm sm:p-6">
         <h2 className="mb-4 font-medium">Items</h2>
-        <table className="w-full text-sm">
+        <table className="w-full min-w-[480px] text-sm">
           <thead>
             <tr className="border-b">
               <th className="py-2 text-left">Product</th>

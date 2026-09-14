@@ -31,7 +31,7 @@ export function CategoryForm({ category, parentCategories, action }: CategoryFor
   ];
 
   return (
-    <form action={formAction} className="max-w-lg space-y-4 rounded-sm border bg-white p-6 shadow-sm">
+    <form action={formAction} className="max-w-lg space-y-4 rounded-sm border bg-white p-4 shadow-sm sm:p-6">
       <Input name="name" label="Name *" defaultValue={category?.name} required />
       <Input name="slug" label="Slug" defaultValue={category?.slug ?? ''} />
       <Textarea name="description" label="Description" defaultValue={category?.description ?? ''} />

@@ -32,6 +32,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
@@ -39,6 +40,7 @@ body {
   color: var(--foreground);
   font-family: var(--font-noto-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
 }
 
 h1,
@@ -574,4 +576,41 @@ h4 {
 
 .section-view-all:hover {
   color: var(--warm-brown);
+}
+
+@media (max-width: 639px) {
+  .hero-content {
+    max-width: 100%;
+    padding: 1.5rem 1rem;
+  }
+
+  .hero-content-eyebrow {
+    letter-spacing: 0.16em;
+    font-size: 0.75rem;
+  }
+
+  .category-card-media,
+  .product-card-media {
+    margin: 0.5rem 0.5rem 0;
+  }
+
+  .category-card-body,
+  .product-card-body {
+    padding: 0.75rem 0.75rem 0.875rem;
+  }
+
+  .product-card-title,
+  .category-card-title {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .product-card-footer,
+  .category-card-footer {
+    gap: 0.375rem;
+  }
+
+  .product-card-price {
+    font-size: 0.8125rem;
+  }
 }

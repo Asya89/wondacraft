@@ -58,19 +58,19 @@ export function ProductImageManager({ product }: ProductImageManagerProps) {
   }
 
   return (
-    <div className="rounded-sm border bg-white p-6 shadow-sm">
+    <div className="rounded-sm border bg-white p-4 shadow-sm sm:p-6">
       <h2 className="mb-4 text-lg font-medium">Images</h2>
 
       <div className="space-y-3">
         {product.images.map((img) => (
-          <div key={img.id} className="flex items-center gap-3 rounded border p-2">
+          <div key={img.id} className="flex flex-col gap-3 rounded border p-2 sm:flex-row sm:items-center">
             <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded">
               <Image src={img.imageUrl} alt={img.alt ?? ''} fill className="object-cover" sizes="64px" />
             </div>
-            <div className="flex-1 text-sm">
+            <div className="min-w-0 flex-1 text-sm">
               {img.isMain && <span className="rounded bg-warm-brown px-1.5 py-0.5 text-xs text-white">Main</span>}
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {!img.isMain && (
                 <Button type="button" size="sm" variant="outline" onClick={() => setMain(img.id)}>
                   Set Main

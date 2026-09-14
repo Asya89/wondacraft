@@ -32,7 +32,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
         />
       </div>
 
-      <h1 className="font-serif text-4xl text-warm-brown">{about.title}</h1>
+      <h1 className="font-serif text-3xl text-warm-brown sm:text-4xl">{about.title}</h1>
 
       <div className="mt-8 space-y-5 leading-relaxed text-muted">
         <p className="font-serif text-2xl leading-snug text-warm-brown">{about.lead}</p>

@@ -35,8 +35,8 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   );
 
   return (
-    <div className="flex flex-wrap gap-4 rounded-sm bg-cream p-4">
-      <div className="flex-1 min-w-[200px]">
+    <div className="flex flex-col gap-3 rounded-sm bg-cream p-4 sm:flex-row sm:flex-wrap">
+      <div className="min-w-0 flex-1 sm:min-w-[200px]">
         <input
           type="search"
           placeholder={translations.products.searchPlaceholder}
@@ -46,14 +46,14 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
               updateParams('search', (e.target as HTMLInputElement).value);
             }
           }}
-          className="w-full rounded-sm border border-border bg-card px-4 py-2 text-sm focus:border-warm-brown focus:outline-none"
+          className="w-full rounded-sm border border-border bg-card px-4 py-2.5 text-base focus:border-warm-brown focus:outline-none md:text-sm"
         />
       </div>
 
       <select
         value={searchParams.get('category') ?? ''}
         onChange={(e) => updateParams('category', e.target.value)}
-        className="rounded-sm border border-border bg-card px-4 py-2 text-sm"
+        className="w-full rounded-sm border border-border bg-card px-4 py-2.5 text-base sm:w-auto md:text-sm"
       >
         <option value="">{translations.products.allCategories}</option>
         {categories.map((cat) => (
@@ -67,7 +67,7 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       <select
         value={searchParams.get('sort') ?? 'newest'}
         onChange={(e) => updateParams('sort', e.target.value)}
-        className="rounded-sm border border-border bg-card px-4 py-2 text-sm"
+        className="w-full max-w-full rounded-sm border border-border bg-card px-4 py-2.5 text-base sm:w-auto md:text-sm"
       >
         <option value="newest">{translations.products.sortNewest}</option>
         <option value="price_asc">{translations.products.sortPriceAsc}</option>

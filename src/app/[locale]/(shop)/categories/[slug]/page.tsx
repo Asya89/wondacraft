@@ -51,8 +51,8 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
             priority
           />
           <div className="absolute inset-0 bg-foreground/20" />
-          <div className="absolute bottom-0 left-0 p-6">
-            <h1 className="font-serif text-3xl text-white sm:text-4xl">{category.name}</h1>
+          <div className="absolute bottom-0 left-0 p-4 sm:p-6">
+            <h1 className="font-serif text-2xl text-white sm:text-4xl">{category.name}</h1>
           </div>
         </div>
       )}
@@ -65,7 +65,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <p className="mb-8 max-w-2xl text-muted">{category.description}</p>
       )}
 
-      <div className="mb-6 flex gap-4">
+      <div className="mb-6 flex flex-wrap gap-x-4 gap-y-2">
         {(['newest', 'price_asc', 'price_desc', 'name'] as const).map((s) => (
           <a
             key={s}
@@ -84,7 +84,7 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <div className="py-20 text-center text-muted">{translations.category.empty}</div>
       ) : (
         <>
-          <div className="grid gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} locale={locale} />
             ))}

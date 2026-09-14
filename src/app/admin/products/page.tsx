@@ -8,15 +8,15 @@ export default async function AdminProductsPage() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-semibold">Products</h1>
         <Link href="/admin/products/create">
           <Button size="sm">+ Create Product</Button>
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-sm border bg-white shadow-sm">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-sm border bg-white shadow-sm">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="border-b bg-gray-50">
             <tr>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Name</th>

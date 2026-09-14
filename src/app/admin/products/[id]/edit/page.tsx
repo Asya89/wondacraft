@@ -26,8 +26,8 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold">Edit: {product.name}</h1>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-xl font-semibold break-words sm:text-2xl">Edit: {product.name}</h1>
         <form action={boundDelete}>
           <Button type="submit" variant="danger" size="sm">
             Delete

@@ -20,7 +20,7 @@ export default async function AdminOrdersPage({ searchParams }: AdminOrdersPageP
     <div>
       <h1 className="mb-6 text-2xl font-semibold">Orders</h1>
 
-      <div className="mb-4 flex gap-2">
+      <div className="mb-4 flex flex-wrap gap-2">
         <Link
           href="/admin/orders"
           className={`rounded-sm px-3 py-1 text-sm ${!status ? 'bg-warm-brown text-white' : 'bg-white border'}`}
@@ -38,8 +38,8 @@ export default async function AdminOrdersPage({ searchParams }: AdminOrdersPageP
         ))}
       </div>
 
-      <div className="overflow-hidden rounded-sm border bg-white shadow-sm">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-sm border bg-white shadow-sm">
+        <table className="w-full min-w-[640px] text-sm">
           <thead className="border-b bg-gray-50">
             <tr>
               <th className="px-4 py-3 text-left font-medium text-gray-500">Order</th>

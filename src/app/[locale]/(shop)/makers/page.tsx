@@ -27,14 +27,14 @@ export default async function MakersPage({ params }: MakersPageProps) {
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-2xl text-center">
-        <h1 className="font-serif text-4xl text-warm-brown">{translations.makers.title}</h1>
+        <h1 className="font-serif text-3xl text-warm-brown sm:text-4xl">{translations.makers.title}</h1>
         <p className="mt-4 leading-relaxed text-muted">{translations.makers.description}</p>
       </div>
 
       {makers.length === 0 ? (
         <p className="mt-12 text-center text-muted">{translations.makers.empty}</p>
       ) : (
-        <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 sm:gap-8 lg:grid-cols-3">
           {makers.map((maker) => (
             <MakerCard key={maker.id} maker={maker} locale={locale} />
           ))}

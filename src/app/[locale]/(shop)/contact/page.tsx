@@ -21,7 +21,7 @@ export default async function ContactPage({ params }: ContactPageProps) {
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6 lg:px-8">
-      <h1 className="font-serif text-4xl text-warm-brown">{translations.contact.title}</h1>
+      <h1 className="font-serif text-3xl text-warm-brown sm:text-4xl">{translations.contact.title}</h1>
       <p className="mt-4 text-muted">{translations.contact.description}</p>
 
       <div className="mt-10">

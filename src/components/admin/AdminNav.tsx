@@ -17,13 +17,13 @@ export function AdminNav() {
 
   return (
     <nav className="border-t bg-white">
-      <div className="mx-auto flex max-w-7xl gap-1 px-4">
+      <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4">
         {links.map((link) => (
           <Link
             key={link.href}
             href={link.href}
             className={cn(
-              'px-4 py-3 text-sm transition-colors',
+              'shrink-0 whitespace-nowrap px-3 py-3 text-sm transition-colors sm:px-4',
               pathname.startsWith(link.href)
                 ? 'border-b-2 border-warm-brown text-warm-brown font-medium'
                 : 'text-gray-600 hover:text-gray-900',
@@ -34,7 +34,7 @@ export function AdminNav() {
         ))}
         <Link
           href="/hy"
-          className="ml-auto px-4 py-3 text-sm text-gray-500 hover:text-gray-900"
+          className="ml-auto shrink-0 whitespace-nowrap px-3 py-3 text-sm text-gray-500 hover:text-gray-900 sm:px-4"
           target="_blank"
         >
           View site →

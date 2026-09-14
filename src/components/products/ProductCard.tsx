@@ -58,7 +58,7 @@ export function ProductCard({ product, locale }: ProductCardProps) {
           <span className="product-card-accent" aria-hidden>
             ✦
           </span>
-          <h3 className="product-card-title font-serif text-lg text-warm-brown">{product.name}</h3>
+          <h3 className="product-card-title font-serif text-base text-warm-brown sm:text-lg">{product.name}</h3>
           {(product.shortDescription || product.size) && (
             <p className="product-card-description">{product.shortDescription ?? product.size}</p>
           )}

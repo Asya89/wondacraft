@@ -30,8 +30,8 @@ export default async function AdminDashboardPage() {
 
       <div className="mt-8">
         <h2 className="mb-4 text-lg font-medium">Recent Orders</h2>
-        <div className="overflow-hidden rounded-sm border bg-white shadow-sm">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto rounded-sm border bg-white shadow-sm">
+          <table className="w-full min-w-[640px] text-sm">
             <thead className="border-b bg-gray-50">
               <tr>
                 <th className="px-4 py-3 text-left font-medium text-gray-500">Order</th>
