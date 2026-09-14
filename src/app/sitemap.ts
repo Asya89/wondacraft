@@ -7,12 +7,16 @@ import { getSiteUrl } from '@/lib/utils';
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl();
 
-  const [products, categories] = await Promise.all([
+  const [products, categories, makers] = await Promise.all([
     prisma.product.findMany({
       where: { isActive: true },
       select: { slug: true, updatedAt: true },
     }),
     prisma.category.findMany({
+      where: { isActive: true },
+      select: { slug: true, updatedAt: true },
+    }),
+    prisma.maker.findMany({
       where: { isActive: true },
       select: { slug: true, updatedAt: true },
     }),
@@ -47,5 +51,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...staticPages, ...productPages, ...categoryPages];
+  const makerPages: MetadataRoute.Sitemap = locales.flatMap((locale) =>
+    makers.map((m) => ({
+      url: `${baseUrl}${localizedPath(`/makers/${m.slug}`, locale)}`,
+      lastModified: m.updatedAt,
+      changeFrequency: 'weekly' as const,
+      priority: 0.7,
+    })),
+  );
+
+  return [...staticPages, ...productPages, ...categoryPages, ...makerPages];
 }

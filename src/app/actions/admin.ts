@@ -53,6 +53,7 @@ export async function createProductAction(formData: FormData) {
   const product = await createProduct({ ...parsed.data, slug });
   revalidatePath('/products');
   revalidatePath('/admin/products');
+  revalidatePath('/makers');
   redirect(`/admin/products/${product.id}/edit`);
 }
 
@@ -76,6 +77,7 @@ export async function updateProductAction(id: string, formData: FormData) {
   revalidatePath('/products');
   revalidatePath(`/products/${slug}`);
   revalidatePath('/admin/products');
+  revalidatePath('/makers');
   return { success: true };
 }
 
@@ -160,6 +162,7 @@ export async function createMakerAction(formData: FormData) {
   await createMaker({ ...parsed.data, slug });
   revalidatePath('/admin/makers');
   revalidatePath('/makers');
+  revalidatePath(`/makers/${slug}`);
   revalidatePath('/');
   redirect('/admin/makers');
 }
@@ -181,6 +184,7 @@ export async function updateMakerAction(id: string, formData: FormData) {
   await updateMaker(id, { ...parsed.data, slug });
   revalidatePath('/admin/makers');
   revalidatePath('/makers');
+  revalidatePath(`/makers/${slug}`);
   revalidatePath('/');
   return { success: true };
 }

@@ -157,7 +157,7 @@ export default async function HomePage({ params }: HomePageProps) {
         {makers.length > 0 ? (
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {makers.map((maker) => (
-              <MakerCard key={maker.id} maker={maker} />
+              <MakerCard key={maker.id} maker={maker} locale={locale} />
             ))}
           </div>
         ) : (
@@ -175,7 +175,8 @@ export default async function HomePage({ params }: HomePageProps) {
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-cream text-warm-brown">
                 <WhyFeatureIcon type={item.icon} />
               </div>
-              <h3 className="font-serif text-lg">{item.title}</h3>
+              <h3 className="font-serif text-lg text-warm-brown">{item.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{item.description}</p>
             </div>
           ))}
         </div>

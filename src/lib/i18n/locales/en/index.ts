@@ -40,7 +40,7 @@ export const en = {
     heroTitle: 'What is made by hand is also made with heart',
     heroDescription:
       'Discover unique handmade works created in Armenia, meet their makers, and support local small business',
-    heroCta: 'View products',
+    heroCta: 'Discover the works →',
     categoriesTitle: 'Categories',
     allProductsTitle: 'WondaCraft selection',
     newTitle: 'New products',
@@ -48,10 +48,26 @@ export const en = {
     makersTitle: 'Makers',
     whyTitle: 'Why WondaCraft',
     whyItems: [
-      { title: 'Handmade', icon: 'handmade' },
-      { title: 'Unique', icon: 'unique' },
-      { title: 'High quality', icon: 'quality' },
-      { title: 'Made with love', icon: 'love' },
+      {
+        title: 'Armenian production',
+        description: 'We support works created in Armenia and local small businesses.',
+        icon: 'local',
+      },
+      {
+        title: 'Selected makers',
+        description: 'WondaCraft itself discovers and selects the makers.',
+        icon: 'makers',
+      },
+      {
+        title: 'Real stories',
+        description: 'Behind every piece is its maker and their story.',
+        icon: 'stories',
+      },
+      {
+        title: 'Distinctive works',
+        description: 'We choose pieces that have their own handwriting and character.',
+        icon: 'unique',
+      },
     ],
     ctaTitle: 'Find your unique handmade piece',
     ctaButton: 'View products',
@@ -149,6 +165,10 @@ export const en = {
     description:
       'Meet the people who create WondaCraft pieces with their hands and hearts.',
     empty: 'No makers yet',
+    viewWorks: 'View works',
+    worksTitle: 'Works',
+    worksEmpty: 'This maker’s works will appear here soon.',
+    notFound: 'Maker not found',
   },
   contact: {
     title: 'Contact',

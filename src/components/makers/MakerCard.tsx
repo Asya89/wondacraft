@@ -1,11 +1,17 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { MakerRecord } from '@/server/services/maker.service';
+import { getTranslations, type Locale } from '@/lib/i18n';
+import { localizedPath } from '@/lib/i18n/path';
 
 interface MakerCardProps {
   maker: MakerRecord;
+  locale: Locale;
 }
 
-export function MakerCard({ maker }: MakerCardProps) {
+export function MakerCard({ maker, locale }: MakerCardProps) {
+  const translations = getTranslations(locale);
+
   return (
     <article className="flex h-full flex-col overflow-hidden rounded-sm border border-border bg-card shadow-sm">
       <div className="relative aspect-[4/5] overflow-hidden bg-cream">
@@ -27,6 +33,12 @@ export function MakerCard({ maker }: MakerCardProps) {
         <h3 className="font-serif text-xl text-warm-brown">{maker.name}</h3>
         <p className="mt-1 text-sm font-medium tracking-wide text-accent">{maker.craft}</p>
         <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{maker.bio}</p>
+        <Link
+          href={localizedPath(`/makers/${maker.slug}`, locale)}
+          className="mt-5 inline-flex items-center justify-center text-sm font-medium text-warm-brown transition-colors hover:text-accent"
+        >
+          {translations.makers.viewWorks} →
+        </Link>
       </div>
     </article>
   );

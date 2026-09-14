@@ -6,6 +6,8 @@ export type ProductSortOption = 'newest' | 'price_asc' | 'price_desc' | 'name';
 
 export interface ProductFilters {
   categorySlug?: string;
+  makerSlug?: string;
+  makerId?: string;
   search?: string;
   isFeatured?: boolean;
   isNew?: boolean;
@@ -33,13 +35,25 @@ function getOrderBy(sort: ProductSortOption = 'newest'): Prisma.ProductOrderByWi
 }
 
 export async function getProducts(filters: ProductFilters = {}) {
-  const { categorySlug, search, isFeatured, isNew, page = 1, limit = 12, sort = 'newest' } = filters;
+  const {
+    categorySlug,
+    makerSlug,
+    makerId,
+    search,
+    isFeatured,
+    isNew,
+    page = 1,
+    limit = 12,
+    sort = 'newest',
+  } = filters;
 
   const where: Prisma.ProductWhereInput = {
     isActive: true,
     ...(isFeatured !== undefined && { isFeatured }),
     ...(isNew !== undefined && { isNew }),
     ...(categorySlug && { category: { slug: categorySlug, isActive: true } }),
+    ...(makerId && { makerId }),
+    ...(makerSlug && !makerId && { maker: { slug: makerSlug, isActive: true } }),
     ...(search && {
       OR: [
         { name: { contains: search, mode: 'insensitive' } },
@@ -116,6 +130,7 @@ export async function createProduct(data: {
   name: string;
   slug?: string;
   categoryId: string;
+  makerId?: string | null;
   shortDescription?: string | null;
   description?: string | null;
   price: number;
@@ -141,6 +156,7 @@ export async function updateProduct(
     name: string;
     slug: string;
     categoryId: string;
+    makerId: string | null;
     shortDescription: string | null;
     description: string | null;
     price: number;

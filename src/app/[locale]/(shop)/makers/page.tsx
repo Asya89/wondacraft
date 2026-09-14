@@ -36,7 +36,7 @@ export default async function MakersPage({ params }: MakersPageProps) {
       ) : (
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {makers.map((maker) => (
-            <MakerCard key={maker.id} maker={maker} />
+            <MakerCard key={maker.id} maker={maker} locale={locale} />
           ))}
         </div>
       )}

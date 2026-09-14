@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { getProductByIdAdmin } from '@/server/services/product.service';
 import { getAllCategoriesFlat } from '@/server/services/category.service';
+import { getMakers } from '@/server/services/maker.service';
 import { ProductForm } from '@/components/admin/ProductForm';
 import { updateProductAction, deleteProductFormAction } from '@/app/actions/admin';
 import { ProductImageManager } from '@/components/admin/ProductImageManager';
@@ -12,9 +13,10 @@ interface EditProductPageProps {
 
 export default async function EditProductPage({ params }: EditProductPageProps) {
   const { id } = await params;
-  const [product, categories] = await Promise.all([
+  const [product, categories, makers] = await Promise.all([
     getProductByIdAdmin(id),
     getAllCategoriesFlat(),
+    getMakers(true),
   ]);
 
   if (!product) notFound();
@@ -34,7 +36,12 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
       </div>
 
       <div className="grid gap-8 lg:grid-cols-2">
-        <ProductForm categories={categories} product={product} action={boundUpdate} />
+        <ProductForm
+          categories={categories}
+          makers={makers}
+          product={product}
+          action={boundUpdate}
+        />
         <ProductImageManager product={product} />
       </div>
     </div>

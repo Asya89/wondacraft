@@ -64,6 +64,8 @@ model Product {
   id               String         @id @default(cuid())
   categoryId       String
   category         Category       @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  makerId          String?
+  maker            Maker?         @relation(fields: [makerId], references: [id], onDelete: SetNull)
   name             String
   slug             String         @unique
   shortDescription String?
@@ -85,6 +87,7 @@ model Product {
   favorites        Favorite[]
 
   @@index([categoryId])
+  @@index([makerId])
   @@index([isActive, isFeatured])
   @@index([isActive, isNew])
   @@index([createdAt])
@@ -181,16 +184,17 @@ model Payment {
 }
 
 model Maker {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
-  slug      String   @unique
+  slug      String    @unique
   craft     String
   bio       String
   image     String?
-  sortOrder Int      @default(0)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sortOrder Int       @default(0)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  products  Product[]
 
   @@index([isActive, sortOrder])
 }

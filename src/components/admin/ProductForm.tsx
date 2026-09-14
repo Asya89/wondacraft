@@ -9,11 +9,12 @@ import type { ProductWithRelations } from '@/server/services/product.service';
 
 interface ProductFormProps {
   categories: Array<{ id: string; name: string; parent: { name: string } | null }>;
+  makers?: Array<{ id: string; name: string }>;
   product?: ProductWithRelations;
   action: (formData: FormData) => Promise<{ error?: string; success?: boolean } | void>;
 }
 
-export function ProductForm({ categories, product, action }: ProductFormProps) {
+export function ProductForm({ categories, makers = [], product, action }: ProductFormProps) {
   const [state, formAction, pending] = useActionState(
     async (_prev: { error?: string; success?: boolean } | null, formData: FormData) => {
       const result = await action(formData);
@@ -27,6 +28,11 @@ export function ProductForm({ categories, product, action }: ProductFormProps) {
     label: c.parent ? `${c.parent.name} → ${c.name}` : c.name,
   }));
 
+  const makerOptions = makers.map((m) => ({
+    value: m.id,
+    label: m.name,
+  }));
+
   return (
     <form action={formAction} className="space-y-4 rounded-sm border bg-white p-6 shadow-sm">
       <Input name="name" label="Name *" defaultValue={product?.name} required />
@@ -37,6 +43,12 @@ export function ProductForm({ categories, product, action }: ProductFormProps) {
         options={[{ value: '', label: 'Select...' }, ...categoryOptions]}
         defaultValue={product?.categoryId ?? ''}
         required
+      />
+      <Select
+        name="makerId"
+        label="Հեղինակ"
+        options={[{ value: '', label: 'Չի նշված' }, ...makerOptions]}
+        defaultValue={product?.makerId ?? ''}
       />
       <Input name="shortDescription" label="Short Description" defaultValue={product?.shortDescription ?? ''} />
       <Textarea name="description" label="Description" defaultValue={product?.description ?? ''} rows={5} />

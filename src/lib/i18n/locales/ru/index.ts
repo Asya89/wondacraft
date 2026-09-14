@@ -40,7 +40,7 @@ export const ru = {
     heroTitle: 'То, что создаётся руками, создаётся также сердцем',
     heroDescription:
       'Откройте уникальные изделия ручной работы, созданные в Армении, узнайте их авторов и поддержите местный малый бизнес',
-    heroCta: 'Смотреть товары',
+    heroCta: 'Открыть работы →',
     categoriesTitle: 'Категории',
     allProductsTitle: 'Подборка WondaCraft',
     newTitle: 'Новые товары',
@@ -48,10 +48,26 @@ export const ru = {
     makersTitle: 'Авторы',
     whyTitle: 'Почему WondaCraft',
     whyItems: [
-      { title: 'Ручная работа', icon: 'handmade' },
-      { title: 'Уникальность', icon: 'unique' },
-      { title: 'Высокое качество', icon: 'quality' },
-      { title: 'Сделано с любовью', icon: 'love' },
+      {
+        title: 'Армянское производство',
+        description: 'Мы поддерживаем работы, созданные в Армении, и местный малый бизнес.',
+        icon: 'local',
+      },
+      {
+        title: 'Отобранные создатели',
+        description: 'WondaCraft сам открывает и выбирает создателей.',
+        icon: 'makers',
+      },
+      {
+        title: 'Настоящие истории',
+        description: 'За каждой работой стоит её создатель и история.',
+        icon: 'stories',
+      },
+      {
+        title: 'Уникальные работы',
+        description: 'Мы выбираем работы, у которых есть свой почерк и характер.',
+        icon: 'unique',
+      },
     ],
     ctaTitle: 'Найдите своё уникальное изделие ручной работы',
     ctaButton: 'Смотреть товары',
@@ -149,6 +165,10 @@ export const ru = {
     description:
       'Познакомьтесь с людьми, которые создают изделия WondaCraft руками и сердцем.',
     empty: 'Авторов пока нет',
+    viewWorks: 'Смотреть работы',
+    worksTitle: 'Работы',
+    worksEmpty: 'Работы этого автора скоро появятся здесь.',
+    notFound: 'Автор не найден',
   },
   contact: {
     title: 'Контакты',

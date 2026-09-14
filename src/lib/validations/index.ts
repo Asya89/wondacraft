@@ -54,6 +54,11 @@ export const productFormSchema = z.object({
   name: z.string().min(2).max(200),
   slug: z.string().min(2).max(200).optional(),
   categoryId: z.string().min(1),
+  makerId: z
+    .string()
+    .optional()
+    .nullable()
+    .transform((value) => (value && value.length > 0 ? value : null)),
   shortDescription: z.string().max(500).optional().nullable(),
   description: z.string().max(5000).optional().nullable(),
   price: z.coerce.number().int().min(0),

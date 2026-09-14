@@ -1,7 +1,7 @@
 import type { hy } from './locales/hy';
 
-type WhyFeatureIconKey = 'handmade' | 'unique' | 'quality' | 'love';
-type WhyFeatureItem = { title: string; icon: WhyFeatureIconKey };
+type WhyFeatureIconKey = 'local' | 'makers' | 'stories' | 'unique';
+type WhyFeatureItem = { title: string; description: string; icon: WhyFeatureIconKey };
 
 type DeepStringify<T> = T extends readonly WhyFeatureItem[]
   ? readonly WhyFeatureItem[]
