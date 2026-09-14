@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getProductBySlug, getRelatedProducts } from '@/server/services/product.service';
 import { ProductCard } from '@/components/products/ProductCard';
@@ -125,6 +127,44 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </h2>
             <div className="prose max-w-none leading-relaxed text-muted whitespace-pre-line">
               {product.description}
+            </div>
+          </section>
+        )}
+
+        {product.maker && (
+          <section className="mt-16 border-t border-border pt-10">
+            <h2 className="mb-6 font-serif text-2xl text-warm-brown">
+              {translations.product.makerTitle}
+            </h2>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+              {product.maker.image && (
+                <div className="relative h-28 w-28 shrink-0 overflow-hidden rounded-sm bg-cream">
+                  <Image
+                    src={product.maker.image}
+                    alt={product.maker.name}
+                    fill
+                    className="object-cover"
+                    sizes="112px"
+                  />
+                </div>
+              )}
+              <div>
+                <p className="font-serif text-xl text-warm-brown">{product.maker.name}</p>
+                <p className="mt-1 text-sm font-medium tracking-wide text-accent">
+                  {product.maker.craft}
+                </p>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                  {product.maker.bio.length > 220
+                    ? `${product.maker.bio.slice(0, 220).trimEnd()}…`
+                    : product.maker.bio}
+                </p>
+                <Link
+                  href={localizedPath(`/makers/${product.maker.slug}`, locale)}
+                  className="mt-4 inline-flex text-sm font-medium text-warm-brown transition-colors hover:text-accent"
+                >
+                  {translations.product.viewMakerWorks} →
+                </Link>
+              </div>
             </div>
           </section>
         )}

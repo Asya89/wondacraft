@@ -134,7 +134,11 @@ export default async function HomePage({ params }: HomePageProps) {
           </div>
           <div>
             <h2 className="font-serif text-3xl text-warm-brown">{translations.home.aboutTitle}</h2>
-            <p className="mt-4 leading-relaxed text-muted">{translations.about.lead}</p>
+            {translations.home.aboutPreview.map((paragraph) => (
+              <p key={paragraph} className="mt-4 leading-relaxed text-muted">
+                {paragraph}
+              </p>
+            ))}
             <Link
               href={localizedPath('/about', locale)}
               className="mt-6 inline-block text-sm text-warm-brown hover:underline"

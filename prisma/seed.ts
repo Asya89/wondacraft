@@ -106,6 +106,7 @@ async function main() {
       name: 'Լավանդա ամիգուրումի արջուկ «Միլո»',
       slug: 'lavanda-amigurumi-ayi-milo',
       categorySlug: 'khaghalikner',
+      makerSlug: 'ani-martirosyan',
       shortDescription: '30 սմ ամիգուրումի արջուկ՝ լավանդա գույնով',
       description:
         'Ձեռագործ ամիգուրումի արջուկ՝ լավանդա գույնի պլյուշ թելից։ Նախագծված է կրեմ գույնի կոճակով և ժապավենով։ Անվտանգ նյութեր՝ իդեալական նվեր մանկական համար։',
@@ -128,6 +129,7 @@ async function main() {
       name: 'Վարդագույն կրոշե նապաստակ «Սոֆի»',
       slug: 'rozayin-crochet-zajik-sofi',
       categorySlug: 'khaghalikner',
+      makerSlug: 'ani-martirosyan',
       shortDescription: 'Կրոշե նապաստակ՝ վարդագույն և կրեմ գույներով',
       description:
         'Յուրահատուկ կրոշե նապաստակ՝ հաստ թելից։ Նախագծված է փափուկ լիցքով՝ իդեալական նվերի համար։',
@@ -147,6 +149,7 @@ async function main() {
       name: 'Փայտե ժամացույց 35 սմ',
       slug: 'patayi-chasy-35-sm',
       categorySlug: 'payte-ashkhatankner',
+      makerSlug: 'vahan-grigoryan',
       shortDescription: '35 սմ փայտե ժամացույց՝ բնական ու մնացորդային փայտից',
       description:
         'Ձեռագործ փայտե ժամացույց՝ բնական ու մնացորդային փայտից։ Հռոմեական թվանշաններով՝ տաք և յուրահատուկ մթնոլորտ ինտերիերի համար։',
@@ -167,6 +170,7 @@ async function main() {
       name: 'Փայտե ժամացույց 40 սմ',
       slug: 'patayi-chasy-40-sm',
       categorySlug: 'payte-ashkhatankner',
+      makerSlug: 'vahan-grigoryan',
       shortDescription: '40 սմ փայտե ժամացույց՝ բնական ու մնացորդային փայտից',
       description:
         'Մեծ չափի փայտե ժամացույց՝ բնական ու մնացորդային փայտից։ Յուրահատուկ հյուսվածք, հռոմեական թվանշաններ։',
@@ -186,6 +190,7 @@ async function main() {
       name: 'Փայտե ժամացույց «Ինտերիեր»',
       slug: 'patayi-chasy-interyer',
       categorySlug: 'payte-ashkhatankner',
+      makerSlug: 'vahan-grigoryan',
       shortDescription: 'Փայտե ժամացույց ժամանակակից ինտերիերի համար',
       description:
         'Էլեգանտ փայտե ժամացույց՝ բնական ու մնացորդային փայտից։ Իդեալական է մինիմալ և տաք ինտերիերների համար։',
@@ -209,48 +214,6 @@ async function main() {
     where: { slug: { notIn: categoriesData.map((c) => c.slug) } },
     data: { isActive: false },
   });
-
-  for (const p of productsData) {
-    const categoryId = categoryMap.get(p.categorySlug);
-    if (!categoryId) continue;
-
-    const product = await prisma.product.upsert({
-      where: { slug: p.slug },
-      update: {
-        name: p.name,
-        categoryId,
-        shortDescription: p.shortDescription,
-        description: p.description,
-        price: p.price,
-        oldPrice: p.oldPrice ?? null,
-        sku: p.sku,
-        stock: p.stock,
-        material: p.material,
-        size: p.size,
-        isFeatured: p.isFeatured,
-        isNew: p.isNew,
-        isActive: true,
-      },
-      create: {
-        name: p.name,
-        slug: p.slug,
-        categoryId,
-        shortDescription: p.shortDescription,
-        description: p.description,
-        price: p.price,
-        oldPrice: p.oldPrice ?? null,
-        sku: p.sku,
-        stock: p.stock,
-        material: p.material,
-        size: p.size,
-        isFeatured: p.isFeatured,
-        isNew: p.isNew,
-        isActive: true,
-      },
-    });
-
-    await setProductImages(product.id, p.images);
-  }
 
   const makersData = [
     {
@@ -306,6 +269,60 @@ async function main() {
     where: { slug: { notIn: makersData.map((m) => m.slug) } },
     data: { isActive: false },
   });
+
+  const makerMap = new Map<string, string>();
+  const makers = await prisma.maker.findMany({
+    where: { slug: { in: makersData.map((m) => m.slug) } },
+    select: { id: true, slug: true },
+  });
+  for (const maker of makers) {
+    makerMap.set(maker.slug, maker.id);
+  }
+
+  for (const p of productsData) {
+    const categoryId = categoryMap.get(p.categorySlug);
+    if (!categoryId) continue;
+    const makerId = p.makerSlug ? (makerMap.get(p.makerSlug) ?? null) : null;
+
+    const product = await prisma.product.upsert({
+      where: { slug: p.slug },
+      update: {
+        name: p.name,
+        categoryId,
+        makerId,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        price: p.price,
+        oldPrice: p.oldPrice ?? null,
+        sku: p.sku,
+        stock: p.stock,
+        material: p.material,
+        size: p.size,
+        isFeatured: p.isFeatured,
+        isNew: p.isNew,
+        isActive: true,
+      },
+      create: {
+        name: p.name,
+        slug: p.slug,
+        categoryId,
+        makerId,
+        shortDescription: p.shortDescription,
+        description: p.description,
+        price: p.price,
+        oldPrice: p.oldPrice ?? null,
+        sku: p.sku,
+        stock: p.stock,
+        material: p.material,
+        size: p.size,
+        isFeatured: p.isFeatured,
+        isNew: p.isNew,
+        isActive: true,
+      },
+    });
+
+    await setProductImages(product.id, p.images);
+  }
 
   console.log('Seed completed successfully!');
   console.log(`Admin login: ${adminEmail} / ${adminPassword}`);

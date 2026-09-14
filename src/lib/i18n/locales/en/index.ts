@@ -45,6 +45,10 @@ export const en = {
     allProductsTitle: 'WondaCraft selection',
     newTitle: 'New products',
     aboutTitle: 'Our story',
+    aboutPreview: [
+      'In Armenia, many talented people create distinctive works with their own hands, but they often lack a place to present what they make.',
+      'WondaCraft was created to discover those makers, tell the story of their work, and support Armenian local production and small business.',
+    ],
     makersTitle: 'Makers',
     whyTitle: 'Why WondaCraft',
     whyItems: [
@@ -93,6 +97,8 @@ export const en = {
     description: 'Description',
     relatedProducts: 'Similar products',
     notFound: 'Product not found',
+    makerTitle: 'The maker',
+    viewMakerWorks: 'View all works by this maker',
   },
   category: {
     notFound: 'Category not found',

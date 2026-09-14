@@ -3,10 +3,20 @@ import Link from 'next/link';
 import { formatPrice } from '@/lib/utils';
 import { getTranslations, type Locale } from '@/lib/i18n';
 import { localizedPath } from '@/lib/i18n/path';
-import type { ProductWithRelations } from '@/server/services/product.service';
 
 interface ProductCardProps {
-  product: ProductWithRelations;
+  product: {
+    id: string;
+    name: string;
+    slug: string;
+    price: number;
+    oldPrice: number | null;
+    isNew: boolean;
+    isFeatured: boolean;
+    shortDescription?: string | null;
+    size?: string | null;
+    images: Array<{ imageUrl: string; alt: string | null; isMain: boolean }>;
+  };
   locale: Locale;
 }
 

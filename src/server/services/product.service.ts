@@ -18,6 +18,7 @@ export interface ProductFilters {
 
 const productInclude = {
   category: true,
+  maker: true,
   images: { orderBy: { sortOrder: 'asc' as const } },
 } satisfies Prisma.ProductInclude;
 

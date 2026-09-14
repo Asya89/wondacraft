@@ -45,6 +45,10 @@ export const ru = {
     allProductsTitle: 'Подборка WondaCraft',
     newTitle: 'Новые товары',
     aboutTitle: 'Наша история',
+    aboutPreview: [
+      'В Армении многие талантливые люди своими руками создают особенные работы, но часто не имеют площадки, где могут представить своё дело.',
+      'WondaCraft создан, чтобы открывать этих создателей, рассказывать об их работах и поддерживать армянское местное производство и малый бизнес.',
+    ],
     makersTitle: 'Авторы',
     whyTitle: 'Почему WondaCraft',
     whyItems: [
@@ -93,6 +97,8 @@ export const ru = {
     description: 'Описание',
     relatedProducts: 'Похожие товары',
     notFound: 'Товар не найден',
+    makerTitle: 'Создатель',
+    viewMakerWorks: 'Смотреть все работы создателя',
   },
   category: {
     notFound: 'Категория не найдена',
