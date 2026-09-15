@@ -16,23 +16,40 @@ const MAPPINGS: AssetMapping[] = [
   { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'hero.webp', maxWidth: 1920 },
   { match: 'about.jpeg', dest: 'about.jpeg', maxWidth: 1600 },
   { match: 'about.jpeg', dest: 'about.webp', maxWidth: 1600 },
-  { match: 'Aug 27, 2026, 01_09_47 PM', dest: 'categories/dzergagort-ayiukner.webp', maxWidth: 900 },
-  { match: 'Aug 26, 2026, 03_23_38 PM', dest: 'categories/ktoric-zajikner.webp', maxWidth: 900 },
-  { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'categories/patayi-chasy.webp', maxWidth: 900 },
-  { match: 'Aug 27, 2026, 01_09_47 PM', dest: 'products/lavanda-ayi-01.webp', maxWidth: 1200 },
-  { match: 'Aug 28, 2026, 12_03_56 PM', dest: 'products/lavanda-ayi-02.webp', maxWidth: 1200 },
-  { match: 'Aug 28, 2026, 12_05_18 PM', dest: 'products/lavanda-ayi-03.webp', maxWidth: 1200 },
-  { match: 'Aug 28, 2026, 12_12_00 PM', dest: 'products/lavanda-ayi-04.webp', maxWidth: 1200 },
-  { match: 'Aug 26, 2026, 03_23_38 PM', dest: 'products/rozayin-zajik-01.webp', maxWidth: 1200 },
-  { match: 'Aug 25, 2026, 02_31_46 PM', dest: 'products/rozayin-zajik-02.webp', maxWidth: 1200 },
-  { match: 'Aug 31, 2026, 04_44_57 PM', dest: 'products/patayi-chasy-35-01.webp', maxWidth: 1200 },
-  { match: 'Aug 24, 2026, 02_12_58 PM', dest: 'products/patayi-chasy-35-02.webp', maxWidth: 1200 },
-  { match: 'Aug 24, 2026, 02_14_07 PM', dest: 'products/patayi-chasy-40-01.webp', maxWidth: 1200 },
-  { match: 'Aug 24, 2026, 02_13_49 PM', dest: 'products/patayi-chasy-40-02.webp', maxWidth: 1200 },
-  { match: 'Aug 24, 2026, 02_13_56 PM', dest: 'products/patayi-chasy-interyer-01.webp', maxWidth: 1200 },
-  { match: '5600378717.webp', dest: 'makers/lilit-hakobyan.webp', maxWidth: 900 },
-  { match: 'Hand-painting.webp', dest: 'makers/ani-martirosyan.webp', maxWidth: 900 },
-  { match: 'istockphoto.jpg', dest: 'makers/vahan-grigoryan.webp', maxWidth: 900 },
+
+  // Categories — real product photos
+  { match: 'bear_1.jpg', dest: 'categories/dzergagort-ayiukner.webp', maxWidth: 900 },
+  { match: 'brelok_panda.jpg', dest: 'categories/ktoric-zajikner.webp', maxWidth: 900 },
+  { match: 'photo_5283033142904173848_y.jpg', dest: 'categories/patayi-chasy.webp', maxWidth: 900 },
+
+  // Toys — bears
+  { match: 'bear_1.jpg', dest: 'products/lavanda-ayi-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173862_y.jpg', dest: 'products/lavanda-ayi-02.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173855_y.jpg', dest: 'products/mokhraguyn-ayi-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173856_y.jpg', dest: 'products/deghdzagayn-ayi-01.webp', maxWidth: 1200 },
+
+  // Toys — bunnies
+  { match: 'bunny_brown_1.jpg', dest: 'products/krem-zajik-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173854_y.jpg', dest: 'products/krem-zajik-02.webp', maxWidth: 1200 },
+  { match: 'bunny_pink_1.png', dest: 'products/rozayin-zajik-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173861_y.jpg', dest: 'products/rozayin-zajik-02.webp', maxWidth: 1200 },
+  { match: 'bunny_pink_2.jpg', dest: 'products/rozayin-zajik-03.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173857_y.jpg', dest: 'products/tsaghikov-zajik-01.webp', maxWidth: 1200 },
+
+  // Accessories — keychains
+  { match: 'brelok_heart.jpg', dest: 'products/brelok-heart-01.webp', maxWidth: 1200 },
+  { match: 'brelok_panda.jpg', dest: 'products/brelok-panda-01.webp', maxWidth: 1200 },
+  { match: 'brelok_tutle.jpg', dest: 'products/brelok-turtle-01.webp', maxWidth: 1200 },
+
+  // Wooden works — clocks only (Gagik)
+  { match: 'photo_5283033142904173848_y.jpg', dest: 'products/patayi-chasy-tree-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173851_y.jpg', dest: 'products/patayi-chasy-apple-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173852_y.jpg', dest: 'products/patayi-chasy-gloss-01.webp', maxWidth: 1200 },
+  { match: 'photo_5283033142904173853_y.jpg', dest: 'products/patayi-chasy-orhnel-01.webp', maxWidth: 1200 },
+
+  // Makers
+  { match: 'Gagik.jpg', dest: 'makers/gagik.webp', maxWidth: 900 },
+  { match: 'Gohar.jpg', dest: 'makers/gohar.webp', maxWidth: 900 },
 ];
 
 async function convertAsset(srcPath: string, destPath: string, maxWidth = 1200) {
