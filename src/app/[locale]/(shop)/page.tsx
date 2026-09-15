@@ -144,7 +144,7 @@ export default async function HomePage({ params }: HomePageProps) {
         <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 sm:gap-12 sm:px-6 lg:grid-cols-2 lg:px-8">
           <div className="relative aspect-[4/3] overflow-hidden rounded-sm">
             <Image
-              src="/images/about.jpeg"
+              src="/images/about.webp"
               alt={translations.seo.aboutImageAlt}
               fill
               className="object-cover"

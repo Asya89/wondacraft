@@ -1,6 +1,7 @@
+import { cache } from 'react';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import { slugifyText } from '@/lib/utils';
+import { slugifyText } from '@/lib/slugify';
 import type { ProductSortOption } from '@/server/services/product.service';
 
 const categoryInclude = {
@@ -20,17 +21,23 @@ export async function getCategories(includeInactive = false) {
 export async function getAllCategoriesFlat(includeInactive = false) {
   return prisma.category.findMany({
     where: includeInactive ? {} : { isActive: true },
-    include: { parent: true },
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      isActive: true,
+      parent: { select: { name: true } },
+    },
     orderBy: [{ sortOrder: 'asc' }, { name: 'asc' }],
   });
 }
 
-export async function getCategoryBySlug(slug: string) {
+export const getCategoryBySlug = cache(async (slug: string) => {
   return prisma.category.findFirst({
     where: { slug, isActive: true },
     include: categoryInclude,
   });
-}
+});
 
 export async function getCategoryProducts(
   slug: string,
@@ -64,9 +71,21 @@ export async function getCategoryProducts(
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       where,
-      include: {
-        category: true,
-        images: { orderBy: { sortOrder: 'asc' } },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        price: true,
+        oldPrice: true,
+        isNew: true,
+        isFeatured: true,
+        shortDescription: true,
+        size: true,
+        images: {
+          orderBy: [{ isMain: 'desc' }, { sortOrder: 'asc' }],
+          take: 1,
+          select: { imageUrl: true, alt: true, isMain: true },
+        },
       },
       orderBy,
       skip: (page - 1) * limit,

@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: AboutPageProps): Promise<Meta
     path: '/about',
     title: translations.seo.aboutTitle,
     description: translations.seo.aboutDescription,
-    image: '/images/about.jpeg',
+    image: '/images/about.webp',
     imageAlt: translations.seo.aboutImageAlt,
   });
 }
@@ -32,7 +32,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-sm">
         <Image
-          src="/images/about.jpeg"
+          src="/images/about.webp"
           alt={translations.seo.aboutImageAlt}
           fill
           className="object-cover"

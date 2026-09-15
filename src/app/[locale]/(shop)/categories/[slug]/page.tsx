@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
-import { getCategoryProducts } from '@/server/services/category.service';
+import { getCategoryBySlug, getCategoryProducts } from '@/server/services/category.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { getTranslations, type Locale } from '@/lib/i18n';
@@ -24,17 +24,17 @@ interface CategoryPageProps {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { slug, locale: localeParam } = await params;
   const locale: Locale = isLocale(localeParam) ? localeParam : 'hy';
-  const result = await getCategoryProducts(slug, { limit: 1 });
-  if (!result) return { title: getTranslations(locale).category.notFound, robots: { index: false } };
+  const category = await getCategoryBySlug(slug);
+  if (!category) return { title: getTranslations(locale).category.notFound, robots: { index: false } };
 
-  const description = buildCategoryDescription(result.category.name, result.category.description, locale);
+  const description = buildCategoryDescription(category.name, category.description, locale);
   return buildPageMetadata({
     locale,
-    path: `/categories/${result.category.slug}`,
-    title: result.category.name,
+    path: `/categories/${category.slug}`,
+    title: category.name,
     description,
-    image: result.category.image,
-    imageAlt: result.category.name,
+    image: category.image,
+    imageAlt: category.name,
   });
 }
 

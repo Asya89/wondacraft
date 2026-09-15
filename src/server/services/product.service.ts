@@ -1,6 +1,7 @@
+import { cache } from 'react';
 import { Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import { slugifyText } from '@/lib/utils';
+import { slugifyText } from '@/lib/slugify';
 
 export type ProductSortOption = 'newest' | 'price_asc' | 'price_desc' | 'name';
 
@@ -16,6 +17,7 @@ export interface ProductFilters {
   sort?: ProductSortOption;
 }
 
+/** Full product payload for detail/admin pages. */
 const productInclude = {
   category: true,
   maker: true,
@@ -33,6 +35,25 @@ function getOrderBy(sort: ProductSortOption = 'newest'): Prisma.ProductOrderByWi
     default:
       return { createdAt: 'desc' };
   }
+}
+
+function productListSelect() {
+  return {
+    id: true,
+    name: true,
+    slug: true,
+    price: true,
+    oldPrice: true,
+    isNew: true,
+    isFeatured: true,
+    shortDescription: true,
+    size: true,
+    images: {
+      orderBy: [{ isMain: 'desc' as const }, { sortOrder: 'asc' as const }],
+      take: 1,
+      select: { imageUrl: true, alt: true, isMain: true },
+    },
+  } satisfies Prisma.ProductSelect;
 }
 
 export async function getProducts(filters: ProductFilters = {}) {
@@ -67,7 +88,7 @@ export async function getProducts(filters: ProductFilters = {}) {
   const [products, total] = await Promise.all([
     prisma.product.findMany({
       where,
-      include: productInclude,
+      select: productListSelect(),
       orderBy: getOrderBy(sort),
       skip: (page - 1) * limit,
       take: limit,
@@ -78,17 +99,17 @@ export async function getProducts(filters: ProductFilters = {}) {
   return { products, total, page, limit, totalPages: Math.ceil(total / limit) };
 }
 
-export async function getProductBySlug(slug: string) {
+export const getProductBySlug = cache(async (slug: string) => {
   return prisma.product.findFirst({
     where: { slug, isActive: true },
     include: productInclude,
   });
-}
+});
 
 export async function getFeaturedProducts(limit = 4) {
   return prisma.product.findMany({
     where: { isActive: true, isFeatured: true },
-    include: productInclude,
+    select: productListSelect(),
     orderBy: { createdAt: 'desc' },
     take: limit,
   });
@@ -97,7 +118,7 @@ export async function getFeaturedProducts(limit = 4) {
 export async function getNewProducts(limit = 4) {
   return prisma.product.findMany({
     where: { isActive: true, isNew: true },
-    include: productInclude,
+    select: productListSelect(),
     orderBy: { createdAt: 'desc' },
     take: limit,
   });
@@ -106,7 +127,7 @@ export async function getNewProducts(limit = 4) {
 export async function getRelatedProducts(categoryId: string, excludeId: string, limit = 4) {
   return prisma.product.findMany({
     where: { categoryId, isActive: true, id: { not: excludeId } },
-    include: productInclude,
+    select: productListSelect(),
     take: limit,
     orderBy: { createdAt: 'desc' },
   });
@@ -221,3 +242,4 @@ export async function reorderProductImages(
 }
 
 export type ProductWithRelations = Prisma.ProductGetPayload<{ include: typeof productInclude }>;
+export type ProductCardRecord = Prisma.ProductGetPayload<{ select: ReturnType<typeof productListSelect> }>;

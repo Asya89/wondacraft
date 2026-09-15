@@ -25,12 +25,6 @@ export function generateOrderNumber(): string {
   return `WC-${timestamp}-${random}`;
 }
 
-import slugify from 'slugify';
-
-export function slugifyText(text: string): string {
-  return slugify(text, { lower: true, strict: true, locale: 'hy' });
-}
-
 export function sanitizeString(input: string): string {
   return input.trim().replace(/\s+/g, ' ');
 }

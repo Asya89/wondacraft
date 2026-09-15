@@ -1,3 +1,4 @@
+import dynamic from 'next/dynamic';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -5,7 +6,6 @@ import { notFound } from 'next/navigation';
 import { getProductBySlug, getRelatedProducts } from '@/server/services/product.service';
 import { ProductCard } from '@/components/products/ProductCard';
 import { ProductGallery } from '@/components/products/ProductGallery';
-import { OrderForm } from '@/components/orders/OrderForm';
 import { JsonLd } from '@/components/seo/JsonLd';
 import { formatPrice } from '@/lib/utils';
 import { getTranslations, type Locale } from '@/lib/i18n';
@@ -19,6 +19,15 @@ import {
   meaningfulImageAlt,
   productJsonLd,
 } from '@/lib/seo';
+
+const OrderForm = dynamic(
+  () => import('@/components/orders/OrderForm').then((mod) => mod.OrderForm),
+  {
+    loading: () => (
+      <div className="h-12 w-full max-w-xs animate-pulse rounded-sm bg-cream sm:w-40" aria-hidden />
+    ),
+  },
+);
 
 interface ProductPageProps {
   params: Promise<{ locale: string; slug: string }>;

@@ -22,7 +22,8 @@ export function Logo({ className, height = 48, href = '/', priority = false }: L
       width={LOGO_WIDTH}
       height={LOGO_HEIGHT}
       priority={priority}
-      className={cn('w-auto object-contain', className)}
+      className={cn('h-auto w-auto object-contain', className)}
+      sizes="(max-width: 640px) 88px, (max-width: 1024px) 96px, 128px"
       style={hasHeightClass ? undefined : { height }}
     />
   );

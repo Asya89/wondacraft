@@ -1,7 +1,6 @@
 import { notFound } from 'next/navigation';
 import { LocaleProvider } from '@/contexts/LocaleContext';
-import { LocaleHtmlLang } from '@/components/layout/LocaleHtmlLang';
-import { isLocale, locales } from '@/lib/i18n/config';
+import { getTranslations, isLocale, locales } from '@/lib/i18n';
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -18,8 +17,7 @@ export default async function LocaleLayout({
   if (!isLocale(locale)) notFound();
 
   return (
-    <LocaleProvider locale={locale}>
-      <LocaleHtmlLang />
+    <LocaleProvider locale={locale} translations={getTranslations(locale)}>
       {children}
     </LocaleProvider>
   );

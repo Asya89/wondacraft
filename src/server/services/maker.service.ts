@@ -1,6 +1,7 @@
+import { cache } from 'react';
 import type { Maker, Prisma } from '@prisma/client';
 import { prisma } from '@/lib/prisma';
-import { slugifyText } from '@/lib/utils';
+import { slugifyText } from '@/lib/slugify';
 
 export type MakerRecord = Maker;
 
@@ -23,9 +24,9 @@ export async function getMakerById(id: string) {
   return prisma.maker.findUnique({ where: { id } });
 }
 
-export async function getMakerBySlug(slug: string) {
+export const getMakerBySlug = cache(async (slug: string) => {
   return prisma.maker.findFirst({ where: { slug, isActive: true } });
-}
+});
 
 export async function createMaker(data: {
   name: string;
