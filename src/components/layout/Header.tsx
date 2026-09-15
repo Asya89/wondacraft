@@ -24,7 +24,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-background/95 backdrop-blur-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-6 lg:px-8">
-        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4 md:flex-none">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-4">
           <Logo
             className="h-10 max-w-[5.5rem] sm:h-12 sm:max-w-none lg:h-16"
             href={localizedPath('/', locale)}
