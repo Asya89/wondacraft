@@ -2,7 +2,9 @@ import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   images: {
-    formats: ['image/webp'],
+    // Product photos are already optimized in sync-assets; skip Vercel `/_next/image`
+    // so middleware/edge cache issues can't blank out the catalog on production.
+    unoptimized: true,
     remotePatterns: [],
   },
   async headers() {
