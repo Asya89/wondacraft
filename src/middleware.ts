@@ -54,15 +54,7 @@ export async function middleware(request: NextRequest) {
     return nextWithLocale(request, defaultLocale);
   }
 
-  if (
-    pathname.startsWith('/api') ||
-    pathname.startsWith('/_next') ||
-    pathname.startsWith('/images') ||
-    pathname.startsWith('/uploads') ||
-    pathname === '/robots.txt' ||
-    pathname === '/sitemap.xml' ||
-    pathname.includes('.')
-  ) {
+  if (pathname.startsWith('/api') || pathname.startsWith('/_next')) {
     return nextWithLocale(request, defaultLocale);
   }
 
@@ -79,5 +71,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+  // Keep public assets and the image optimizer out of middleware.
+  // Otherwise Vercel `/_next/image` internal fetches to `/images/*` can 404
+  // while the same files work locally.
+  matcher: [
+    '/((?!_next/static|_next/image|images/|uploads/|favicon.ico|robots.txt|sitemap.xml).*)',
+  ],
 };
